@@ -1,0 +1,44 @@
+.admin .HotelData {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 123;
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    animation:mymove ease-in .8s;
+    animation-fill-mode: forwards;
+    .titleANDadd{
+        width: 100%;
+        position: relative;
+        height: 40px;
+        h4{
+            position: absolute;
+            left: 0;
+            line-height: 40px;
+            font-size: 16px;
+            font-family: MicrosoftYaHei;
+            line-height: 20px;
+        }
+        >div{
+            position: absolute;
+            right: 0;
+            >.upload {
+                >span{
+                    float: left;
+                }
+                >button{
+                    float: left;
+                }
+            }
+        }
+    }
+}
+@keyframes mymove{
+    0% { 
+        top: -100%;
+    }
+    100% {
+        top: 0%;
+    }
+}

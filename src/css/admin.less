@@ -1,0 +1,206 @@
+@fontcoloe:#1f2d3d;
+@bodyColoe: rgb(59,59,59);
+@import "./set.less";
+@import "./DataStyle.less";
+@import "./dele.less";
+@import "./reviewed.less";
+@import "./hotel.less";
+@import "./equipment.less";
+@import "./header.less";
+@import "./agent.less";
+.admin{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    border: 20px solid rgb(231,234,238);
+    h3{
+        font-size: 16px;
+        color:@fontcoloe;
+        border-bottom: 1px solid #c0ccda;
+        line-height: 60px;
+        padding: 0 32px;
+    }
+    .adminSearch{
+        padding: 0 32px;
+        >span,>div,>input{
+            float: left;
+            line-height: 36px;
+        }
+        .getroleName {
+            width: 150px;
+            margin-right: 15px;
+            margin-top: 1px;
+        }
+        .region{
+            margin-right: 15px;
+        }
+        .keyWord{
+            width: 150px;
+            margin-right: 30px;
+            margin-left: 5px;
+            height: 30px;
+            box-sizing: border-box;
+            line-height: 30px;
+            margin-top: 2px;
+        }
+        .Adminbtn{
+            margin-left: 20px;
+            height: 29px;
+            margin-top: 3px;
+        }
+    }
+    .AdminLis{
+        margin-top: 25px;
+        padding:0 30px;
+
+        .ant-table-wrapper{
+            td,th{
+                text-align: center;
+            }
+            .ant-table{
+                border-right: 1px solid rgb(232,232,232);
+                border-left: 1px solid rgb(232,232,232);
+                td{
+                    color: #000;
+                    button{
+                        border: none;
+                        background-color: rgba(0,0,0,0)
+                    }
+                    .deleBtn{
+                        color:rgb(31,160,255) ;
+                        a{
+                            color:rgb(31,160,255) ;
+                        }
+                    }
+                }
+            }
+        }
+        .caozuo{
+            text-align: center;
+            i{
+                font-weight: 600;
+                color: #1fa0ff;
+            }
+        }
+        .page{
+            margin-top: 20px;
+            span{
+                float: left;
+                line-height: 32px;
+                margin: 0 8px;
+            }
+            ul{
+                float: left;
+            }
+        }
+    }
+}
+.Role{
+    .keyImg{
+        >span:nth-child(1){
+            float: left;
+        }
+        img{
+            width: 100%;
+        }
+    }
+}
+.ad{
+    position: absolute;
+    width: 100%;
+    min-height:100%;
+    left: 0;
+    top: 0;
+    z-index: 10;
+    background-color: white;
+    .ad_body{
+        >.txt{
+            line-height: 42px;
+            color: @bodyColoe;
+            margin-bottom: 10px;
+            span{
+                display: inline-block;
+                width: 130px;
+                text-align: right;
+                font-size: 14px;
+            }
+            input{
+                display: inline-block;
+                width: 500px;
+                height: 42px;
+            }
+        }
+        .Check{
+           // height: 60px;
+            >span{
+                float: left;
+                width: 130px;
+                text-align: right;
+                font-size: 14px;
+                height: 100%;
+            }
+            .ant-checkbox-group{
+                width:600px;
+                float: left;
+                label{
+                    margin: 5px;
+                }
+                .ant-checkbox-checked .ant-checkbox-inner{
+                    background-color: rgb(255,102, 0);
+                    border-color: rgb(255,102, 0);
+                }
+            }
+        }
+        .add{
+            >span{
+                line-height: 60px;
+            }
+            >div{
+                height: 100%;
+                float: left;
+                line-height: 60px;
+                button{
+                    margin-top: 10px;
+                    height:30px;
+                    float: left;
+                    width: auto;
+                    border-radius: 5px;
+                    font-size: 14px;
+                    margin:15px 10px;
+                }
+            }
+            .region{
+                float: left;
+            }
+            .JurisdLis{
+                float: none;
+            }
+        }
+       .AdBtn button span{
+           width: auto;
+       }
+    }
+}
+.choice{
+    position: absolute;
+    width: 100%;
+    top: 0;
+    left: 0;
+    min-height: 100%;
+    background-color: white;
+    z-index: 11;
+    .serch{
+        padding: 0 30px;
+        >input{
+            width: 250px;
+            margin-right: 50px;
+        }
+        ._choice{
+            margin-right: 20px
+        }
+        >button{
+            width: 90px;
+        }
+    }
+}

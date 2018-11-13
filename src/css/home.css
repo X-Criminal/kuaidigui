@@ -1,0 +1,78 @@
+.Home{
+    min-width: 1230px;;
+}
+.Home .ant-layout-header{
+    background-color: rgb(227,239,255);
+    padding: 0;
+    height: 100px;
+}
+.Home .ant-layout-header .title{
+    float: left;
+    width: 240px;
+    background: rgb(61, 160, 249);
+    text-align: center;
+    color: white;
+    font-size: 24px;
+    font-weight: 600;
+    height: 100%;
+    line-height: 100px;
+}
+.Home .userName{
+    cursor:pointer;
+}
+.Home .userName{
+    float: right;
+    color: white;
+    position: relative;
+}
+
+.Home .userName:hover .updateAdminPassword{
+    display: block;
+}
+.Home .ant-layout-sider{
+    height:calc(100vh - 100px) ;
+    background-color: rgb(66,152,238);
+}
+.Home .ant-layout-sider ul{
+    background-color: rgb(66,152,238);
+}
+.Home .ant-layout-sider ul li{
+    margin: 0;
+
+    color: white;
+}
+.Home .ant-layout-sider .ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected{
+    background-color: rgb(100,177,248);
+    box-sizing: border-box;
+    border-left: 6px solid rgb(33,103,180);
+}
+.Home .ant-layout-sider .ant-menu-inline.ant-menu-sub{
+    background-color: rgb(66,152,238);
+}
+.Home .ant-layout-sider .ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected a{
+    color: #229df8;
+}
+.Home .ant-layout-sider ul a{
+    color: #ffffff;
+}
+.Home .ant-layout-sider .ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected a{
+    color: #fff;
+}
+.Home .ant-menu-dark .ant-menu-submenu-selected{
+    background-color: #64b2f9;
+}
+.Home .ant-menu-dark .ant-menu-inline.ant-menu-sub{
+    box-shadow: none;
+}
+.Home .ant-layout-sider ul a i{
+    margin-right: 8px;
+}
+.Home .ant-layout-content{
+    box-sizing: border-box;
+}
+.Home .ant-layout {
+    background-color: white;
+}
+.Home .ant-layout .ant-table-thead > tr > th{
+    background-color: rgb(229,232,242)
+}

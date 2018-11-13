@@ -1,0 +1,12 @@
+.clear-fix::after,
+.clear-fix::before {
+    content: ".";
+    line-height: 0;
+    height: 0;
+    display: block;
+    visibility: hidden;
+    clear: both;
+}
+._back{
+    cursor:pointer;
+}
