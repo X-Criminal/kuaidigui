@@ -33,11 +33,19 @@ export default class App extends Component{
             return(
                 <div className={'adminSearch clear-fix'}>
                     <span>
-                        搜索
+                        账号：
                     </span>
-                    <Input className={"keyWord"} onChange={this.getKeyWord} placeholder={this.props.placeholder?this.props.placeholder:"输入关键字搜索"}/>
+                    <Input className={"keyWord"} onChange={this.getKeyWord} />
+                    <span>
+                        姓名：
+                    </span>
+                    <Input className={"keyWord"} onChange={this.getKeyWord} />
+                    <span>
+                        联系电话：
+                    </span>
+                    <Input className={"keyWord"} onChange={this.getKeyWord} />
                     <Button className={"Adminbtn"} type="primary" loading={this.state.loading} onClick={this.search}>
-                        查询
+                       搜索
                     </Button>
                     {this.props.postData?this.props.postData:null}
                 </div>

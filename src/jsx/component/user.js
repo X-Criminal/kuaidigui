@@ -10,13 +10,14 @@ export default class App extends Component{
                 page:1,
                 keyword:"",
                 strip:0,
+                admins:[{key:1,"序号":"序号","昵称":"昵称","联系电话":"联系电话","状态":"状态","姓名":"姓名","身份证号":"身份证号"}]
         }
     }
     componentWillMount(){
         url = sessionStorage.getItem("url")
     }
     componentDidMount(){
-        this.init( )
+       
     }
     /**初始化 */
     init=(data,cb)=>{
