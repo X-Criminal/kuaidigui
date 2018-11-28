@@ -13,7 +13,7 @@ class App extends Component {
   constructor(props){
     super(props)
     this.state={
-        islogin:false,
+        islogin:true,
     }
   }
   componentWillMount(){
@@ -26,7 +26,7 @@ class App extends Component {
           })
       }else{
         this.setState({
-          islogin:false,
+          islogin:true,
         })
       }
   }

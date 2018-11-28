@@ -123,22 +123,24 @@ const Home = withRouter((props)=>{
                                 </Menu.Item>
                             </SubMenu>
                             <SubMenu
-                            key="xiaoxi"
-                            title={<span><i className={"iconfont icon-lingdang"}></i>&nbsp;&nbsp;<span>消息管理</span> </span>}
+                            key="dingdan2"
+                            title={<span><i className={"iconfont icon-dingdan"}></i>&nbsp;&nbsp;<span>订单管理</span> </span>}
                             >
                                 <Menu.Item key="shenqing">
-                                    <Link to={"/hotel"}>
-                                        快递员申请
+                                    <Link to={"/shenqing"}>
+                                       快递员申请
                                     </Link>
                                 </Menu.Item>
                                 <Menu.Item key="fankui">
-                                    <Link to={"/data"}>
-                                        反馈信息
+                                    <Link to={"/fankui"}>
+                                  
+                                    反馈信息
                                     </Link>
                                 </Menu.Item>
                                 <Menu.Item key="yichang">
-                                    <Link to={"/reviewed"}>
-                                        异常消息
+                                    <Link to={"/yichang"}>
+                                    
+                                    异常消息
                                     </Link>
                                 </Menu.Item>
                             </SubMenu>

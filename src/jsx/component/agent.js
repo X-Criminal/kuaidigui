@@ -17,42 +17,11 @@ export default class App extends Component{
     }
     componentDidMount(){
         //url = sessionStorage.getItem("url");
-        this.init()
+
     }
 
       /**初始化 */
-      init=(data,cb)=>{
-        let _data={
-            numberPage:8,
-            page:this.state.page,
-            condition:this.state.condition,
-            idRole:this.state.idRole,
-            keywords:this.state.keywords,
-        }
-        if(data){
-            for(let k in data){
-                _data[k]=data[k]
-                this.setState({
-                    [k]:data[k]
-                })
-            }
-        }
-        // axios.post(url+"SmartPillow/web/agent/getAgentList",_data)
-        //       .then((res)=>{
-        //           if(res.data.code===1000&&res.data.data){
-        //                 this.setState({
-        //                     strip:res.data.data.strip,
-        //                    admins:res.data.data.admins
-        //                 })
-        //           }else{
-        //             this.setState({
-        //                 strip:0,
-        //                admins:[ ]
-        //             })
-        //           }
-        //           cb&&cb( )
-        //       })
-    }
+     
     /**添加 */
     addAdmin=(data,cb)=>{
 

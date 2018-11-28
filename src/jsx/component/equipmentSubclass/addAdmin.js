@@ -1,9 +1,9 @@
-import React from "react";
-import {Button,Icon,Input,Select} from "antd";
-import { Route, Switch, Link} from 'react-router-dom';
-import Region               from "../share/region"
+import React                        from "react";
+import {Button,Input,Select }              from "antd";
+import { Route, Switch, Link}       from 'react-router-dom';
+import fetchJsonp                   from "fetch-jsonp";
 
-
+let BMap,marker;
 const Option = Select.Option;
 
 export default class App extends React.Component {
@@ -21,13 +21,14 @@ export default class App extends React.Component {
     render(){
         return(
             <div className={"addAdmin"} style={{"float":"right"}}>
-                <Link to={"/ /addAdmin"}>
+                <Link to={"/equipment/addAdmin"}>
                     <Button type="primary">
+                    <i className={"iconfont icon-tianjia"} style={{fontSize:"12px"}}></i>&nbsp;
                         添加管理员
                     </Button>
                 </Link>
                 <Switch>
-                    <Route  path="/ /addAdmin"     render={ ()=> <AddAmin enData={this.enData}/>}/>
+                    <Route  path="/equipment/addAdmin"     render={ ()=> <AddAmin enData={this.enData}/>}/>
                 </Switch>
             </div>
         )
@@ -39,154 +40,135 @@ class AddAmin extends React.Component{
     constructor(props){
         super(props)
         this.state={
-            loading:false,
-            p:"",
-            c:"",
-            a:"",
-            address:"",
-            admintype:1,
-            age:"",
-            identityCard:"",
-            name:"",
-            password:"",
-            telephone:""
+
+            isPosition:false,
+            positionTxt:"",
         }
+    }
+    componentDidMount(){
+        this.initMap()
     }
 
-    onRegion=(a,txt)=>{
-        this.setState({
-            [a]:txt,
-            err:"",
-            loading:false,
-        })
-    }
-    onchange=( e )=>{
-      if(typeof e !== "number"){
-        this.setState({
-            [e.target.name]:e.target.value
-        })
-       }else{
-           this.setState({
-            admintype:e,
-            err:"",
-            loading:false,
-           })
-       } 
-    }
-    postData=( )=>{
-        this.setState({
-            loading:true,
-        })
-        let data={
-            address:this.state.address,
-            admintype:this.state.admintype,
-            age:(+this.state.age),
-            adminRole:[{idRole:1}],
-            identityCard:this.state.identityCard,
-            name:this.state.name,
-            password:this.state.password,
-            telephone:this.state.telephone,
-            area:this.state.p+this.state.c+this.state.a
-        }
-        for(let k in data){
-            if(data[k].length<=0){
-                    this.setState({
-                        err:"资料请填写完整"
-                    })
-                    return false;
-            }
-        }
-
-        this.props.enData(data,(data)=>{
+    _position=()=>{
             this.setState({
-                loading:false
+                positionTxt:this.state.lng+","+this.state.lat
             })
-            window.location.href="/#/ "
-        })
+            fetchJsonp("http://api.map.baidu.com/geocoder/v2/?callback=callback&location="+this.state.lat+","+this.state.lng+"&output=json&pois=1&ak=YMWpSvrB8HfPaGXFHh1rXb6zDwEjTU5E")
+                      .then((res)=>{
+                          return res.json()
+                      }).then((res)=>{
+                          this.setState({
+                            positionTxt:res.result.formatted_address+","+res.result.sematic_description
+                          })
+                      })
+            
     }
-    onfocus=( )=>{
-        this.setState({
-            err:"",
-            loading:false,
-        })
+    initMap=()=>{
+        let _this = this;
+            BMap = window.BMap
+        var myCity = new BMap.LocalCity(); 
+        myCity.get(_this.getCityByIP)
     }
+    getCityByIP=(rs)=>{
+        let _this =this;
+        let cityName = rs.name;
+        var map = new BMap.Map("allmap"); // 创建Map实例
+        map.centerAndZoom(cityName, 10); // 初始化地图,设    置中心点坐标和地图级别
+        map.addControl(new BMap.MapTypeControl()); //添加地图类型控件
+        //map.setCurrentCity("北京"); // 设置地图显示的城市 此项是必须设置的
+        map.enableScrollWheelZoom(true); //开启鼠标滚轮缩放
+        
+        map.addEventListener('click', function (e) {
+            let data={};
+            _this.setState({
+                lng:e.point.lng,
+                lat:e.point.lat
+            })
+            data.lng = e.point.lng;
+            data.lat = e.point.lat;
+            let point = new BMap.Point(data.lng, data.lat); //将标注点转化成地图上的点
+            if(marker) map.removeOverlay(marker );
+            marker = new BMap.Marker(point); //将点转化成标注点
+            map.addOverlay(marker); 
+        })
+
+    }
+
         render(){
             return(
-                <div className={"addAdminBox"}>
+                <div className={"addAdminBox equipAdd"}>
                         <div>
-                              <h3>添加管理员 <Link to={"/ "}><Icon type={"close"}/></Link></h3>
+                              <h3> <Link to={"/equipment"}>快递柜管理</Link>>添加快递柜</h3>
                               <div className={"addAdminData"}>
-                                   <div key={1}>
+                                   <div key={1} className={"text"}>
                                        <span>
-                                           账号
+                                           快递柜名称
                                        </span>
                                        <Input name={"telephone"} onChange={this.onchange} onFocus={this.onfocus}/>
                                    </div>
-                                   <div key={2}>
+                                   <div key={2} className={"text"}>
                                        <span>
-                                           密码
+                                           快递柜行数
                                        </span>
                                        <Input name={"password"} onChange={this.onchange} onFocus={this.onfocus}/>
                                    </div>
-                                   <div key={3}>
+                                   <div key={3} className={"text"}>
                                        <span>
-                                           姓名
+                                           快递号列数
                                        </span>
                                        <Input name={"name"} onChange={this.onchange} onFocus={this.onfocus}/>
                                    </div>
-                                   <div key={4}>
+                                   <div key={5} className={"text"}>
                                        <span>
-                                           年龄
+                                           安装地址
                                        </span>
-                                       <Input name={"age"} onChange={this.onchange} onFocus={this.onfocus}/>
+                                       <Input name={"map"} value={this.state.positionTxt} disabled/>&nbsp;&nbsp;
+                                       <Button onClick={this._position}>地图选择</Button>
                                    </div>
-                                   <div key={5}>
+                                   <div key={4} className={"text map clear-fix"}>
+                                       <span>&nbsp;</span>
+                                       <div id={"allmap"}></div>
+                                    </div>
+                                    <div className={"text"}>
                                        <span>
-                                           身份证
+                                           服务费
                                        </span>
-                                       <Input name={"identityCard"} onChange={this.onchange} onFocus={this.onfocus}/>
+                                       <Input name={"name"} onChange={this.onchange} onFocus={this.onfocus}/>&nbsp;&nbsp;<b>元/次</b>
                                    </div>
-                                   <div key={6}>
+                                   <div className={"text"}>
                                        <span>
-                                           地区
+                                           付款方
                                        </span>
-                                       <Region onRegion={this.onRegion}/>
-                                   </div>
-                                   <div key={7}>
-                                       <span>
-                                          详细地址
-                                       </span>
-                                       <Input name={"address"} onChange={this.onchange} onFocus={this.onfocus}/>
-                                   </div>
-                                    <div key={8}>
-                                       <span>
-                                          角色
-                                       </span>
-                                       <Select
-                                            showSearch
-                                            optionFilterProp="children"
-                                            placeholder={'全部'}
-                                            onChange={this.onchange}
-                                            allowClear={true}
-                                            name={"admintype"}
-                                            className={"getroleName"}
-                                            >
-                                                <Option key={1} value={1}>普通管理员</Option>
-                                                <Option key={2} value={2}>代理商</Option> 
+                                       <Select style={{ width: 500 }}>
+                                            <Option value="jack">Jack</Option>
+                                            <Option value="lucy">Lucy</Option>
+                                            <Option value="disabled">Disabled</Option>
+                                            <Option value="Yiminghe">yiminghe</Option>
                                         </Select>
-                                   </div>  
-                                   <div key={9}>
-                                       <p style={{"color":"red","textAlign":"center"}}>{this.state.err}</p>
                                    </div>
-                                   <div className={"adminDataBtn"} key={10}>
-                                        <Button>
-                                            <Link to={"/ "}>
-                                                取消
-                                            </Link>
-                                        </Button>
-                                        <Button type={"primary"} loading={this.state.loading} onClick={this.postData}>
-                                             确定
-                                        </Button>
+                                   <div className={"text"}>
+                                       <span>
+                                           绑定快递员
+                                       </span>
+                                       <Select style={{ width: 240 }} placeholder={"选择快递公司"}>
+                                            <Option value="jack">Jack</Option>
+                                            <Option value="lucy">Lucy</Option>
+                                            <Option value="disabled">Disabled</Option>
+                                            <Option value="Yiminghe">yiminghe</Option>
+                                        </Select>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <Select style={{ width: 240 }} placeholder={"选择快递员"}>
+                                            <Option value="jack">Jack</Option>
+                                            <Option value="lucy">Lucy</Option>
+                                            <Option value="disabled">Disabled</Option>
+                                            <Option value="Yiminghe">yiminghe</Option>
+                                        </Select>
+                                   </div>
+                                   <div className={"text postBtn"}>
+                                       <span>
+                                           
+                                       </span>
+                                        <Button>提交</Button>
                                    </div>
                               </div>
                         </div>
