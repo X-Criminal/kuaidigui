@@ -33,7 +33,7 @@ class app extends Component{
 
       compareToFirstPassword = (rule, value, callback) => {
         const form = this.props.form;
-        if (value && value !== form.getFieldValue('Password')) {
+        if (value && value !== form.getFieldValue('newPassword')) {
           callback('两次输入的密码不一致!');
         } else {
           callback();
@@ -46,12 +46,13 @@ class app extends Component{
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
           if (!err) {
-              axios.post(url+"SmartPillow/web/admin/adminLogin",values)
+              axios.post(url+"/deliveryLockers/web/webBasicFunctionController/login",values)
                // axios.post("http://172.16.10.16:8086/securitylock/web/admin/Login",values)
                      .then((res)=>{
                          if(res.data.code===1000){
                                 cookie.save("islogin",true);
-                                this.props.login( )
+                                cookie.save("userData",res.data.data);
+                                this.props.login( );
                          }else{
                              this.setState({
                                 loginerr:"账号或密码错误"
@@ -68,15 +69,15 @@ class app extends Component{
       resetAdminPassword=(e)=>{
             e.preventDefault( );
             let data={
-                password:"",
+                newPassword:"",
                     code:"",
-               telephone:"",
+                 account:"",
             };
             this.props.form.validateFields((err,values)=>{
                  if(!err){
-                     data.password=values.Password;
+                     data.newPassword=values.newPassword;
                          data.code=values.code;
-                    data.telephone=values.Telephone;
+                    data.account=values.account;
                         this.Postreset(data,()=>{
                             /**发送后回调 */
                             console.log(data)
@@ -87,7 +88,7 @@ class app extends Component{
             })
       }
       Postreset=(data,cb)=>{
-            axios.post(url+"SmartPillow/web/admin/resetAdminPassword",data)
+            axios.post(url+"/SmartPillow/web/admin/resetAdminPassword",data)
                  .then((res)=>{
                             cb&&cb(res)
                        })
@@ -121,13 +122,13 @@ class app extends Component{
     /**获取验证码 */
       getCode=( )=>{
           if( this.state.user.length<=0) return false;
-            axios.get(url+"/SmartPillow//web/admin/sendSmsCode?telephone="+this.state.user)
+            axios.get(url+"/deliveryLockers/wx/basicFunctionController/getCode?phone="+this.state.user+"&type=4")
                  .then((res)=>{
                         if(res.data!==1000){
                             alert(res.data.message)
                         }
                  })
-      } 
+      }
     /**保存手机号 */
       getPhone=(e)=>{
             this.setState({
@@ -152,7 +153,7 @@ class app extends Component{
                             <Form onSubmit={this.handleSubmit} className="login-form Login">
                             <h3>用户登陆</h3>
                             <FormItem>
-                            {getFieldDecorator('telephone', {
+                            {getFieldDecorator('account', {
                                 rules: [{ required: true, message: '请输入用户名!' }],
                             })(
                                 <Input  key={"请输入手机号或者邮箱"} prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} onFocus={this.onfocus} placeholder="账号" />
@@ -166,7 +167,9 @@ class app extends Component{
                             )}
                             </FormItem>
                             <p className={"err"}>{this.state.loginerr}</p>
-                            <p className={"resetAdminPassword"} onClick={this.pagIng}>忘记密码</p>
+                            <div className={"clear-fix"}>
+                                <p className={"resetAdminPassword"} onClick={this.pagIng}>忘记密码</p>
+                            </div>
                             <FormItem>
                                 <Button type="primary" htmlType="submit" className="login-form-button">
                                     登录
@@ -181,7 +184,7 @@ class app extends Component{
                         <Form onSubmit={this.resetAdminPassword} className={"resetAdminPassword"}>
                             <h3>忘记密码</h3>
                             <FormItem>
-                                {getFieldDecorator('Telephone', {
+                                {getFieldDecorator('account', {
                                         rules: [{ required: true, message: '请输入手机号!' }],
                                 })(
                                         <Input placeholder="手机号" name={"user"} onChange={this.getPhone}/>
@@ -197,7 +200,7 @@ class app extends Component{
                                 <Button loading={this.state.loading} type="primary" onClick={this.onCode}>{this.state.codeTxt}</Button>
                             </FormItem>
                             <FormItem>
-                                {getFieldDecorator('Password', {
+                                {getFieldDecorator('newPassword', {
                                         rules: [{ required: true, message: '输入新密码!' },{validator:this.validateToNextPassword}],
                                 })(
                                         <Input placeholder="输入新密码" />

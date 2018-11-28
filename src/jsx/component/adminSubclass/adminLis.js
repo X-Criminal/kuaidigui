@@ -34,10 +34,10 @@ export default class App extends Component{
     /**判断删除 */
     DeleBox=(e)=>{
         if(e==="cancel"){
-                window.location.href="/#/ "
+               window.history.go(-1)
         }else if(e==="sure" ){
             this.props.deleData(this.state.adminId,()=>{
-                window.location.href="/#/ "
+                window.history.go(-1)
             })
         }
     }
@@ -46,67 +46,70 @@ export default class App extends Component{
         this.props.emtPage(e)
     }
     render(){
+        let data = this.props.admins;
+        for(let i = 0;i<data.length;i++){
+            data[i].index=i+1;
+        }
         return(
             <div className={"AdminLis"}>
                     <Table
-                        dataSource={this.props.admins}
+                        dataSource={data}
                         bordered
                         pagination={false}
-                        rowKey={"序号"}
+                        rowKey={"index"}
                     >
                         <Column
                         title="序号"
-                        dataIndex="id"
-                        key="id"
+                        dataIndex="index"
+                        key="index"
                         />
                         <Column
                         title="账号"
-                        dataIndex="账号"
-                        key="账号"
+                        dataIndex="account"
+                        key="account"
                         />
                         <Column
                         title="姓名"
-                        dataIndex="姓名"
-                        key="姓名"
+                        dataIndex="name"
+                        key="name"
                         />
                         <Column
                         title="联系电话"
-                        dataIndex="联系电话"
-                        key="联系电话"
+                        dataIndex="phone"
+                        key="phone"
                         />
                         <Column
                         title="密码"
-                        dataIndex="密码"
-                        key="密码"
+                        dataIndex="password"
+                        key="password"
                         />
                         <Column
                         title="管辖区域"
-                        dataIndex="管辖区域"
-                        key="管辖区域"
+                        dataIndex="jurisdiction"
+                        key="jurisdiction"
                         />
                         <Column
                         title="操作"
-                        dataIndex="序号"
-                        key="序号"
+                        key="id"
                         render={(text) => {
                             return(
                                 <div className={"caozuo"}>
                                     <Tooltip placement="bottom" title={"详情"}>
-                                        <Button onClick={this.onUpdateAdmin.bind(this,text)}>
+                                        <Button>
                                             <Link to={"/admin/UpdateAdmin"}>
                                                 <i className="iconfont icon-zhangdan"></i>
                                             </Link>
                                         </Button>
                                     </Tooltip>
                                     <Tooltip placement="bottom" title={"编辑"}>
-                                        <Button onClick={this.onDeleteAdmin.bind(this,text.idAdmin)}>
+                                        <Button >
                                             <Link to={"/admin/DeleteAdmin"} className={"deleBtn"}>
                                                 <i className="iconfont icon-bianji"></i>
                                             </Link>
                                         </Button>
                                     </Tooltip>
                                     <Tooltip placement="bottom" title={"删除"}>
-                                        <Button onClick={this.onDeleteAdmin.bind(this,text.idAdmin)}>
+                                        <Button>
                                             <Link to={"/admin/DeleteAdmin"} className={"deleBtn"}>
                                                 <i className="iconfont icon-recyclebin"></i>
                                             </Link>
@@ -118,8 +121,8 @@ export default class App extends Component{
                         />
                 </Table>
                     <div  className={"page"}>
-                        <span>共{this.props.strip}条</span>
-                        <Pagination defaultCurrent={1} showQuickJumper  size="small" total={this.props.strip} defaultPageSize={8} onChange={this.onPage}/>
+                        <span>共{this.props.totalItems}条</span>
+                        <Pagination defaultCurrent={1} showQuickJumper  size="small" total={this.props.totalItems} defaultPageSize={6} onChange={this.onPage}/>
                     </div>
                     <Switch>
                         <Route path={"/admin/DeleteAdmin"} render={()=> <Dele DeleBox={this.DeleBox}/>}/>

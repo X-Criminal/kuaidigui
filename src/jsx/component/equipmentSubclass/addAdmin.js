@@ -49,7 +49,7 @@ class AddAmin extends React.Component{
         this.initMap()
     }
 
-    _position=()=>{
+     _position=()=>{
             this.setState({
                 positionTxt:this.state.lng+","+this.state.lat
             })
@@ -123,7 +123,7 @@ class AddAmin extends React.Component{
                                            安装地址
                                        </span>
                                        <Input name={"map"} value={this.state.positionTxt} disabled/>&nbsp;&nbsp;
-                                       <Button onClick={this._position}>地图选择</Button>
+                                       {/* <Button onClick={this._position}>地图选择</Button> */}
                                    </div>
                                    <div key={4} className={"text map clear-fix"}>
                                        <span>&nbsp;</span>

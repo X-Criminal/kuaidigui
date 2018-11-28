@@ -55,57 +55,67 @@ export default class App extends Component{
         }),
       }
     render(){
+        let data = this.props.admins;
+        for(let i =0;i<data.length;i++){
+            data[i].index = i+1
+        }
         return(
             <div className={"AdminLis"}>
                     <Table 
-                       dataSource={this.props.admins} 
+                       dataSource={data} 
                        pagination={false} 
-                       rowKey={"key"}
+                       rowKey={"index"}
                        rowSelection={this.rowSelection}
                        >
                         <Column
                         title="序号"
-                        dataIndex="telephone"
-                        key="telephone"
+                        dataIndex="index"
+                        key="index"
                         />
                         <Column
                         title="快递柜名称"
-                        dataIndex="password"
-                        key="password"
-                        />
-                        <Column
-                        title="服务费"
                         dataIndex="name"
                         key="name"
                         />
                         <Column
+                        title="服务费"
+                        dataIndex="serviceCharge"
+                        key="serviceCharge"
+                        />
+                        <Column
                         title="付款方"
-                        dataIndex="age"
-                        key="age"
+                        dataIndex="payer"
+                        key="payer"
+                        render={(res)=>{
+                            return <span>{res===1?"存件方":res===2?"取件方":"-"}</span>
+                        }}
                         />
                         <Column
                         title="格子数"
-                        dataIndex="identityCard"
-                        key="identityCard"
+                        dataIndex="gridNumber"
+                        key="gridNumber"
                         />
                         <Column
                         title="使用数"
-                        dataIndex="3"
-                        key="3"
+                        dataIndex="useNumber"
+                        key="useNumber"
                         />
                           <Column
                         title="所在区域"
-                        dataIndex="34"
-                        key="45"
+                        dataIndex="layAddreass"
+                        key="layAddreass"
                         />
                           <Column
                         title="状态"
-                        dataIndex="76"
-                        key="76"
+                        dataIndex="deviceStatus"
+                        key="deviceStatus"
+                        render={(res)=>{
+                            return <span>{res===1?"正常":res===2?"异常":"-"}</span>
+                        }}
                         />
                         <Column
                         title="操作(详情,修改,删除)"
-                        key="idAdmin"
+                        key="id"
                         render={(text) => {
                             return(
                                 <div>
@@ -136,8 +146,8 @@ export default class App extends Component{
                         />
                 </Table>
                     <div  className={"page"}>
-                        <span>共{this.props.strip}条</span>
-                        <Pagination defaultCurrent={1} total={this.props.strip} defaultPageSize={8} onChange={this.onPage}/>
+                        <span>共{this.props.totalItems}条</span>
+                        <Pagination defaultCurrent={1} total={this.props.totalItems} defaultPageSize={6} onChange={this.onPage}/>
                     </div>
                     <Switch>
                         <Route path={"/equipment/details"}      component={DetaIls}/>

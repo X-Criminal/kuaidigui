@@ -13,11 +13,11 @@ class App extends Component {
   constructor(props){
     super(props)
     this.state={
-        islogin:true,
+        islogin:false,
     }
   }
   componentWillMount(){
-    sessionStorage.setItem("url","https://www.znx158.com/")
+    sessionStorage.setItem("url","http://172.16.2.137:8086")
   }
   componentDidMount(){
       if(cookie.load("islogin")){
@@ -26,7 +26,7 @@ class App extends Component {
           })
       }else{
         this.setState({
-          islogin:true,
+          islogin:false,
         })
       }
   }

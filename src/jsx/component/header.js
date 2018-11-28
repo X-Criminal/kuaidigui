@@ -1,8 +1,10 @@
 import React                                         from "react";
 import cookie                                        from "react-cookies";
+import axios                                         from "axios";
 import { HashRouter as Router, Route, Switch, Link } from 'react-router-dom';
-import {Icon,Input,Button,Form}                      from "antd";
+import {Icon,Input,Button,Form,message}              from "antd";
 const FormItem = Form.Item;
+let url;
 export default class App extends React.Component{
     constructor(props){
         super(props)
@@ -11,12 +13,10 @@ export default class App extends React.Component{
         }
     }
     Cancellation=( )=>{
-        cookie.remove("islogin")
-        window.location.reload()
-        // axios.get(sessionStorage.getItem("url")+"/SmartPillow//web/admin//adminCancellation")
-        //      .then(()=>{
-        //         window.location.reload()
-        //      })
+        cookie.remove("userData");
+        cookie.remove("islogin");
+        window.location.reload();
+
     }
     render(){
         return(
@@ -24,7 +24,7 @@ export default class App extends React.Component{
                 <div>
                     <div className={"title"}>智能《快递柜》</div>
                     <div className={"out"}>
-                        <Button>
+                        <Button onClick={this.Cancellation}>
                             退出
                             <i className={"iconfont icon-ai-out"}></i>
                         </Button>
@@ -32,13 +32,13 @@ export default class App extends React.Component{
                     <div className={"userName"}>
                         <i className={"iconfont icon-wulumuqishigongandashujuguanlipingtai-ico-"}></i>
                         <div className={"_userName"}>
-                            <p>范柳原(13888888888)</p>
-                             <p>超级管理员</p> 
+                            <p>{cookie.load("userData").name+"("+cookie.load('userData').phone+")"}</p>
+                            <p>{cookie.load("userData").adminType===1?"超级管理员":"-"}</p> 
                         </div>
                         <Icon type="caret-down" theme="filled"/>
                         <div className={"updateAdminPassword"}>
                                 <i className={"iconfont icon-wulumuqishigongandashujuguanlipingtai-ico-"}></i>
-                                <p>1388888888</p>
+                                <p>{cookie.load('userData').phone}</p>
                                 <Link to={"/"+this.props.pathSnippets+"/updateAdminPassword"}>
                                     <Button type="primary">
                                         修改密码
@@ -62,6 +62,9 @@ class updata extends React.Component{
             loading:false,
         }
     }
+    componentWillMount(){
+        url = sessionStorage.getItem("url")
+    }
 
     /**提交修改 */
     enterLoading=( )=>{
@@ -72,11 +75,36 @@ class updata extends React.Component{
 
       compareToFirstPassword = (rule, value, callback) => {
         const form = this.props.form;
-        if (value && value !== form.getFieldValue('password')) {
+        if (value && value !== form.getFieldValue('newPassword')) {
           callback('两次输入的密码不一致!');
         } else {
           callback();
         }
+      }
+
+      handleSubmit=( e )=>{
+        e.preventDefault();
+        this.props.form.validateFields((err, values) => {
+                let data = {
+                    account:cookie.load("userData").phone,
+                    newPassword:values.newPassword,
+                    password:values.password
+                }
+                axios.post(url+"/deliveryLockers/web/webBasicFunctionController/updatePassword",data)
+                     .then((res)=>{
+                         if(res.data.code===1000){
+                             alert("修改成功，请重新登录！");
+                             cookie.remove("userData");
+                             cookie.remove("islogin");
+                             window.location.reload();
+                         }else{
+                             message.error(res.data.message)
+                                this.setState({
+                                    loading:!this.state.loading
+                                })
+                         }
+                     })
+        })
       }
 
 
@@ -86,15 +114,15 @@ class updata extends React.Component{
             <div className={"updata"}>
                 <div className={"updataBox"}>
                     <h2>修改密码  <Link to={"/"+this.props.pathSnippets}><Icon type={"close"} /></Link></h2>
-                    <p>登录账号：13838384438</p>
-                    <Form className={" clear-fix"}>
+                    <p>登录账号：{cookie.load("userData").phone}</p>
+                    <Form className={" clear-fix"}  onSubmit={this.handleSubmit}>
                         <div className={"updataTxt"}>
                             <div>
-                                <span>用户名</span> <Input disabled={true} style={{"border":"none","backgroundColor":"#fff"}}/>
+                                <span>用户名</span> <Input disabled={true} style={{"border":"none","backgroundColor":"#fff"}} value={cookie.load("userData").name}/>
                             </div>
                             <FormItem>
                                     <span>原密码</span>
-                                    {getFieldDecorator("oldPassword",{
+                                    {getFieldDecorator("password",{
                                         rules: [{ required: true, message: '请输入原密码!' }],
                                     })(
                                         <Input type={"password"}/>
@@ -103,7 +131,7 @@ class updata extends React.Component{
                             </FormItem>
                             <FormItem>
                                     <span>新密码</span> 
-                                        {getFieldDecorator("password",{
+                                        {getFieldDecorator("newPassword",{
                                             rules: [{ required: true, message: '请输入密码!' }],
                                         })(
                                             <Input type={"password"}/>
@@ -125,7 +153,7 @@ class updata extends React.Component{
                                         取消
                                     </Link>
                                 </Button>
-                                <Button type="primary" loading={this.state.loading} onClick={this.enterLoading}>
+                                <Button type="primary"  htmlType="submit" loading={this.state.loading} onClick={this.enterLoading}>
                                         确定
                                 </Button>
                             </div>

@@ -7,12 +7,10 @@ export default class App extends Component{
         constructor(props){
             super(props)
             this.state={
-                    p:"",
-                    c:"",
-                    a:"",
-                    idRole:0,
-                    keywords:"",
                     loading:false,
+                    account:"",
+                    nameL:"",
+                    phone:"",
             }
         }
         
@@ -22,9 +20,9 @@ export default class App extends Component{
             loading:true,
         })
         let data ={
-            condition:this.state.p+this.state.c+this.state.a,
-               idRole:this.state.idRole,
-             keywords:this.state.keywords
+            account:this.state.account,
+            name:this.state.name,
+            phone:this.state.phone
         }
         this.props.onSearch(data,(res)=>{
                 this.setState({
@@ -33,11 +31,6 @@ export default class App extends Component{
         })
     }
 
-    handleChange=(e)=>{
-            this.setState({
-                idRole:e||0
-            })
-    }
     getKeyWord=(e)=>{
         this.setState({
             [e.target.name]:e.target.value
@@ -49,15 +42,15 @@ export default class App extends Component{
                     <span>
                         账号
                     </span>
-                        <Input className={"keyWord"} onChange={this.getKeyWord}/>
+                        <Input className={"keyWord"} name={"account"} onChange={this.getKeyWord}/>
                     <span>
                         姓名
                     </span>
-                        <Input className={"keyWord"} onChange={this.getKeyWord}/>
+                        <Input className={"keyWord"} name={"name"} onChange={this.getKeyWord}/>
                     <span>
                         联系电话
                     </span>
-                        <Input className={"keyWord"} onChange={this.getKeyWord}/>
+                        <Input className={"keyWord"} name={"phone"} onChange={this.getKeyWord}/>
                     <Button className={"Adminbtn"} type="primary" loading={this.state.loading} onClick={this.search}>
                         查询
                     </Button>
