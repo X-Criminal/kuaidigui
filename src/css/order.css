@@ -1,0 +1,22 @@
+.order .orderAdd{
+    border: none;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    min-height: 100%;
+    background-color: white;
+    z-index: 998;
+}
+.orderAddBody >div{
+    margin: 25px 0;
+}
+.orderAddBody >div>span{
+    display: inline-block;
+    width: 120px;
+    text-align: center;
+}
+.orderAddBody >div>input{
+    display: inline-block;
+    width: 350px;
+}

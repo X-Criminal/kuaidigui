@@ -3,7 +3,8 @@ import {Table,Button,Pagination,Tooltip }        from "antd";
 import {Route, Switch, Link}                     from 'react-router-dom';
 import Dele                                      from "../share/dele";
 import DetaIls                                   from "./detaIls"
-const {Column} =Table
+import Edit                                      from "./edit"
+const {Column} =Table;
 export default class App extends Component{
     constructor(props){
         super(props)
@@ -33,10 +34,10 @@ export default class App extends Component{
     /**判断删除 */
     DeleBox=(e)=>{
         if(e==="cancel"){
-                window.location.href="/#/agent"
+                window.history.go(-1)
         }else if(e==="sure" ){
             this.props.deleData(this.state.adminId,()=>{
-                window.location.href="/#/agent"
+                window.history.go(-1)
             })
         }
     }
@@ -128,7 +129,7 @@ export default class App extends Component{
                                     </Tooltip>
                                     <Tooltip placement="bottom" title={"编辑"}>
                                         <Button onClick={this.onDeleteAdmin.bind(this,text.idAdmin)}>
-                                            <Link to={"/equipment/DeleteAdmin"} className={"deleBtn"}>
+                                            <Link to={"/equipment/edit"} className={"deleBtn"}>
                                                 <i className="iconfont icon-bianji"></i>
                                             </Link>
                                         </Button>
@@ -150,7 +151,8 @@ export default class App extends Component{
                         <Pagination defaultCurrent={1} total={this.props.totalItems} defaultPageSize={6} onChange={this.onPage}/>
                     </div>
                     <Switch>
-                        <Route path={"/equipment/details"}      component={DetaIls}/>
+                        <Route path={"/equipment/details"}               component={DetaIls}/>
+                        <Route path={"/equipment/edit"}               component={Edit}/>
                         <Route path={"/agent/DeleteAdmin"} render={()=> <Dele DeleBox={this.DeleBox}/>}/>
                     </Switch>
             </div>

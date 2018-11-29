@@ -1,51 +1,11 @@
-import React                                from "react";
-import {Button,Input,Select,message,Icon ,InputNumber }  from "antd";
-import { Route, Switch, Link}               from 'react-router-dom';
-import axios                                from "axios";
-import fetchJsonp                           from "fetch-jsonp";
-
+import React,{Component}                                        from "react";
+import {Button,message,Input,Select,InputNumber,Icon}           from "antd";
+import axios                                                    from "axios";
+import fetchJsonp                                               from "fetch-jsonp";
+import {Link}                                                   from 'react-router-dom';
+const Option =Select.Option;
 let BMap,marker,url,userDeliverys=[{}];
-const Option = Select.Option;
-
-export default class App extends React.Component {
-    constructor(props){
-        super(props)
-        this.state={
-            DhlId:"",
-
-        }
-    }
-    componentWillMount(){
-        url = sessionStorage.getItem("url")
-    }
-    enData=( data ,cb)=>{
-        axios.post(url+"/deliveryLockers/web/deliveryLockerManageController/addDeliveryLocker",data)
-             .then((res)=>{
-                 if(res.data.code ===1000){
-                     cb&&cb( )
-                 }
-                 console.log(res)
-             })
-    }
-    render(){
-        return(
-            <div className={"addAdmin"} style={{"float":"right"}}>
-                <Link to={"/equipment/addAdmin"}>
-                    <Button type="primary">
-                    <i className={"iconfont icon-tianjia"} style={{fontSize:"12px"}}></i>&nbsp;
-                        添加快递柜
-                    </Button>
-                </Link>
-                <Switch>
-                    <Route  path="/equipment/addAdmin"     render={ ()=> <AddAmin enData={this.enData}/>}/>
-                </Switch>
-            </div>
-        )
-
-    }
-}
-
-class AddAmin extends React.Component{
+export default class AddAmin extends Component{
     constructor(props){
         super(props)
         this.state={
@@ -241,7 +201,7 @@ class AddAmin extends React.Component{
             return(
                 <div className={"addAdminBox equipAdd"}>
                         <div>
-                              <h3> <Link to={"/equipment"}>快递柜管理</Link>>添加快递柜</h3>
+                              <h3> <Link to={"/equipment"}>快递柜管理</Link>>编辑信息</h3>
                               <div className={"addAdminData"}>
                                     <div key={0} className={"text"}>
                                        <span>

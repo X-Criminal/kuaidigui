@@ -1,8 +1,9 @@
-import React,{Component}                from "react"
+import React,{Component}                         from "react"
 import {Table,Button,Pagination,Tooltip }        from "antd"
-import {Route, Switch, Link}            from 'react-router-dom';
+import {Route, Switch, Link}                     from 'react-router-dom';
 //import Region                           from "../share/region"
-import Dele                             from "../share/dele"
+import Dele                                      from "../share/dele"
+import Details                                   from "./details"
 const {Column} =Table
 
 export default class App extends Component{
@@ -91,12 +92,13 @@ export default class App extends Component{
                         <Column
                         title="操作"
                         key="id"
+                        dataIndex="id"
                         render={(text) => {
                             return(
                                 <div className={"caozuo"}>
                                     <Tooltip placement="bottom" title={"详情"}>
                                         <Button>
-                                            <Link to={"/admin/UpdateAdmin"}>
+                                            <Link to={"/admin/details"+text}>
                                                 <i className="iconfont icon-zhangdan"></i>
                                             </Link>
                                         </Button>
@@ -125,7 +127,8 @@ export default class App extends Component{
                         <Pagination defaultCurrent={1} showQuickJumper  size="small" total={this.props.totalItems} defaultPageSize={6} onChange={this.onPage}/>
                     </div>
                     <Switch>
-                        <Route path={"/admin/DeleteAdmin"} render={()=> <Dele DeleBox={this.DeleBox}/>}/>
+                        <Route path={"/admin/DeleteAdmin"}  render={()=> <Dele DeleBox={this.DeleBox}/>}/>
+                        <Route path={"/admin/details:data"} component={Details} />
                     </Switch>
             </div>
         )

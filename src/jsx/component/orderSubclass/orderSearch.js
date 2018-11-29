@@ -1,8 +1,10 @@
 import React,{Component}    from "react";
-import {Input,Button,Icon}  from "antd";
+import {Input,Button,Icon,Select}  from "antd";
 import {Link,Switch,Route}  from "react-router-dom";
+import axios                from "axios"
 
-//const Option = Select.Option;
+const Option = Select.Option;
+let url;
 export default class App extends Component{
         constructor(props){
             super(props)
@@ -15,6 +17,11 @@ export default class App extends Component{
                     loading:false,
             }
         }
+        componentWillMount(){
+            url = sessionStorage.getItem("url")
+        }
+
+
         render(){
             return(
                 <div className={'adminSearch clear-fix'}>
@@ -42,18 +49,53 @@ export default class App extends Component{
 
 class Add extends Component{
     constructor(props){
-        super(this)
+        super(props)
         this.state={
-
+            SelectDhlAll:[]
         }
+    }
+    componentDidMount(){
+        this.getSelectDhl()
+    }
+    getSelectDhl=()=>{
+        axios.post(url+"/deliveryLockers/wx/expressDeliveryController/selectDhl")
+             .then((res)=>{
+                 if(res.data.code===1000){
+                    this.setState({
+                        SelectDhlAll:res.data.data
+                    })
+                 }
+                    
+             })
     }
     render(){
         return(
-            <div className={"orderAdd"}>
-
+            <div className={"orderAdd admin"}>
+                  <h3><Link to={"/order"}>快递公司管理</Link>><span>添加快递公司</span></h3>
+                  <div className={"orderAddBody"}>
+                    <div>
+                        <span>
+                            快递柜名称：
+                        </span>
+                        <Select style={{width:350}}>
+                            {this.state.SelectDhlAll.map((item,index)=> <Option key={index} value={item.id}>{item.name}</Option>)}
+                        </Select>
+                    </div>
+                    <div>
+                        <span>
+                            服务电话：
+                        </span>
+                        <Input/>
+                    </div>
+                    <div>
+                        <span>
+                            
+                        </span>
+                        <Button>提交</Button>
+                    </div>
+                        
+                  </div>
             </div>
         )
     }
-
-
 }
