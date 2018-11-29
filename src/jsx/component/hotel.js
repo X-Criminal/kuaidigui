@@ -1,7 +1,8 @@
 import React ,{Component}           from "react";
-import {Input,Button,Table}         from "antd";
+import {Input,Button,Table,DatePicker,Tooltip }         from "antd";
+import {Link} from "react-router-dom"
+const { RangePicker } = DatePicker;
 
-const {Column}   = Table;
 export default class App extends Component{
     constructor(props){
         super(props)
@@ -12,32 +13,46 @@ export default class App extends Component{
 
         render(){
             return(
-                <div className={"hotel"}>
+                <div className={"hotel admin"}>
                        <h3>发件订单管理</h3>
-                       <div className={"hotelSearch"}>
-                             <div>
-                                  <span>订单编号：<Input/></span>
-                                  <span>状态：<Input/></span>
-                                  <span>快递柜：<Input/></span>
-                                  <span>所属区域：<Input/></span>
-                             </div>
-                             <div>
-                                  <span>快递公司<Input/></span>
-                                  <span>快递员：<Input/></span>
-                                  <span>发件人<Input/></span>
-                                  <span><Input/></span>
-                             </div>
-                            <Button>
-                                搜索
-                            </Button>
-                       </div>
-                       <div>
+                       <div className={"clear-fix"}>
+                          <div className={"hotelSearch clear-fix"}>
+                                <div>
+                                      <span><span>订单编号：</span> <Input/></span>
+                                      <span><span>状态：</span> <Input/></span>
+                                      <span><span>快递柜：</span> <Input/></span>
+                                      <span><span>所属区域：</span> <Input/></span>
+                                </div>
+                                <div>
+                                      <span><span>快递公司：</span> <Input/></span>
+                                      <span><span>快递员：</span> <Input/></span>
+                                      <span><span>发件人：</span> <Input/></span>
+                                      <span><RangePicker className={"RangePicker"}/></span>
+                                </div>
+                                <Button  type="primary">
+                                    搜索
+                                </Button>
+                          </div>
+                       <div className={"export"}>
                            <Button>
+                           <i class="iconfont icon-daochu_icon"></i>
                                导出超时未取件订单
                            </Button>
                        </div>
-                       <Table  columns={columns} dataSource={data} rowKey={"key"} bordered={true}>
-                           
+                    
+                       </div>
+                       <Table  
+                        columns={columns} 
+                        dataSource={data} 
+                        rowKey={"key"} 
+                        bordered={true}
+                        pagination={{
+                          defaultPageSize:6,
+                          total:11,
+                          size:"small",
+                          showQuickJumper:true
+                        }}
+                        >
                        </Table>
                 </div>
             )
@@ -54,34 +69,124 @@ const renderContent = (value, row, index) => {
     return obj;
   };
   const columns = [{
-    title: 'Name',
+    title: '序号',
     dataIndex: 'name',
     render: (text, row, index) => {
-      if (index < 4) {
-        return <a href="javascript:;">{text}</a>;
+      if (index < data.length-1) {
+        return <div>{text}</div>;
       }
       return {
-        children: <a href="javascript:;">{text}</a>,
+        children: <div style={{textAlign:"right"}}>总计</div>,
         props: {
-          colSpan: 5,
+          colSpan: 7,
         },
       };
     },
   }, {
-    title: 'Age',
+    title: '订单编号',
     dataIndex: 'age',
     render: renderContent,
   }, {
-    title: 'Home phone',
+    title: '快递柜',
     dataIndex: 'tel',
+    render: renderContent,
   }, {
-    title: 'Phone',
+    title: '发件人',
     dataIndex: 'phone',
     render: renderContent,
   }, {
-    title: 'Address',
+    title: '快递公司',
     dataIndex: 'address',
     render: renderContent,
+  }
+  , {
+    title: '快递员',
+    dataIndex: 'address',
+    render: renderContent,
+  }
+  , {
+    title: '下单时间',
+    dataIndex: 'address',
+    render: renderContent,
+  }
+  , {
+    title: '快递费（元）',
+    dataIndex: 'address',
+    render: (text, row, index) => {
+      if (index < data.length-1) {
+        return <span>{998}</span>;
+      }
+      return {
+        children: <span>{text}</span>,
+      };
+    },
+  }
+  , {
+    title: '柜子服务费（元）',
+    dataIndex: 'address',
+    render: (text, row, index) => {
+      if (index < data.length-1) {
+        return <span>{998}</span>;
+      }
+      return {
+        children: <span>{text}</span>,
+      };
+    },
+  }
+  , {
+    title: '总费用（元）',
+    dataIndex: 'address',
+    render: (text, row, index) => {
+      if (index < data.length-1) {
+        return <span>{998}</span>;
+      }
+      return {
+        children: <span>{text}</span>,
+      };
+    },
+  }
+  , {
+    title: '状态',
+    dataIndex: 'address',
+    render: (text, row, index) => {
+      if (index < data.length-1) {
+        return <a href="javascript:;">{text}</a>;
+      }
+      return {
+        props: {
+          colSpan: 2,
+        },
+      };
+    },
+  }
+  , {
+    title: '操作(详情/开锁)',
+    dataIndex: 'address',
+   render: (text, row, index) => {
+      if (index < data.length-1) {
+        return (<div className={"caozuo"}>
+                 <Tooltip placement="bottom" title={"详情"}>
+                      <Button>
+                          <Link to={"/hotel/details"}>
+                              <i className="iconfont icon-zhangdan"></i>
+                          </Link>
+                      </Button>
+                  </Tooltip>
+                  <Tooltip placement="bottom" title={"开锁"}>
+                      <Button>
+                          <Link to={"/hotel/open"} className={"deleBtn"}>
+                              <i className="iconfont icon-suo"></i>
+                          </Link>
+                      </Button>
+                  </Tooltip>
+              </div>)
+      }
+      return {
+        props: {
+          colSpan: 2,
+        },
+      };
+    },
   }];
 
   const data = [{
@@ -114,6 +219,13 @@ const renderContent = (value, row, index) => {
     address: 'London No. 2 Lake Park',
   }, {
     key: '5',
+    name: 'Jake White',
+    age: 18,
+    tel: '0575-22098909',
+    phone: 18900010002,
+    address: 'Dublin No. 2 Lake Park',
+  }, {
+    key: '6',
     name: 'Jake White',
     age: 18,
     tel: '0575-22098909',
