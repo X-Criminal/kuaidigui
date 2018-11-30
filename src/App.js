@@ -18,8 +18,8 @@ class App extends Component {
   }
   componentWillMount(){
     sessionStorage.setItem("url","http://172.16.2.137:8086");
-    cookie.save("islogin",true)
-    cookie.save("userData",{name:"xiaoming"})
+    //cookie.save("islogin",true)
+   // cookie.save("userData",{name:"xiaoming"})
   }
   componentDidMount(){
       if(cookie.load("islogin")){

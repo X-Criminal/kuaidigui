@@ -1,8 +1,9 @@
-import React ,{Component}           from "react";
+import React ,{Component}                               from "react";
 import {Input,Button,Table,DatePicker,Tooltip }         from "antd";
-import {Link} from "react-router-dom"
-const { RangePicker } = DatePicker;
+import {Link,Switch,Route}                              from "react-router-dom"
+import HotelDetails                                     from "./hotelSubclass/HotelDetailList";
 
+const { RangePicker } = DatePicker;
 export default class App extends Component{
     constructor(props){
         super(props)
@@ -35,7 +36,7 @@ export default class App extends Component{
                           </div>
                        <div className={"export"}>
                            <Button>
-                           <i class="iconfont icon-daochu_icon"></i>
+                           <i className="iconfont icon-daochu_icon"></i>
                                导出超时未取件订单
                            </Button>
                        </div>
@@ -54,6 +55,9 @@ export default class App extends Component{
                         }}
                         >
                        </Table>
+                       <Switch>
+                          <Route path={"/hotel/details/"} component={HotelDetails}/>
+                       </Switch>
                 </div>
             )
         }
@@ -68,7 +72,8 @@ const renderContent = (value, row, index) => {
     }
     return obj;
   };
-  const columns = [{
+  const columns = [
+    {
     title: '序号',
     dataIndex: 'name',
     render: (text, row, index) => {
@@ -96,22 +101,19 @@ const renderContent = (value, row, index) => {
     render: renderContent,
   }, {
     title: '快递公司',
-    dataIndex: 'address',
+    dataIndex: 'kk',
     render: renderContent,
-  }
-  , {
+  }, {
     title: '快递员',
-    dataIndex: 'address',
+    dataIndex: 'y',
     render: renderContent,
-  }
-  , {
+  }, {
     title: '下单时间',
-    dataIndex: 'address',
+    dataIndex: 's',
     render: renderContent,
-  }
-  , {
+  }, {
     title: '快递费（元）',
-    dataIndex: 'address',
+    dataIndex: 'hhhh',
     render: (text, row, index) => {
       if (index < data.length-1) {
         return <span>{998}</span>;
@@ -120,10 +122,9 @@ const renderContent = (value, row, index) => {
         children: <span>{text}</span>,
       };
     },
-  }
-  , {
+  }, {
     title: '柜子服务费（元）',
-    dataIndex: 'address',
+    dataIndex: 'd',
     render: (text, row, index) => {
       if (index < data.length-1) {
         return <span>{998}</span>;
@@ -132,10 +133,9 @@ const renderContent = (value, row, index) => {
         children: <span>{text}</span>,
       };
     },
-  }
-  , {
+  }, {
     title: '总费用（元）',
-    dataIndex: 'address',
+    dataIndex: 'f',
     render: (text, row, index) => {
       if (index < data.length-1) {
         return <span>{998}</span>;
@@ -144,10 +144,9 @@ const renderContent = (value, row, index) => {
         children: <span>{text}</span>,
       };
     },
-  }
-  , {
+  }, {
     title: '状态',
-    dataIndex: 'address',
+    dataIndex: 'g',
     render: (text, row, index) => {
       if (index < data.length-1) {
         return <a href="javascript:;">{text}</a>;
@@ -158,8 +157,7 @@ const renderContent = (value, row, index) => {
         },
       };
     },
-  }
-  , {
+  }, {
     title: '操作(详情/开锁)',
     dataIndex: 'address',
    render: (text, row, index) => {
@@ -183,7 +181,7 @@ const renderContent = (value, row, index) => {
       }
       return {
         props: {
-          colSpan: 2,
+          colSpan: 0,
         },
       };
     },
