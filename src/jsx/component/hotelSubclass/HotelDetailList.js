@@ -18,7 +18,7 @@ export default class App extends React.Component{
         return(
             <div className={"HotelData admin"} style={{border:"none"}}>
                 <h3>
-                    <span onClick={this.goBack} style={{cursor:"pointer"}}>发件订单管理</span>>详情
+                    <Link to="/hotel"><span>发件订单管理</span></Link>>详情
                 </h3>
                 <div className={"hotel-details-body"}>
                     <div className={"details-info-1"}>

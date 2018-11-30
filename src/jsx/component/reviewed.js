@@ -1,9 +1,11 @@
 import React ,{Component} from "react";
-import axios              from "axios";
-import Search             from "./userSubclass/search";
-import Reviewed           from "./reviewedSubclass/adminLis";
+//import axios              from "axios";
+import echarts from 'echarts/lib/echarts';
+import 'echarts/lib/chart/pie';
+import 'echarts/lib/component/tooltip';
+import 'echarts/lib/component/title';
 
-let url;
+//let url;
 export default class App extends Component{
     constructor(props){
         super(props)
@@ -13,77 +15,109 @@ export default class App extends Component{
         }
     }
     componentDidMount(){
-        url = sessionStorage.getItem("url")
-        this.init( )
+      //  url = sessionStorage.getItem("url")
+      this.myChart()
     }
 
-    /**初始化 */
-    init=(data,cb)=>{
-        let _data={
-            numberPage:8,
-            page:this.state.page,
-            keywords:this.state.keywords,
-        }
-        if(data){
-            for(let k in data){
-                _data[k]=data[k]
-                this.setState({
-                    [k]:data[k]
-                })
-            }
-        }
-        axios.post(url+"/SmartPillow//web/agent/queryCheckadmin",_data)
-              .then((res)=>{
-                  if(res.data.code===1000&&res.data.data){
-                        this.setState({
-                            strip:res.data.data.strip,
-                           admins:res.data.data.admins
-                        })
-                  }else{
-                    this.setState({
-                        strip:0,
-                       admins:[ ]
-                    })
-                  }
-                  cb&&cb( )
-              })
-    }
-
-    /**提交搜索 */
-    onSearch=( data,cb )=>{
-        this.setState({
-            keywords:data.keywords
-        })
-        this.init(data,(data)=>{
-            cb&&cb(data)
-        })
-    }
-    /**提交审核 */
-    upData=(idAdmin)=>{
-         axios.post(url+"SmartPillow/web/agent/updateCheckadmin",{"idAdmin":idAdmin})
-              .then((res)=>{
-                  console.log(res)
-              })
-    }
-    /**删除审核 */
-    deleData=( data, cb )=>{
-        console.log(data)
-        cb&&cb( )
-    }
-    /**翻页*/
-    emtPage=(e)=>{
-        this.setState({
-            page:e
-        })
-        this.init({page:e})
+    myChart=()=>{
+        var myChart = echarts.init(document.getElementById('main'));
+        // 绘制图表
+        myChart.setOption({
+            tooltip: {
+                trigger: 'item',
+                formatter: "{a} <br/>{b}: {c} ({d}%)"
+            },
+            legend: {
+                orient: 'vertical',
+                x: 'left',
+                data:['直接访问','邮件营销']
+            },
+            series: [
+                {
+                    name:'服务费',
+                    type:'pie',
+                    radius: ['50%', '70%'],
+                    avoidLabelOverlap: false,
+                    color:[
+                           "#4ed8da","#e06950"
+                    ],
+                    label: {
+                        normal: {
+                            show: false,
+                            position: 'center'
+                        },
+                    },
+                    labelLine: {
+                        normal: {
+                            show: false
+                        }
+                    },
+                    data:[
+                        {value:335, name:'寄件服务费'},
+                        {value:310, name:'存件服务费'},
+                    ]
+                }
+            ]
+        });
     }
 
     render(){
             return(
                 <div className={"reviewed admin"}>
-                        <h3>审核通知</h3>
-                        <Search onSearch={this.onSearch} placeholder={"输入账号，姓名搜索"}/>
-                        <Reviewed strip={this.state.strip} admins={this.state.admins} upData={this.upData} deleData={this.deleData} emtPage={this.emtPage}/>
+                        <h3>订单服务费统计</h3>
+                        <div className={"_map clear-fix"}>
+                            <div className={"_map-title"}> <i></i> 总服务费 </div>
+                            <div id="main" style={{ width: 500, height: 500 }}></div>
+                            <div className={"Datanumber"}>
+                                 <p>￥12345612</p>
+                                 <p>总服务费</p>
+                            </div>
+                            <div className={"reviewedName"}>
+                                <div>
+                                    <p><i></i><span>￥99998</span></p>
+                                    <p>寄件服务费</p>
+                                </div>
+                                <div>
+                                    <p><i></i><span>￥99998</span></p>
+                                    <p>寄件服务费</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div className={"_data"}>
+                            <div className={"_map-title"}> <i></i> 今日服务费用 </div>
+                            <div className={"_map-body1 clear-fix"}>
+                                 <div>
+                                    <p><i></i><span>￥99998</span></p>
+                                    <p>寄件服务费</p>
+                                 </div>
+                                 <div>
+                                 <p><i></i><span>￥99998</span></p>
+                                    <p>存件服务费</p>
+                                 </div>
+                             </div>
+                            <div className={"_map-title"}> <i></i> 本月服务费用 </div>
+                            <div className={"_map-body2 clear-fix"}>
+                                 <div>
+                                    <p><i></i><span>￥99998</span></p>
+                                    <p>寄件服务费</p>
+                                 </div>
+                                 <div>
+                                 <p><i></i><span>￥99998</span></p>
+                                    <p>存件服务费</p>
+                                 </div>
+                             </div>
+                            <div className={"_map-title"}> <i></i> 今年服务费用 </div>
+                            <div className={"_map-body3 clear-fix"}>
+                                 <div>
+                                    <p><i></i><span>￥99998</span></p>
+                                    <p>寄件服务费</p>
+                                 </div>
+                                 <div>
+                                 <p><i></i><span>￥99998</span></p>
+                                    <p>存件服务费</p>
+                                 </div>
+                             </div>
+                        </div>
                 </div>
             )
         }

@@ -1,170 +1,199 @@
-import React ,{Component}           from "react";
-import Search                       from "./userSubclass/search";
-import { Radio ,DatePicker,Icon }   from 'antd';
-import axios                        from "axios"
-import moment from 'moment';
-import locale from 'antd/lib/date-picker/locale/zh_CN';
-import 'moment/locale/zh-cn';
+import React ,{Component}                               from "react";
+import {Input,Button,Table,DatePicker,Tooltip }         from "antd";
+import {Link,Switch,Route}                              from "react-router-dom"
+import HotelDetails                                     from "./dataSubclass/HotelDetailList";
+import Open                                             from "./dataSubclass/open"
 
-import echarts from "echarts"
-let upData = false,myChart,url;
-
-const dateFormat = 'YYYY/MM/DD';
-let initDate   = new Date( );
-let inDate     = initDate.getFullYear()+"-"+(initDate.getMonth()+1)+"-"+initDate.getDate()
+const { RangePicker } = DatePicker;
 export default class App extends Component{
     constructor(props){
         super(props)
         this.state={
-             date:[],
-             amount:[],
-             typeData:1,
-             inDate:"",
-             keywords:""
-        }
-    }
-    onSearch=( e , cb)=>{
-        this.setState({
-            keywords:e.keywords
-        })
-        console.log(e);
-        cb&&cb()
-    }
-    /**选择年月日 */
-    onDateType=( type )=>{
-        this.setState({
-            typeData:type.target.value
-        })
-    this.init({type:type.target.value})
-    }
-    /**选择日期 */
-    onDate=( type , date)=>{
-        this.setState({
-            inDate:date
-        })
 
-    }
-    componentWillMount(){
-        url = sessionStorage.getItem("url");
-        this.setState({
-            inDate:inDate
-        })
-    }
-    /**初始化 */
-    componentDidMount(){
-        this.init()
-    }
-    /**初始化 */
-    init( data ){
-        let _data={
-            startTime:this.state.inDate,
-             keywords:this.state.keywords,
-                 type:this.state.typeData
         }
-        if(data){
-            for(let k in data){
-                _data[k] = data[k]
-            }
-        }
-        axios.post(url+"/SmartPillow/web/wxorder/wxOrderStatistics",_data)
-             .then((res)=>{
-                if(upData){
-                    UpData(this.state.date,this.state.amount,this.state.typeData )
-                }else{
-                    echart(this.state.date,this.state.amount,this.state.typeData)
-                }
-             })
     }
 
         render(){
             return(
-                <div className={"Data admin"}>
-                    <h3>
-                        营销报销
-                    </h3>    
-                    <Search onSearch={this.onSearch} placeholder={"输入酒店，代理商名称"}/>
-                    <div className={"Datanav"}>
-                        <Radio.Group buttonStyle="solid" onChange={this.onDateType} defaultValue={this.state.typeData}>
-                            <Radio.Button value={1}>周</Radio.Button>
-                            <Radio.Button value={2}>月</Radio.Button>
-                            <Radio.Button value={3}>年</Radio.Button>
-                        </Radio.Group>
-                    </div>
-                    <div className={"DateBody"}>
-                        <Icon type={"left"}/>
-                        <DatePicker onChange={this.onDate} allowClear={false} locale={locale}  defaultValue={moment(initDate, dateFormat)}/>
-                        <Icon type={"right"}/>
-                    </div>
-                    <div className={"echarts1"} style={{"width":"80%","height":"400px"}}></div>
-                    <p className={"totalMoney"}>销售总额(元):</p>
+                <div className={"hotel admin"}>
+                       <h3>存件订单管理</h3>
+                       <div className={"clear-fix"}>
+                          <div className={"hotelSearch clear-fix"}>
+                                <div>
+                                      <span><span>订单编号：</span> <Input/></span>
+                                      <span><span>状态：</span> <Input/></span>
+                                      <span><span>快递柜：</span> <Input/></span>
+                                      <span style={{width:243,display:"inline-block"}}></span>
+                                </div>
+                                <div>
+                                      <span><span>快递公司：</span> <Input/></span>
+                                      <span><span>快递员：</span> <Input/></span>
+                                      <span><span>发件人：</span> <Input/></span>
+                                      <span><RangePicker className={"RangePicker"}/></span>
+                                </div>
+                                <Button  type="primary">
+                                    搜索
+                                </Button>
+                          </div>
+                       <div className={"export"}>
+                           <Button>
+                           <i className="iconfont icon-daochu_icon"></i>
+                               导出超时未取件订单
+                           </Button>
+                       </div>
+                    
+                       </div>
+                       <Table  
+                        columns={columns} 
+                        dataSource={data} 
+                        rowKey={"key"} 
+                        bordered={true}
+                        pagination={{
+                          defaultPageSize:6,
+                          total:11,
+                          size:"small",
+                          showQuickJumper:true
+                        }}
+                        >
+                       </Table>
+                       <Switch>
+                          <Route path={"/data/details/"} component={HotelDetails}/>
+                          <Route path={"/data/Open/"}    component={Open}   />
+                       </Switch>
                 </div>
             )
         }
 }
-
-
-
-
-let sEries=[0],
-    xAxis =[0];
-function echart( _sEries, _xAxis,type){
-    if(_sEries.length>0&&_xAxis){
-        myChart = echarts.init(document.querySelector('.echarts1')); 
-        iftype(type)
-        for(let i = 0,idx = _sEries.length;i<idx;i++){
-            sEries[i]=_sEries[i]
-            xAxis[i] =_xAxis[i]
-        }
-        myChart.setOption({
-            legend:{
-                data:"销售量"
-            },
-            color: ['rgb(60,172,255)'],
-            tooltip: {},
-            xAxis: {
-                data: sEries
-            },
-            yAxis: {
-                
-            },
-            series: [{
-                name:"销售额",
-                type: 'bar',
-                data: xAxis
-            },
-        ]
-        });
-        upData=!upData;
+const renderContent = (value, row, index) => {
+    const obj = {
+      children: value,
+      props: {},
+    };
+    if (index === data.length-1) {
+      obj.props.colSpan = 0;
     }
-}
+    return obj;
+  };
+  const columns = [
+    {
+    title: '序号',
+    dataIndex: 'name',
+    render: (text, row, index) => {
+      if (index < data.length-1) {
+        return <div>{text}</div>;
+      }
+      return {
+        children: <div style={{textAlign:"right"}}>总计</div>,
+        props: {
+          colSpan: 7,
+        },
+      };
+    },
+  }, {
+    title: '订单编号',
+    dataIndex: 'age',
+    render: renderContent,
+  }, {
+    title: '快递柜',
+    dataIndex: 'tel',
+    render: renderContent,
+  }, {
+    title: '存件人',
+    dataIndex: 'phone',
+    render: renderContent,
+  }, {
+    title: '取件人',
+    dataIndex: 'kk',
+    render: renderContent,
+  }, {
+    title: '下单时间',
+    dataIndex: 'y',
+    render: renderContent,
+  }, {
+    title: '状态',
+    dataIndex: 's',
+    render: renderContent,
+  }, {
+    title: '柜子服务费（元）',
+    dataIndex: 'hhhh',
+    render: (text, row, index) => {
+      if (index < data.length-1) {
+        return <span>{998}</span>;
+      }
+      return {
+        children: <span>{text}</span>,
+      };
+    },
+  },{
+    title: '操作(详情/开锁)',
+    dataIndex: 'address',
+   render: (text, row, index) => {
+      if (index < data.length-1) {
+        return (<div className={"caozuo"}>
+                 <Tooltip placement="bottom" title={"详情"}>
+                      <Button>
+                          <Link to={"/data/details"}>
+                              <i className="iconfont icon-zhangdan"></i>
+                          </Link>
+                      </Button>
+                  </Tooltip>
+                  <Tooltip placement="bottom" title={"开锁"}>
+                      <Button>
+                          <Link to={"/data/open"} className={"deleBtn"}>
+                              <i className="iconfont icon-suo"></i>
+                          </Link>
+                      </Button>
+                  </Tooltip>
+              </div>)
+      }
+      return {
+        props: {
+          colSpan:1,
+        },
+      };
+    },
+  }];
 
-function UpData(_sEries,_xAxis,type){
-     iftype(type)
-        for(let i = 0,idx = _sEries.length;i<idx;i++){
-            sEries[i]=_sEries[i]
-            xAxis[i] =_xAxis[i]
-        }
-        let option = myChart.getOption();
-        option.xAxis[0].data=sEries;
-        option.series[0].data = xAxis;
-        myChart.setOption(option)
-}
- function iftype(type){
-    sEries=[];xAxis =[];
-    if(type===1){
-         for(let i = 0;i<7;i++){
-            sEries.push("-");
-            xAxis.push("0")
-         }
-    }else if(type===2){
-        for(let i = 0;i<30;i++){
-            sEries.push("-");
-            xAxis.push("0")
-         }
-    }else if(type===3){
-        for(let i = 0;i<12;i++){
-            sEries.push("-");
-            xAxis.push("0")
-         }
-    }
- }
+  const data = [{
+    key: '1',
+    name: 'John Brown',
+    age: 32,
+    tel: '0571-22098909',
+    phone: 18889898989,
+    address: 'New York No. 1 Lake Park',
+  }, {
+    key: '2',
+    name: 'Jim Green',
+    tel: '0571-22098333',
+    phone: 18889898888,
+    age: 42,
+    address: 'London No. 1 Lake Park',
+  }, {
+    key: '3',
+    name: 'Joe Black',
+    age: 32,
+    tel: '0575-22098909',
+    phone: 18900010002,
+    address: 'Sidney No. 1 Lake Park',
+  }, {
+    key: '4',
+    name: 'Jim Red',
+    age: 18,
+    tel: '0575-22098909',
+    phone: 18900010002,
+    address: 'London No. 2 Lake Park',
+  }, {
+    key: '5',
+    name: 'Jake White',
+    age: 18,
+    tel: '0575-22098909',
+    phone: 18900010002,
+    address: 'Dublin No. 2 Lake Park',
+  }, {
+    key: '6',
+    name: 'Jake White',
+    age: 18,
+    tel: '0575-22098909',
+    phone: 18900010002,
+    address: 'Dublin No. 2 Lake Park',
+  }];

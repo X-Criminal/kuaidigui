@@ -2,6 +2,7 @@ import React ,{Component}                               from "react";
 import {Input,Button,Table,DatePicker,Tooltip }         from "antd";
 import {Link,Switch,Route}                              from "react-router-dom"
 import HotelDetails                                     from "./hotelSubclass/HotelDetailList";
+import Open                                             from "./hotelSubclass/open"
 
 const { RangePicker } = DatePicker;
 export default class App extends Component{
@@ -57,6 +58,7 @@ export default class App extends Component{
                        </Table>
                        <Switch>
                           <Route path={"/hotel/details/"} component={HotelDetails}/>
+                          <Route path={"/hotel/Open/"}    component={Open}   />
                        </Switch>
                 </div>
             )
