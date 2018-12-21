@@ -1,0 +1,317 @@
+.equipment .adminSearch .name {
+    width: 290px;
+    margin-left: 8px;
+    margin-right: 20px;
+  }
+  .equipment .adminSearch .upload {
+    float: right;
+  }
+  .equipment .adminSearch .upload > span {
+    float: left;
+  }
+  .equipment .adminSearch .upload > span > div {
+    float: left;
+  }
+  .equipment .adminSearch .upload > button {
+    float: left;
+  }
+  .equipment .equipAdd {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    min-height: 100%;
+    background-color: white;
+    z-index: 998;
+  }
+  .equipment .equipAdd h3 {
+    padding: 0 20px;
+    font-size: 18px;
+  }
+  .equipment .equipAdd .text:nth-child(1) {
+    margin-top: 40px;
+  }
+  .equipment .equipAdd .text {
+    margin: 15px 0;
+  }
+  .equipment .equipAdd .text > span {
+    display: inline-block;
+    width: 120px;
+    text-align: right;
+    padding-right: 8px;
+    color: black;
+  }
+  .equipment .equipAdd .text input {
+    width: 500px;
+    height: 40px;
+  }
+  .equipment .equipAdd .text button {
+    height: 40px;
+    background-color: #00CCE4;
+    color: white;
+  }
+  .equipment .equipAdd .postBtn button {
+    height: 30px;
+  }
+  .equipment .details {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    border: none;
+  }
+  .equipment .details table {
+    width: 95%;
+    margin: 0 auto;
+    margin-top: 33px;
+    text-align: center;
+  }
+  .equipment .details table td {
+    border: 1px solid #CCCCCC;
+    line-height: 42px;
+    color: black;
+  }
+  .equipment .details table thead td {
+    background-color: #f3f3f3;
+  }
+  .equipment .details > p {
+    display: inline-block;
+    margin-bottom: 0;
+    width: 95%;
+    margin-left: 2.5%;
+    color: black;
+    line-height: 42px;
+  }
+  .equipment .details .cabinet {
+    width: 95%;
+    color: black;
+    margin: 0 auto;
+    margin-top: 20px;
+    min-width: 1558px;
+  }
+  .equipment .details .cabinet > p span {
+    margin-right: 10px;
+  }
+  .equipment .details .cabinet > p span i {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 100%;
+    margin-right: 6px;
+  }
+  .equipment .details .cabinet > p span:nth-child(1) i {
+    background-color: #12E339;
+  }
+  .equipment .details .cabinet > p span:nth-child(2) i {
+    background-color: #5CBDFF;
+  }
+  .equipment .details .cabinet > p span:nth-child(3) i {
+    background-color: #FFE600;
+  }
+  .equipment .details .cabinet ul {
+    margin: 0;
+    padding: 0;
+  }
+  .equipment .details .cabinet ul li {
+    list-style: none;
+    float: left;
+    margin-right: 9px;
+    margin-bottom: 9px;
+    width: 133px;
+    height: 80px;
+    background-color: #12E339;
+    cursor: pointer;
+  }
+  .equipment .details .cabinet ul li h4 {
+    text-align: center;
+  }
+  .equipment .details .cabinet ul li a {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+  .equipment .details .cabinet ul li a >div{
+    padding-top: 5px;
+    height: 100%;
+  }
+  .equipment .details .cabinet ul li a p{
+    margin-bottom: 0;
+    padding: 0 5px;
+  }
+  .equipment .details .edit {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.2);
+  }
+  .equipment .details .edit > div {
+    position: absolute;
+    width: 691px;
+    height: 390px;
+    background-color: white;
+    top: 20%;
+    left: 50%;
+    margin-left: -345px;
+    
+    border-radius: 8px;
+  }
+  .equipment .details .edit > div h3 {
+    line-height: 60px;
+    font-size: 18px;
+    border: none;
+  }
+  .equipment .details .edit > div h3 i {
+    float: right;
+    line-height: 60px;
+    cursor: pointer;
+  }
+  .equipment .details .edit > div > div {
+    color: black;
+    margin: 15px 0;
+  }
+  .equipment .details .edit > div > div > span:nth-child(1) {
+    display: inline-block;
+    width: 120px;
+    text-align: right;
+    padding-right: 15px;
+  }
+  .equipment .details .edit > div > div:nth-of-type(-n+2) {
+    line-height: 40px;
+  }
+  .equipment .details .edit > div > div:nth-of-type(-n+2) > input {
+    width: 500px;
+    height: 40px;
+    margin-right: 5px;
+  }
+  .equipment .details .edit > div > div:nth-of-type(3) .xuanze {
+    height: 40px;
+  }
+  .equipment .details .edit > div > div:nth-of-type(3) .xuanze > div {
+    height: 40px;
+    line-height: 40px;
+  }
+  .equipment .details .edit > div > div:nth-of-type(3) .xuanze > div > div {
+    line-height: 40px;
+  }
+  .equipment .details .edit > div > div:nth-of-type(4) input {
+    width: 160px;
+    margin-right: 10px;
+    height: 40px;
+  }
+  .equipment .details .edit > div .editBtn {
+    margin-top: 20px;
+    width: 88px;
+    height: 36px;
+    background-color: #4A90E2;
+    color: white;
+  }
+  .equipment .details .details_searchA .details_search {
+    padding: 15px 32px;
+  }
+  .equipment .details .details_searchA .details_search > span {
+    margin: 0 10px;
+  }
+  .equipment .details .details_searchA .details_search > span > input {
+    width: 180px;
+    margin-left: 8px;
+  }
+  .equipment .details_searchA table {
+    margin-top: 0;
+  }
+  .equipment .details_searchA table td {
+    line-height: 36px;
+  }
+  .equipment .details_searchA ul {
+    margin: 0 auto;
+    margin-top: 15px;
+    float: right;
+    margin-right: 2.55%;
+  }
+  .map span {
+    width: 120px;
+    float: left;
+  }
+  #allmap {
+    width: 800px;
+    height: 300px;
+    float: left;
+  }
+  .ul_switch {
+    width: 100%;
+    height: 100%;
+    font-size: 12px;
+  }
+  .ul_switch h4 {
+    line-height: 20px;
+  }
+  .shiyong p,
+  .gongxiang p,
+  .duxiang p {
+    margin-bottom: 0;
+    padding: 0 3px;
+    color: black;
+  }
+  .shiyong {
+    background-color: #FFE600;
+  }
+  .gongxiang {
+    background-color: #12E339;
+  }
+  .duxiang {
+    background-color: #5CBDFF;
+  }
+  .equipment .binding {
+    float: right;
+    height: 36px;
+    margin-right: 10px;
+  }
+  .equipment .bangding {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.2);
+    top: 0;
+    left: 0;
+  }
+  .bangding > div {
+    position: absolute;
+    background-color: white;
+    padding: 10px;
+    width: 600px;
+    left: 50%;
+    margin-left: -300px;
+    top: 20%;
+    border-radius: 8px;
+  }
+  .bangding > div h4 {
+    line-height: 36px;
+    font-size: 16px;
+  }
+  .bangding .clear-fix > span {
+    float: left;
+    width: 70px;
+    line-height: 32px;
+  }
+  .bangding .clear-fix .bangding-Select {
+    float: left;
+  }
+  .bangding .clear-fix .bangding-Select > div {
+    margin: 0 10px;
+    width: 150px;
+  }
+  .bangding .clear-fix > button {
+    background-color: #4a72e2;
+    color: white;
+    font-size: 18px;
+  }
+  .bangding .addBangding {
+    background-color: #4a72e2;
+    color: white;
+    margin-top: 20px;
+    margin-left: 80px;
+  }
+  

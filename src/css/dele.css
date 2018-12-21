@@ -1,0 +1,49 @@
+.deleBox {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.2);
+  }
+  .deleBox > div {
+    width: 350px;
+    background-color: white;
+    position: absolute;
+    left: calc(50% - 175px);
+    top: 25%;
+    box-sizing: border-box;
+    padding: 10px;
+    border-radius: 8px;
+  }
+  .deleBox > div h4 {
+    font-size: 16px;
+    color: black;
+  }
+  .deleBox > div .deleTxt {
+    height: 61px;
+    line-height: 61px;
+  }
+  .deleBox > div .deleTxt > i {
+    padding: 5px;
+    font-size: 40px;
+    border-radius: 100%;
+    background-color: #f7ba1b;
+    color: white;
+    float: left;
+  }
+  .deleBox > div .deleTxt span {
+    float: left;
+    line-height: 50px;
+    padding-left: 10px;
+    font-weight: 600;
+  }
+  .deleBox > div .deldeBtn {
+    margin: 10px 0;
+    text-align: right;
+  }
+  .deleBox > div .deldeBtn button {
+    display: inline-block;
+    margin: 0 15px;
+  }
+  

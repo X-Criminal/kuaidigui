@@ -14,10 +14,7 @@ export default class App extends Component{
         this.setState({
             loading:true,
         })
-        let data ={
-             keywords:this.state.keywords
-        }
-        this.props.onSearch(data,(res)=>{
+        this.props.onSearch({},(res)=>{
                 this.setState({
                     loading:false
                 })
@@ -25,9 +22,10 @@ export default class App extends Component{
     }
 
     getKeyWord=(e)=>{
-        this.setState({
-            keywords:e.target.value
-        })
+        this.props.onchange(e)
+        // this.setState({
+        //     keywords:e.target.value
+        // })
     }
         render(){
             return(
@@ -35,15 +33,15 @@ export default class App extends Component{
                     <span>
                         账号：
                     </span>
-                    <Input className={"keyWord"} onChange={this.getKeyWord} />
+                    <Input className={"keyWord"} name={"id"} onChange={this.getKeyWord} />
                     <span>
                         姓名：
                     </span>
-                    <Input className={"keyWord"} onChange={this.getKeyWord} />
+                    <Input className={"keyWord"} name={"name"} onChange={this.getKeyWord} />
                     <span>
                         联系电话：
                     </span>
-                    <Input className={"keyWord"} onChange={this.getKeyWord} />
+                    <Input className={"keyWord"} name={"phone"} onChange={this.getKeyWord} />
                     <Button className={"Adminbtn"} type="primary" loading={this.state.loading} onClick={this.search}>
                        搜索
                     </Button>

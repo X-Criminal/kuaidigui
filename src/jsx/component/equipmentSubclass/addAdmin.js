@@ -4,7 +4,7 @@ import { Route, Switch, Link}               from 'react-router-dom';
 import axios                                from "axios";
 import fetchJsonp                           from "fetch-jsonp";
 
-let BMap,marker,url,userDeliverys=[{}];
+let BMap,marker,map,url,userDeliverys=[{}];
 const Option = Select.Option;
 
 export default class App extends React.Component {
@@ -22,9 +22,11 @@ export default class App extends React.Component {
         axios.post(url+"/deliveryLockers/web/deliveryLockerManageController/addDeliveryLocker",data)
              .then((res)=>{
                  if(res.data.code ===1000){
-                     cb&&cb( )
+                     cb&&cb( );
+                     message.success(res.data.message);
+                 }else{
+                     message.error(res.data.message);
                  }
-                 console.log(res)
              })
     }
     render(){
@@ -61,8 +63,8 @@ class AddAmin extends React.Component{
             getAreaByParentid:[],
 
             serviceCharge:"",
-            latitude:"",
-            longitude:"",
+            latitude:0,
+            longitude:0,
             layAddreass:"",
             lineNumber:"",
             mac:"",
@@ -73,6 +75,11 @@ class AddAmin extends React.Component{
             userDeliverys:[],
             city:"",
             area:"",
+
+            lng:"",
+            lat:"",
+
+            isFromData:false,
         }
     }
     componentDidMount(){
@@ -83,18 +90,31 @@ class AddAmin extends React.Component{
 
 /**地图*/
     _position=()=>{
+        if(this.state.isFromData&&this.state.layAddreass.length>0){
+            fetchJsonp("https://api.map.baidu.com/geocoder/v2/?&output=json&address="+this.state.layAddreass+"&ak=YMWpSvrB8HfPaGXFHh1rXb6zDwEjTU5E")
+            .then((res)=>{
+                return res.json()
+            }).then((res)=>{
+                let point = new BMap.Point(res.result.location.lng, res.result.location.lat);
+                this.setState({longitude:res.result.location.lng,latitude:res.result.location.lat});
+                if(marker) map.removeOverlay(marker);
+                marker = new BMap.Marker(point); //将点转化成标注点
+                map.addOverlay(marker); 
+            })
+            return false;
+        }
+
             this.setState({
                 layAddreass:this.state.lng+","+this.state.lat
             })
-            fetchJsonp("http://api.map.baidu.com/geocoder/v2/?callback=callback&location="+this.state.latitude+","+this.state.longitude+"&output=json&pois=1&ak=YMWpSvrB8HfPaGXFHh1rXb6zDwEjTU5E")
+            fetchJsonp("https://api.map.baidu.com/geocoder/v2/?callback=callback&location="+this.state.latitude+","+this.state.longitude+"&output=json&pois=1&ak=YMWpSvrB8HfPaGXFHh1rXb6zDwEjTU5E")
                       .then((res)=>{
                           return res.json()
                       }).then((res)=>{
                           this.setState({
-                            layAddreass:res.result.formatted_address+","+res.result.sematic_description
+                            layAddreass:res.result.sematic_description
                           })
                       })
-            
     }
     initMap=()=>{
         let _this = this;
@@ -105,7 +125,7 @@ class AddAmin extends React.Component{
     getCityByIP=(rs)=>{
         let _this =this;
         let cityName = rs.name;
-        var map = new BMap.Map("allmap"); // 创建Map实例
+        map = new BMap.Map("allmap"); // 创建Map实例
         map.centerAndZoom(cityName, 10); // 初始化地图,设    置中心点坐标和地图级别
         map.addControl(new BMap.MapTypeControl()); //添加地图类型控件
         //map.setCurrentCity("北京"); // 设置地图显示的城市 此项是必须设置的
@@ -115,7 +135,8 @@ class AddAmin extends React.Component{
             let data={};
             _this.setState({
                 longitude:e.point.lng,
-                latitude:e.point.lat
+                latitude:e.point.lat,
+                isFromData:false
             })
             data.lng = e.point.lng;
             data.lat = e.point.lat;
@@ -197,7 +218,7 @@ class AddAmin extends React.Component{
          this.setState({
             city:e
          })
-         this.getAreaByParentid(e)
+       this.getAreaByParentid(e)
      }
      /**区 */
      getAreaByParentid=(id)=>{
@@ -216,6 +237,12 @@ class AddAmin extends React.Component{
         })
      }
     /**------省市-END------ */
+    layAddreass=(e)=>{
+        this.setState({
+            isFromData:true,
+            layAddreass:e.target.value
+        })
+    }
     /**提交数据 */
     onData=()=>{
         let data = {
@@ -231,7 +258,7 @@ class AddAmin extends React.Component{
             rankNumber:this.state.rankNumber,
             userDeliverys:userDeliverys,
             city:this.state.city,
-            //area:this.state.area
+            area:this.state.area
         }
         this.props.enData(data,()=>{
             window.history.go(-1)
@@ -241,7 +268,7 @@ class AddAmin extends React.Component{
             return(
                 <div className={"addAdminBox equipAdd"}>
                         <div>
-                              <h3> <Link to={"/equipment"}>快递柜管理</Link>>添加快递柜</h3>
+                              <h3> <Link to={"/equipment"}>设备管理</Link>>添加快递柜</h3>
                               <div className={"addAdminData"}>
                                     <div key={0} className={"text"}>
                                        <span>
@@ -287,7 +314,7 @@ class AddAmin extends React.Component{
                                        <span>
                                            安装地址
                                        </span>
-                                       <Input name={"map"} value={this.state.layAddreass} disabled/>&nbsp;&nbsp;
+                                       <Input name={"map"} value={this.state.layAddreass} onChange={this.layAddreass}/>&nbsp;&nbsp;
                                        <Button onClick={this._position}>地图选择</Button>
                                    </div>
                                    <div key={4} className={"text map clear-fix"}>
@@ -340,7 +367,7 @@ class App2 extends React.Component{
         queryCourierByDhlId=(id)=>{
             axios.post(url+"/deliveryLockers/web/deliveryLockerManageController/queryCourierByDhlId",{dhlId:id})
                 .then((res)=>{
-                    if(res.data.code===1000){
+                    if(res.data.code===1000&&res.data.message!=="没有数据"){
                         this.setState({
                             queryCourierByDhlId:res.data.data,
                         })

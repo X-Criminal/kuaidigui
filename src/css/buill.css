@@ -1,0 +1,25 @@
+.bill .search > span {
+    display: inline-block;
+    width: 100px;
+    text-align: right;
+    padding-right: 10px;
+  }
+  .bill .search > input {
+    width: 180px;
+  }
+  .bill .search > button {
+    margin-left: 20px;
+  }
+  .bill .bill-table {
+    width: 95%;
+    margin: 0 auto;
+    margin-top: 25px;
+  }
+  .bill .bill-table thead th {
+    background-color: #f2f5f5;
+    border: 1px solid #ccc;
+  }
+  .bill .bill-table td {
+    border: 1px solid #ccc;
+  }
+  

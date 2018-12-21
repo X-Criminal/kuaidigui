@@ -50,72 +50,92 @@ export default class App extends Component{
         this.props.rowSelection(a)
     }
     render(){
+        let data
+        if(this.props.admins){
+             data = this.props.admins;
+            for(let i = 0;i<data.length;i++){
+                data[i].index=i+1;
+                data[i].id2 = data[i].id+"@@@@@";
+            }
+        }else{
+            data = [];
+        }
+       
         return(
             <div className={"AdminLis"}>
                     <Table 
-                        dataSource={this.props.admins} 
+                        rowKey="id2"
+                        dataSource={data} 
                         bordered
                         pagination={false}
                         rowSelection={{onChange:this.rowSelection}}
-                        rowKey={"key"}
+                       
                         >
                         <Column
                         title="序号"
-                        dataIndex="序号"
-                        key="序号"
-                        />
+                        dataIndex="index"
+                        key="index"
+                        /> 
                         <Column
                         title="账号"
-                        dataIndex="账号"
-                        key="账号"
+                        dataIndex="id"
+                        key="id"
                         />
                         <Column
                         title="姓名"
-                        dataIndex="姓名"
-                        key="姓名"
+                        dataIndex="name"
+                        key="name"
                         />
                         <Column
                         title="联系电话"
-                        dataIndex="联系电话"
-                        key="联系电话"
+                        dataIndex="phone"
+                        key="phone"
                         />
                         <Column
                         title="快递公司"
-                        dataIndex="快递公司"
-                        key="快递公司"
+                        dataIndex="userCouriers"
+                        key="userCouriers"
+                        render={(res)=>{
+                            if(res){
+                               return res.map((item,index)=> item?<p style={{marginBottom:"0"}} key={index} id={item.id}>{item.name}</p>:null)
+                            }
+                        }}
                         />
                         <Column
                         title="所属区域"
-                        dataIndex="所属区域"
-                        key="所属区域"
+                        dataIndex="address"
+                        key="address"
                         />
                         <Column
                         title="状态"
-                        dataIndex="状态"
-                        key="状态"
+                        dataIndex="tStatus"
+                        key="tStatus"
+                        render={(res)=>{
+                            return res===0?<span>正常</span>:res===1?<span style={{color:"red"}}>冻结</span>:"-"
+                        }}
                         />
                         <Column
                         title="操作"
-                        key="idAdmin"
+                        key="操作"
                         render={(text) => {
                             return(
                                 <div>
                                       <Tooltip placement="bottom" title={"详情"}>
                                         <Button onClick={this.onUpdateAdmin.bind(this,text)}>
-                                            <Link to={"/agent/Details"}>
+                                            <Link to={"/agent/Details"+text.id}>
                                                 <i className="iconfont icon-zhangdan" style={{color:"#1fa0ff"}}></i>
                                             </Link>
                                         </Button>
                                     </Tooltip>
                                     <Tooltip placement="bottom" title={"编辑"}>
-                                        <Button onClick={this.onDeleteAdmin.bind(this,text.idAdmin)}>
-                                            <Link to={"/agent/edit"} className={"deleBtn"}>
+                                        <Button onClick={this.onUpdateAdmin.bind(this,text.id)}>
+                                            <Link to={"/agent/edit"+text.id} className={"deleBtn"}>
                                                 <i className="iconfont icon-bianji"></i>
                                             </Link>
                                         </Button>
                                     </Tooltip>
                                     <Tooltip placement="bottom" title={"删除"}>
-                                        <Button onClick={this.onDeleteAdmin.bind(this,text.idAdmin)}>
+                                        <Button onClick={this.onDeleteAdmin.bind(this,text.id)}>
                                             <Link to={"/agent/DeleteAdmin"} className={"deleBtn"}>
                                                 <i className="iconfont icon-recyclebin"></i>
                                             </Link>
@@ -128,11 +148,11 @@ export default class App extends Component{
                 </Table>
                     <div  className={"page"}>
                         <span>共{this.props.strip}条</span>
-                        <Pagination defaultCurrent={1} total={this.props.strip} defaultPageSize={8} onChange={this.onPage}/>
+                        <Pagination defaultCurrent={1} total={this.props.strip} defaultPageSize={6} onChange={this.onPage}/>
                     </div>
                     <Switch>
-                        <Route path={"/agent/Details"} render={()=> <UpDetails upData={this.state.upData} enData={this.enData}/>}/>
-                        <Route path={"/agent/edit"} render={()=>    <Edit />}/>
+                        <Route path={"/agent/Details:data"}  component={UpDetails}/>
+                        <Route path={"/agent/edit:data"} render={()=>    <Edit upData={this.state.upData} enData={this.enData}/>}/>
                         <Route path={"/agent/DeleteAdmin"} render={()=> <Dele DeleBox={this.DeleBox}/>}/>
                     </Switch>
             </div>

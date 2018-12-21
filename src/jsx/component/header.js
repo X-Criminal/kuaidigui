@@ -15,6 +15,7 @@ export default class App extends React.Component{
     Cancellation=( )=>{
         cookie.remove("userData");
         cookie.remove("islogin");
+        sessionStorage.removeItem("WebMenu")
         window.location.reload();
 
     }
@@ -33,7 +34,7 @@ export default class App extends React.Component{
                         <i className={"iconfont icon-wulumuqishigongandashujuguanlipingtai-ico-"}></i>
                         <div className={"_userName"}>
                             <p>{cookie.load("userData").name+"("+cookie.load('userData').phone+")"}</p>
-                            <p>{cookie.load("userData").adminType===1?"超级管理员":"-"}</p> 
+                            <p>{cookie.load("userData").adminType===1?"普通管理员":cookie.load("userData").adminType===2?"超级管理员":"-"}</p> 
                         </div>
                         <Icon type="caret-down" theme="filled"/>
                         <div className={"updateAdminPassword"}>

@@ -7,24 +7,29 @@ export default class App extends Component{
     constructor(props){
         super(props)
         this.state={
-                page:1,
-                keyword:"",
-                strip:0,
-                admins:[{key:1,"序号":"序号","昵称":"昵称","联系电话":"联系电话","状态":"状态","姓名":"姓名","身份证号":"身份证号"}]
+            admins:[{key:1,}],
+            strip:0,
+            currPage:1,
+            id:"",
+            name:"",
+            phone:"",
         }
     }
     componentWillMount(){
         url = sessionStorage.getItem("url")
     }
     componentDidMount(){
-       
+       this.init( )
     }
+
     /**初始化 */
     init=(data,cb)=>{
         let _data={
-            numberPage:8,
-            page:this.state.page,
-            keywords:this.state.keywords,
+            size:6,
+            currPage:this.state.currPage,
+            name:this.state.name,
+            phone:this.state.phone,
+            id:this.state.id,
         }
         if(data){
             for(let k in data){
@@ -34,12 +39,12 @@ export default class App extends Component{
                 })
             }
         }
-        axios.post(url+"/SmartPillow//web/user/getUserListBykeyword",_data)
+        axios.post(url+"/deliveryLockers/web/webTUserController/getUserCustomByParams",_data)
               .then((res)=>{
                   if(res.data.code===1000&&res.data.data){
                         this.setState({
-                            strip:res.data.data.strip,
-                           admins:res.data.data.wxusers
+                            strip:res.data.totalItems,
+                           admins:res.data.data
                         })
                   }else{
                     this.setState({
@@ -50,24 +55,30 @@ export default class App extends Component{
                   cb&&cb( )
               })
     }
+
+    onchange=(e)=>{
+        this.setState({
+            [e.target.name]:e.target.value
+        })
+    }
     /**查询 */
     onSearch=( data,cb )=>{
-        this.init(data,()=>{
+        this.init(null,()=>{
             cb&&cb( )
         })
     }
     /**翻页 */
     emtPage=(e)=>{
         this.setState({
-            page:e
+            currPage:e
         })
-        this.init({page:e})
+        this.init({currPage:e})
     }
         render(){
             return(
                 <div className={"user admin"}>
                        <h3>用户管理</h3>
-                       <Search onSearch={this.onSearch}/>
+                       <Search onSearch={this.onSearch}  onchange={this.onchange}/>
                        <UserLis strip={this.state.strip} emtPage={this.emtPage} admins={this.state.admins}/>
                 </div>
             )

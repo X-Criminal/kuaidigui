@@ -7,7 +7,17 @@ import zh_CN from 'antd/lib/locale-provider/zh_CN';
 import 'moment/locale/zh-cn';
 import './App.css';
 import "antd/dist/antd.css";
-
+import "./css/admin_init.css";
+import "./css/set.css";
+import "./css/DataStyle.css";
+import "./css/dele.css";
+import "./css/reviewed.css";
+import "./css/hotel.css";
+import "./css/equipment.css";
+import "./css/header.css";
+import "./css/agent.css";
+import "./css/user.css";
+import "./css/buill.css";
 
 class App extends Component {
   constructor(props){
@@ -17,7 +27,7 @@ class App extends Component {
     }
   }
   componentWillMount(){
-    sessionStorage.setItem("url","http://172.16.2.137:8086");
+    sessionStorage.setItem("url","https://guigui.zhongdianwl.com/");
     //cookie.save("islogin",true)
    // cookie.save("userData",{name:"xiaoming"})
   }
@@ -44,7 +54,6 @@ class App extends Component {
             <LocaleProvider locale={zh_CN}>
               <Router  login={this.login} islogin={this.state.islogin}/>
             </LocaleProvider>
-           
          </div>
     );
   }

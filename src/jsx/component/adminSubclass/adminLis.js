@@ -2,8 +2,9 @@ import React,{Component}                         from "react"
 import {Table,Button,Pagination,Tooltip }        from "antd"
 import {Route, Switch, Link}                     from 'react-router-dom';
 //import Region                           from "../share/region"
-import Dele                                      from "../share/dele"
-import Details                                   from "./details"
+import Dele                                      from "../share/dele";
+import Details                                   from "./details";
+import Edit                                      from "./edit";
 const {Column} =Table
 
 export default class App extends Component{
@@ -21,10 +22,11 @@ export default class App extends Component{
         })
     }
     /**保存删除 */
-    onDeleteAdmin(adminId){
+    onDeleteAdmin=(adminId)=>{
        this.setState({
             adminId:adminId
        })
+       console.log(adminId)
     }
     /**提交修改数据 */
     enData=(data,cb )=>{
@@ -105,14 +107,14 @@ export default class App extends Component{
                                     </Tooltip>
                                     <Tooltip placement="bottom" title={"编辑"}>
                                         <Button >
-                                            <Link to={"/admin/DeleteAdmin"} className={"deleBtn"}>
+                                            <Link to={"/admin/edit"+text} className={"deleBtn"}>
                                                 <i className="iconfont icon-bianji"></i>
                                             </Link>
                                         </Button>
                                     </Tooltip>
                                     <Tooltip placement="bottom" title={"删除"}>
                                         <Button>
-                                            <Link to={"/admin/DeleteAdmin"} className={"deleBtn"}>
+                                            <Link to={"/admin/DeleteAdmin/"+text} className={"deleBtn"} onClick={this.onDeleteAdmin.bind(this,text)}>
                                                 <i className="iconfont icon-recyclebin"></i>
                                             </Link>
                                         </Button>
@@ -127,8 +129,9 @@ export default class App extends Component{
                         <Pagination defaultCurrent={1} showQuickJumper  size="small" total={this.props.totalItems} defaultPageSize={6} onChange={this.onPage}/>
                     </div>
                     <Switch>
-                        <Route path={"/admin/DeleteAdmin"}  render={()=> <Dele DeleBox={this.DeleBox}/>}/>
+                        <Route path={"/admin/DeleteAdmin/"}  render={()=> <Dele DeleBox={this.DeleBox}/>}/>
                         <Route path={"/admin/details:data"} component={Details} />
+                        <Route path={"/admin/edit:data"}    component={Edit}/>
                     </Switch>
             </div>
         )

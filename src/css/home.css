@@ -1,6 +1,9 @@
 .Home{
     min-width: 1230px;;
 }
+.Home .ant-layout-sider-children ul>li a{
+    position: relative;
+}
 .Home .ant-layout-header{
     background-color: rgb(227,239,255);
     padding: 0;
@@ -30,7 +33,7 @@
     display: block;
 }
 .Home .ant-layout-sider{
-    height:calc(100vh - 100px) ;
+    height:calc(100vh - 100px);
     background-color: rgb(66,152,238);
 }
 .Home .ant-layout-sider ul{
@@ -75,4 +78,43 @@
 }
 .Home .ant-layout .ant-table-thead > tr > th{
     background-color: rgb(229,232,242)
+}
+.Home{
+    position: relative;
+}
+.HomeErr{
+    position: absolute;
+    bottom: 35px;
+    right: 35px;
+    width: 240px;
+    height: 140px;
+    border: 1px solid rgb(170,170,170);
+    border-radius: 10px;
+    transition: all .8s;
+    z-index:11;
+    text-align: center;
+    cursor: pointer;
+}
+.HomeErr >i{
+    position: absolute;
+    right: 10px;
+    top: 10px;
+}
+.HomeErr img{
+    margin-top: 15px;
+    width: 55px;
+}
+.HomeErr p{
+    margin-bottom: 0;
+    line-height: 25px;
+}
+.sup{
+    position: absolute;
+    text-indent: -9999px;
+    width: 5px;
+    height: 5px;
+    border-radius: 100%;
+    background-color: red;
+    top: 12px;
+    left: 25px;
 }

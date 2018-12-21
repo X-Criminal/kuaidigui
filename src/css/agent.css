@@ -1,0 +1,164 @@
+.agent .bindingBox {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 50;
+    background-color: rgba(0, 0, 0, 0.2);
+  }
+  .agent .bindingBox > div {
+    width: 725px;
+    height: 270px;
+    position: absolute;
+    left: calc(50% - 362px);
+    top: 10%;
+    background: white;
+    border-radius: 8px;
+    padding-bottom: 60px;
+  }
+  .agent .bindingBox > div h3 {
+    border: none;
+  }
+  .agent .bindingBox > div h3 a {
+    float: right;
+  }
+  .agent .bindingBox > div .bindingData > div:nth-child(1) span {
+    display: inline-block;
+    width: 15%;
+    text-align: right;
+    padding-right: 25px;
+    font-size: 16px;
+  }
+  .agent .bindingBox > div .bindingData > div:nth-child(1) input {
+    width: 55%;
+    height: 40px;
+    margin-right: 15px;
+  }
+  .agent .bindingBox > div .bindingData > div:nth-child(1) button {
+    width: 60px;
+    height: 40px;
+    font-size: 18px;
+  }
+  .agent .bindingBox > div .bindingData .adminDataBtn {
+    position: absolute;
+    bottom: 25px;
+    left: 110px;
+  }
+  .agent .Details {
+    position: absolute;
+    width: 100%;
+    min-height: 100%;
+    background-color: white;
+    top: 0;
+    left: 0;
+  }
+  .agent .Details > div:nth-child(1) {
+    margin-bottom: 30px;
+  }
+  .agent .Details h3 > span {
+    cursor: pointer;
+  }
+  .agent .Details h3 .anticon-export {
+    float: right;
+    line-height: 60px;
+    cursor: pointer;
+  }
+  .agent .Details .DateilsTable {
+    margin: 0 auto;
+    width: 90%;
+    text-align: center;
+    color: black;
+  }
+  .agent .Details .DateilsTable thead {
+    background-color: #f2f5f5;
+  }
+  .agent .Details .DateilsTable thead th {
+    line-height: 44px;
+    border: 1px solid #d1d8d8;
+  }
+  .agent .Details .DateilsTable tbody td {
+    line-height: 44px;
+    border: 1px solid #d1d8d8;
+  }
+  .agent .Details [role=tablist] {
+    border: none;
+  }
+  .agent .Details .ant-tabs {
+    width: 90%;
+    margin: 0 auto;
+  }
+  .agent .Details .ant-tabs [role=tab] {
+    border: 1px solid #ccc;
+    margin: 0;
+    width: 100px;
+    height: 36px;
+    line-height: 12px;
+    text-align: center;
+  }
+  .agent .Details .ant-tabs [role=tab]:nth-child(1) {
+    border-radius: 5px 0 0 5px;
+  }
+  .agent .Details .ant-tabs [role=tab]:nth-child(3) {
+    border-radius: 0 5px 5px 0;
+  }
+  .agent .Details .ant-tabs .ant-tabs-nav .ant-tabs-tab-active {
+    border: 1px solid #1890ff;
+    background-color: #1890ff;
+    color: white;
+  }
+  .agent .Details .ant-tabs .ant-tabs-nav-scroll {
+    height: 37px;
+  }
+  .agent .Details .ant-tabs .ant-table-thead > tr > th,
+  .agent .Details .ant-tabs .ant-table-tbody > tr > td {
+    padding: 0;
+    line-height: 42px;
+  }
+  .agent .Details .A .ant-pagination,
+  .agent .Details .B .ant-pagination,
+  .agent .Details .C .ant-pagination {
+    margin-top: 20px;
+    float: right;
+  }
+  .agent .edit {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    min-height: 100%;
+    background-color: white;
+  }
+  .agent .edit h3 span {
+    cursor: pointer;
+  }
+  .agent .edit h3 i {
+    float: right;
+    cursor: pointer;
+    line-height: 61px;
+  }
+  .agent .edit .editBody > div > span {
+    display: inline-block;
+    width: 150px;
+    text-align: right;
+    font-size: 14px;
+    color: black;
+    line-height: 50px;
+  }
+  .agent .edit .editBody > div input {
+    width: 60%;
+    display: inline-block;
+    background-color: white;
+    border: none;
+    color: black;
+  }
+  .agent .edit .editBody > div .region {
+    display: inline-block;
+  }
+  .agent .edit .editBody > div .region > div {
+    margin-left: 0 !important;
+  }
+  .agent .edit .editBody .editBtn button {
+    margin-top: 100px;
+  }
+  

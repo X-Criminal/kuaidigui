@@ -1,0 +1,183 @@
+.updata {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    z-index: 998;
+    background-color: rgba(0, 0, 0, 0.2);
+  }
+  .updata .updataBox {
+    width: 420px;
+    position: absolute;
+    left: calc(50% - 210px);
+    top: 20%;
+    background-color: white;
+    border-radius: 8px;
+  }
+  .updata .updataBox h2 {
+    font-size: 16px;
+    padding: 0 20px;
+    color: #343337;
+    border-radius: 8px 8px 0 0;
+    margin: 0;
+    line-height: 40px;
+  }
+  .updata .updataBox h2 i {
+    float: right;
+    line-height: 40px;
+  }
+  .updata .updataBox > p {
+    line-height: 14px;
+    margin: 0;
+    margin: 0 20px;
+  }
+  .updata .updataTxt {
+    height: 40px;
+    line-height: 40px;
+    font-size: 14px;
+    color: #4a596c;
+    margin-top: 10px;
+  }
+  .updata .updataTxt > div {
+    float: left;
+    width: 100%;
+  }
+  .updata .updataTxt > div input {
+    height: 40px;
+  }
+  .updata .updataTxt > .ant-form-item {
+    margin-bottom: 15px;
+  }
+  .updata .updataTxt > div:last-child {
+    margin: 20px 0;
+    text-align: center;
+  }
+  .updata .updataTxt > div span {
+    display: inline-block;
+    width: 25%;
+    text-align: right;
+    padding-right: 10px;
+  }
+  .updata .updataTxt div input {
+    width: 70%;
+  }
+  .Home .updata .updataTxt .ant-form-item-control {
+    margin-top: 0;
+  }
+  .updata .updataTxt .ant-form-item .ant-form-item-control-wrapper .ant-form-item-control .ant-form-item-children {
+    text-align: left;
+    width: 100%;
+  }
+  .updata .updataTxt div button {
+    width: 120px;
+    height: 33px;
+    margin: 0 15px;
+  }
+  .updata .updataTxt div button span {
+    display: inline-block;
+    width: 100%;
+    padding: 0;
+    text-align: center;
+  }
+  .updataTxt .ant-form-explain {
+    text-align: center;
+  }
+  .ant-layout-header > div {
+    height: 100%;
+  }
+  .ant-layout-header .userName {
+    height: 100%;
+  }
+  .ant-layout-header .userName ._userName,
+  .ant-layout-header .userName .anticon-caret-down,
+  .ant-layout-header .userName .icon-wulumuqishigongandashujuguanlipingtai-ico- {
+    height: 100%;
+    float: left;
+  }
+  .ant-layout-header .userName .icon-wulumuqishigongandashujuguanlipingtai-ico- {
+    height: 100%;
+    position: relative;
+    width: 40px;
+  }
+  .ant-layout-header .userName ._userName {
+    padding-top: 30px;
+    line-height: 20px;
+    margin: 0 10px;
+  }
+  .ant-layout-header .userName ._userName p {
+    font-size: 16px;
+    margin: 0;
+    color: #353536;
+  }
+  .ant-layout-header .userName ._userName p:nth-child(2) {
+    font-size: 12px;
+  }
+  .ant-layout-header .userName .anticon-caret-down {
+    margin-top: 40px;
+    color: #020202;
+  }
+  .ant-layout-header .userName .icon-wulumuqishigongandashujuguanlipingtai-ico-:before {
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    display: inline-block;
+    position: absolute;
+    top:30%;
+    color: #8db9ee;
+    background-color: #d2e4fc;
+    border-radius: 100%;
+  }
+  .ant-layout-header .userName .updateAdminPassword {
+    width: 100%;
+    position: absolute;
+    display: none;
+    top: 100%;
+    box-shadow: 0px 0px 1px 1px #ccc;
+    border-radius: 8px;
+    background-color: white;
+    z-index: 999998;
+    text-align: center;
+  }
+  .ant-layout-header .userName .updateAdminPassword button {
+    width: 85%;
+    height: 40px;
+    margin-bottom: 20px;
+  }
+  .ant-layout-header .userName .updateAdminPassword .icon-wulumuqishigongandashujuguanlipingtai-ico- {
+    float: none;
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+    height: auto;
+    margin-top: 20px;
+  }
+  .ant-layout-header .userName .updateAdminPassword .icon-wulumuqishigongandashujuguanlipingtai-ico-::before {
+    position: relative;
+    font-size: 60px;
+    margin-top: 10px;
+    width: 90px;
+    height: 90px;
+    line-height: 90px;
+  }
+  .ant-layout-header .userName .updateAdminPassword > p {
+    line-height: 32px;
+    font-size: 16px;
+    color: black;
+    margin: 0;
+  }
+  .ant-layout-header .out {
+    height: 100%;
+    line-height: 100px;
+    float: right;
+    margin: 0 45px;
+  }
+  .ant-layout-header .out i {
+    margin: 0 8px;
+  }
+  .ant-layout-header .out button {
+    border: none;
+    background-color: rgba(0, 0, 0, 0);
+  }
+  

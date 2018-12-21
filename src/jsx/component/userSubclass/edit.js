@@ -1,19 +1,60 @@
 import React , {Component}      from "react";
-import {Icon,Button}                   from "antd";
-
-import userImg                  from "../../../img/login.png";
+import {Icon,Button,message}                   from "antd";
+import axios from "axios"
+let id,url;
 export default class App extends Component{
     constructor(props){
         super(props)
         this.state={
-
+            getUserCustom2ById:{}
         }
     }
     
+    componentWillMount(){
+        id=this.props.match.params.data;
+        url = sessionStorage.getItem("url");
+    }
+    componentDidMount(){
+        this.getUserCustom2ById( )
+    }
+
     BACK=()=>{
         window.history.back(-1)
     }
+
+    getUserCustom2ById=()=>{
+        axios.post(url+"/deliveryLockers/web/webTUserController/getUserCustom2ById",{id:id})
+             .then((res)=>{
+                if(res.data.code===1000&&res.data.message.indexOf("操作成功")>-1){
+                    this.setState({
+                        getUserCustom2ById:res.data.data
+                    })
+                }else{
+                    message.error(res.data.message);
+                }
+             })
+    }
+
+    upDateUser(type){
+        console.log(type)
+        let _type = window.confirm("此操作将冻结该用户，是否继续？")
+            if(_type){
+                axios.post(url+"/deliveryLockers/web/webTUserController/updateUser",{id:id,type:type})
+                .then((res)=>{
+                        if(res.data.code===1000){
+                            this.getUserCustom2ById( );
+                            message.success(res.data.message);
+                        }else{
+                            message.error(res.data.match);
+                        }
+                }).catch((res)=>{
+                    message.error("网络连接错误，请稍后再试！")
+                })
+            }
+         
+    }
     render(){
+        let data = this.state.getUserCustom2ById;
         return(
             <div className={"edit"}>
                 <h3>
@@ -25,44 +66,53 @@ export default class App extends Component{
                 <div className={"editBody"}>
                     <div>
                         <span>账号：</span>
-                        <span>131313113</span>
+                        <span>{data.id}</span>
                     </div>
                     <div>
                         <span>头像：</span>
-                        <img src={userImg} alt="头像"/>
+                        <img src={data.pic} alt="头像"/>
                     </div>
                     <div>
                         <span>昵称：</span>
-                        <span>131313113</span>
+                        <span>{data.nickname}</span>
                     </div>
                     <div>
                         <span>联系电话：</span>
-                        <span>131313113</span>
+                        <span>{data.phone}</span>
                     </div>
                     <div>
                         <span>地址：</span>
-                        <span>131313113</span>
+                        <span>{data.address}</span>
+                    </div>
+                    <div>
+                        <span>状态：</span>
+                        {/* <span>{data.approveStatus===0?"未认证":data.approveStatus===1?"已认证"?data.approveStatus===2:"已冻结":"-"}</span> */}
+                        {data.approveStatus===0?<span style={{color:"red"}}>未认证</span>:data.approveStatus===1?<span>已认证</span>:data.approveStatus===2?<span color="red">已冻结</span>:<span>-</span>}
                     </div>
                 </div>
-                <div className={"userData"}>
-                    <div>
-                        <span>姓名：</span>
-                        <span>张三</span>
+                {
+                    data.approveStatus===1?
+                    <div className={"userData"}>
+                        <div>
+                            <span>姓名：</span>
+                            <span>{data.realName}</span>
+                        </div>
+                        <div>
+                            <span>身份证号：</span>
+                            <span>{data.idNumber}</span>
+                        </div>
+                        <div>
+                            <span>身份证：</span>
+                            <span>
+                                <img src={data.frontPic} alt={"userData"}/>
+                                <img src={data.reversePic} alt={"userData"}/>
+                            </span>
+                        </div>
                     </div>
-                    <div>
-                        <span>身份证号：</span>
-                        <span>429424244444222</span>
-                    </div>
-                    <div>
-                        <span>身份证：</span>
-                        <span>
-                            <img src={userImg} alt={"userData"}/>
-                            <img src={userImg} alt={"userData"}/>
-                        </span>
-                    </div>
-                </div>
-                <Button type="primary">
-                    冻结
+                    :null
+                }
+                <Button type="primary" onClick={this.upDateUser.bind(this,data.approveStatus===2?2:1)}>
+                    {data.approveStatus===2?<span>解冻</span>:<span>冻结</span>}
                 </Button>
             </div>
         )

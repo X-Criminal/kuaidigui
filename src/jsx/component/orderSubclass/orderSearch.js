@@ -1,5 +1,5 @@
 import React,{Component}    from "react";
-import {Input,Button,Icon,Select}  from "antd";
+import {Input,Button,Icon,Select,message}  from "antd";
 import {Link,Switch,Route}  from "react-router-dom";
 import axios                from "axios"
 
@@ -9,26 +9,23 @@ export default class App extends Component{
         constructor(props){
             super(props)
             this.state={
-                    p:"",
-                    c:"",
-                    a:"",
-                    idRole:0,
-                    keywords:"",
-                    loading:false,
+                  
             }
         }
         componentWillMount(){
             url = sessionStorage.getItem("url")
         }
 
-
+        search=()=>{
+            this.props.upData( )
+        }
         render(){
             return(
                 <div className={'adminSearch clear-fix'}>
                     <span style={{marginRight:"10px"}}>
                         名称
                     </span>
-                    <Input className={"orderTion"} style={{"width":"200px"}}/>
+                    <Input className={"orderTion"} style={{"width":"200px"}} onChange={this.props.onchange}/>
                     <Button className={"Adminbtn"} type="primary" loading={this.state.loading} onClick={this.search}>
                         查询
                     </Button>
@@ -40,7 +37,7 @@ export default class App extends Component{
                         </Link>
                     </Button>
                     <Switch>
-                        <Route path={"/order/add"} render={()=> <Add/>}/>
+                        <Route path={"/order/add"} render={()=> <Add upData={this.props.upData}/>}/>
                     </Switch>
                 </div>
             )
@@ -51,21 +48,54 @@ class Add extends Component{
     constructor(props){
         super(props)
         this.state={
-            SelectDhlAll:[]
+            SelectDhlAll:[],
+            dhlCoding:"",
+            logo:"",
+            name:"",
+            serviceCall:"",
         }
     }
     componentDidMount(){
         this.getSelectDhl()
     }
     getSelectDhl=()=>{
-        axios.post(url+"/deliveryLockers/wx/expressDeliveryController/selectDhl")
+        axios.post(url+"/deliveryLockers/web/dhlManageController/queryDhlAndCodingList")
              .then((res)=>{
                  if(res.data.code===1000){
                     this.setState({
                         SelectDhlAll:res.data.data
                     })
                  }
-                    
+             })
+    }
+    onchange=(data,b)=>{
+        this.setState({
+            dhlCoding:data,
+            logo:b.props.logo,
+            name:b.props.children
+        })
+    }
+    serviceCall=(e)=>{
+        this.setState({
+            serviceCall:e.target.value
+        })
+    }
+    addDhl=()=>{
+        let _data = {
+            dhlCoding:this.state.dhlCoding,
+            logo:this.state.logo,
+            name:this.state.name,
+            serviceCall:this.state.serviceCall,
+        }
+        axios.post(url+"/deliveryLockers/web/dhlManageController/addDhl",_data)
+             .then((res)=>{
+                 if(res.data.code===1000&&res.data.message==="操作成功！"){
+                    window.history.go(-1)
+                    this.props.upData( );
+                    message.success(res.data.message)
+                 }else{
+                     message.error(res.data.message)
+                 }
              })
     }
     render(){
@@ -77,23 +107,22 @@ class Add extends Component{
                         <span>
                             快递柜名称：
                         </span>
-                        <Select style={{width:350}}>
-                            {this.state.SelectDhlAll.map((item,index)=> <Option key={index} value={item.id}>{item.name}</Option>)}
+                        <Select style={{width:350}} onChange={this.onchange}>
+                            {this.state.SelectDhlAll.map((item,index)=> <Option logo={item.logo} key={index} value={item.id}>{item.name}</Option>)}
                         </Select>
                     </div>
                     <div>
                         <span>
                             服务电话：
                         </span>
-                        <Input/>
+                        <Input name={"serviceCall"} onChange={this.serviceCall}/>
                     </div>
                     <div>
                         <span>
                             
                         </span>
-                        <Button>提交</Button>
+                        <Button onClick={this.addDhl}>提交</Button>
                     </div>
-                        
                   </div>
             </div>
         )

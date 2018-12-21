@@ -1,5 +1,5 @@
 import React,{Component}                        from "react";
-import { Form, Icon, Input, Button}             from 'antd';
+import { Form, Icon, Input, Button,message}     from 'antd';
 import axios                                    from "axios";
 import cookie                                   from "react-cookies";
 import "../css/login.css"
@@ -52,17 +52,29 @@ class app extends Component{
                          if(res.data.code===1000){
                                 cookie.save("islogin",true);
                                 cookie.save("userData",res.data.data);
-                                this.props.login( );
+                                this.getWebMenu( res.data.data.id )
+                                
                          }else{
                              this.setState({
                                 loginerr:"账号或密码错误"
                              })
                          }
-                     })   
+                     }).catch(()=>{
+                         message.error("网络连接错误请稍后再试！")
+                     })  
             }else{
               console.log(err)
           }
         });
+      }
+      getWebMenu(id){
+        axios.post(url+"/deliveryLockers/web/webMenuController/getWebMenu",{adminId:id})
+             .then((res)=>{
+                 if(res.data.code===1000&&res.data.message==="操作成功！"){
+                    sessionStorage.setItem("WebMenu",JSON.stringify(res.data.data));
+                    this.props.login( );
+                 }
+             })
       }
 
       /**忘记密码 */
@@ -80,10 +92,11 @@ class app extends Component{
                     data.account=values.account;
                         this.Postreset(data,()=>{
                             /**发送后回调 */
-                            console.log(data)
+                            message.error(data.data.message)
+                           // console.log(data)
                         })
                  }else{
-                    console.log(err)   
+                    console.log(err)
                  }
             })
       }
@@ -219,7 +232,7 @@ class app extends Component{
                                     确定
                                 </Button>
                                 <Button className="login-form-button" onClick={this.pagIng}>
-                                    返回登陆
+                                    返回登录
                                 </Button>
                             </div>
                         </Form>

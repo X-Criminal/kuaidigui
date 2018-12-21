@@ -9,14 +9,14 @@ export default class App extends Component{
     constructor(props){
         super(props)
         this.state={
-            upData:[],
+            EditDtate:"",
             adminId:"",
         }
     }
     /**保存修改 */
-    onUpdateAdmin(data){
+    onEdit(data){
         this.setState({
-            upData:data
+            EditDtate:data
         })
     }
     /**保存删除 */
@@ -48,7 +48,12 @@ export default class App extends Component{
 
     rowSelection = {
         onChange: (selectedRowKeys, selectedRows) => {
-          console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+            let ids=[];
+            for(let i = 0;i<selectedRows.length;i++){
+                ids.push(selectedRows[i].id)
+            }
+            this.props.selectedRows(ids)
+       //   console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
         },
         getCheckboxProps: record => ({
           disabled: record.name === 'Disabled User', // Column configuration not to be checked
@@ -58,7 +63,8 @@ export default class App extends Component{
     render(){
         let data = this.props.admins;
         for(let i =0;i<data.length;i++){
-            data[i].index = i+1
+            data[i].index = i+1;
+            data[i].render1 = i+"99898"
         }
         return(
             <div className={"AdminLis"}>
@@ -74,7 +80,12 @@ export default class App extends Component{
                         key="index"
                         />
                         <Column
-                        title="快递柜名称"
+                        title="设备编号"
+                        dataIndex="mac"
+                        key="mac"
+                        />
+                        <Column
+                        title="设备名称"
                         dataIndex="name"
                         key="name"
                         />
@@ -96,12 +107,12 @@ export default class App extends Component{
                         dataIndex="gridNumber"
                         key="gridNumber"
                         />
-                        <Column
+                          <Column
                         title="使用数"
                         dataIndex="useNumber"
                         key="useNumber"
                         />
-                          <Column
+                         <Column
                         title="所在区域"
                         dataIndex="layAddreass"
                         key="layAddreass"
@@ -116,26 +127,26 @@ export default class App extends Component{
                         />
                         <Column
                         title="操作(详情,修改,删除)"
-                        key="id"
+                        key="render1"
                         render={(text) => {
                             return(
                                 <div>
                                     <Tooltip placement="bottom" title={"详情"}>
-                                        <Button onClick={this.onUpdateAdmin.bind(this,text)}>
-                                            <Link to={"/equipment/details"}>
+                                        <Button >
+                                            <Link to={"/equipment/details"+text.id}>
                                                 <i className="iconfont icon-zhangdan" style={{color:"#1890ff"}}></i>
                                             </Link>
                                         </Button>
                                     </Tooltip>
                                     <Tooltip placement="bottom" title={"编辑"}>
-                                        <Button onClick={this.onDeleteAdmin.bind(this,text.idAdmin)}>
-                                            <Link to={"/equipment/edit"} className={"deleBtn"}>
+                                        <Button onClick={this.onEdit.bind(this,text.id)}>
+                                            <Link to={"/equipment/edit"+text.id} className={"deleBtn"}>
                                                 <i className="iconfont icon-bianji"></i>
                                             </Link>
                                         </Button>
                                     </Tooltip>
                                     <Tooltip placement="bottom" title={"删除"}>
-                                        <Button onClick={this.onDeleteAdmin.bind(this,text.idAdmin)}>
+                                        <Button onClick={this.onDeleteAdmin.bind(this,text.id)}>
                                             <Link to={"/equipment/DeleteAdmin"} className={"deleBtn"}>
                                                 <i className="iconfont icon-recyclebin"></i>
                                             </Link>
@@ -151,9 +162,9 @@ export default class App extends Component{
                         <Pagination defaultCurrent={1} total={this.props.totalItems} defaultPageSize={6} onChange={this.onPage}/>
                     </div>
                     <Switch>
-                        <Route path={"/equipment/details"}               component={DetaIls}/>
-                        <Route path={"/equipment/edit"}               component={Edit}/>
-                        <Route path={"/agent/DeleteAdmin"} render={()=> <Dele DeleBox={this.DeleBox}/>}/>
+                        <Route path={"/equipment/details:data"}             component={DetaIls}/>
+                        <Route path={"/equipment/edit:data"}                render={()=> <Edit EditDtate={this.state.EditDtate} enData={this.enData}/>}/>
+                        <Route path={"/equipment/DeleteAdmin"} render={()=> <Dele DeleBox={this.DeleBox}/>}/>
                     </Switch>
             </div>
         )

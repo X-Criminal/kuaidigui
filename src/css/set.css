@@ -1,0 +1,49 @@
+.set .setBody {
+    padding: 32px;
+  }
+  .set .setBody > div {
+    margin-bottom: 25px;
+    color: black;
+    font-family: "微软雅黑";
+  }
+  .set .setBody > div > span:nth-child(1) {
+    display: inline-block;
+    text-align: right;
+    width: 120px;
+    box-sizing: border-box;
+    padding-right: 9px;
+  }
+  .set .setBody > div > input {
+    width: 400px;
+    margin-right: 10px;
+  }
+  .set .setBody ._state > span {
+    float: left;
+  }
+  .set .setBody ._state > div {
+    float: left;
+    width: 300px;
+  }
+  .set .setBody ._state > div h4 {
+    width: 100%;
+    background-color: #e7eaee;
+    line-height: 32px;
+    padding-left: 15px;
+  }
+  .set .setBody ._state > div ._stateIndex {
+    margin: 10px 0;
+  }
+  .set .setBody ._state > div ._stateIndex > span {
+    display: inline-block;
+    width: 90px;
+    text-align: right;
+    padding: 0 9px;
+  }
+  .set .setBody ._state > div ._stateIndex .ant-checkbox-checked .ant-checkbox-inner {
+    background-color: #ff6600;
+    border-color: #ff6600;
+  }
+  .set .setBody ._state > div ._stateIndex .ant-checkbox-wrapper:nth-of-type(1) {
+    margin-right: 25px;
+  }
+  

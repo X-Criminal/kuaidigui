@@ -54,7 +54,7 @@ export default class App extends Component{
                     <Button className={"Adminbtn"} type="primary" loading={this.state.loading} onClick={this.search}>
                         查询
                     </Button>
-                    <AddAdmin addAdmin={this.props.addAdmin}/>
+                    <AddAdmin addAdmin={this.props.addAdmin} onAddData={this.props.onAddData}/>
                 </div>
             )
         }

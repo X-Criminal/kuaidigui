@@ -28,7 +28,7 @@ export default class App extends React.Component {
                     </Button>
                 </Link>
                 <Switch>
-                    <Route  path="/admin/addAdmin"     render={ ()=>{return <Ad  />}}/>
+                    <Route  path="/admin/addAdmin"  render={ ()=>{return <Ad  onAddData={this.props.onAddData}/>}}/>
                 </Switch>
             </div>
         )
