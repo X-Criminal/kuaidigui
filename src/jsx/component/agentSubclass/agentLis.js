@@ -152,7 +152,7 @@ export default class App extends Component{
                     </div>
                     <Switch>
                         <Route path={"/agent/Details:data"}  component={UpDetails}/>
-                        <Route path={"/agent/edit:data"} render={()=>    <Edit upData={this.state.upData} enData={this.enData}/>}/>
+                        <Route path={"/agent/edit:data"} render={()=>    <Edit onSearch={this.props.onSearch} upData={this.state.upData} enData={this.enData}/>}/>
                         <Route path={"/agent/DeleteAdmin"} render={()=> <Dele DeleBox={this.DeleBox}/>}/>
                     </Switch>
             </div>

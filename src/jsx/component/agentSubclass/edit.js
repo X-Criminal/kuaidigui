@@ -1,6 +1,7 @@
 import React,{Component}                     from "react";
-import {Button,Icon,Select}                  from "antd";
+import {Button,Icon,Select,Checkbox,message}                  from "antd";
 import axios from "axios";
+const CheckboxGroup = Checkbox.Group;
 
 const Option = Select.Option;
 let url,id;
@@ -11,6 +12,11 @@ export default class App extends Component{
                 getCityByParentid:[],
                 getAreaByParentid:[],
                 user:{userCouriers:{}},
+                plainOptions:[],
+                defa:[],
+                T_province:"",
+                T_city:"",
+                T_area:"",
             }
         }
         componentWillMount(){
@@ -18,16 +24,29 @@ export default class App extends Component{
             id=window.location.hash.split("agent/edit")[1];
         }
         componentDidMount(){
-            this.init( )
+            this.init( );
+            this.getPlainOptions( );
         }
 
         BACK=()=>{
             window.history.back(-1)
         }
-
-        getParentid=(e)=>{
+        getPlainOptions=()=>{
+            let arr =[];
+            let option = JSON.parse(sessionStorage.getItem("selectDhl"));
+            for(let i = 0;i<option.length;i++){
+                arr.push({label:option[i].name,value:option[i].id})
+            }
             this.setState({
-                province:e
+                plainOptions:arr,
+            })
+        }
+
+        getParentid=(e,type)=>{
+           
+            this.setState({
+                province:e,
+                T_province:type.props.children,
             })
             if(typeof e !=="undefined") this.getCityByParentid(e);
          }
@@ -43,9 +62,10 @@ export default class App extends Component{
                   })
          }
 
-         getGradeid=(e)=>{
+         getGradeid=(e,type)=>{
             this.setState({
-               city:e
+               city:e,
+               T_city:type.props.children
             })
           this.getAreaByParentid(e)
         }
@@ -60,22 +80,51 @@ export default class App extends Component{
                        }
                  })
         }
-        getArea=(e)=>{
+        getArea=(e,type)=>{
             this.setState({
-                area:e
+                area:e,
+                T_area:type.props.children
             })
          }
          init=()=>{
               axios.post(url+"/deliveryLockers/web/webTUserController/getUserCustom3ById",{id:id})
                  .then((res)=>{
                      if(res.data.code===1000&&res.data.message==="操作成功！"){
+                         let arr =[];
+                         for(let i=0;i<res.data.data.userCouriers.length;i++){
+                             arr.push(res.data.data.userCouriers[i].id)
+                         }
                         this.setState({
-                            user:res.data.data
+                            user:res.data.data,
+                            defa:arr
                         })
                      }
                  })
          }
-
+         onDefa=( e )=>{
+            this.setState({
+                defa:e
+            })
+         }
+         upData=()=>{
+             let data={
+                area:this.state.T_area,
+                city:this.state.T_city,
+                province:this.state.T_province,
+                id:id,
+                dhlId:this.state.defa
+             }
+            axios.post(url+"/deliveryLockers/web/webTUserController/chengeUser",data)
+                 .then((res)=>{
+                     if(res.data.code===1000&&res.data.message.indexOf("操作成功")>-1){
+                            window.history.go(-1);
+                            message.success(res.data.message);
+                            this.props.onSearch( );
+                     }else{
+                        message.error(res.data.message)
+                     }
+                 })
+         }
           
         render(){
             return(
@@ -94,18 +143,9 @@ export default class App extends Component{
                                 <span>联系电话：</span>
                                 <input disabled value={this.state.user.phone||""}/>
                             </div>
-                            <div>
+                            <div className={"kdgs clear-fix"}>
                                 <span>快递公司：</span>
-                                <Select
-                                    showSearch
-                                    style={{ width: 200 }}
-                                   // placeholder={}
-                                    filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
-                                >
-                                    {
-                                       JSON.parse(sessionStorage.getItem("selectDhl")).map((item,index)=> <Option key={index} value={item.id}>{item.name}</Option>)
-                                    }
-                                </Select>
+                                <CheckboxGroup options={this.state.plainOptions} value={this.state.defa} onChange={this.onDefa}/>
                             </div>
                             <div>
                                 <span>所属区域：</span>
@@ -139,7 +179,7 @@ export default class App extends Component{
                             </div>
                             <div className={"editBtn"}>
                                 <span></span>
-                                <Button type="primary">
+                                <Button type="primary" onClick={this.upData}>
                                     保存
                                 </Button>
                             </div>

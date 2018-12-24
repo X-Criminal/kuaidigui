@@ -137,7 +137,7 @@ class Edit extends Component{
     }
     componentWillMount(){
         this.setState({
-            dataId:JSON.parse(window.unescape(window.location.hash.split("/aedit")[1])),
+            dataId:JSON.parse(decodeURIComponent(window.decodeURIComponent(window.location.hash.split("/aedit")[1]))),
         })
     }
     componentDidMount(){
@@ -148,7 +148,6 @@ class Edit extends Component{
         window.history.go(-1)
     }
     addCabinet=( )=>{
-       // if(this.state.arr.indexOf(this.state.dataId)>-1){
             let data = {
                 deliveryId:id,
                 id:this.state.dataId.id,
@@ -169,28 +168,6 @@ class Edit extends Component{
                          message.error(res.data.message)
                      }
                  })
-        // }
-        // else{
-        //     let data = {
-        //         deliveryId:id,
-        //         high:this.state.high,
-        //         length:this.state._length,
-        //         name:this.state.name,
-        //         useWay:this.state.useWay,
-        //         width:this.state.width,
-        //         serviceCharge:this.state.serviceCharge
-        //     }
-        //     axios.post(url+"/deliveryLockers/web/deliveryLockerManageController/addCabinet",data)
-        //          .then((res)=>{
-        //              if(res.data.code===1000&&res.data.message==="操作成功！"){
-        //                 this.props.addCabinet( )
-        //                 window.history.go(-1)
-        //                 message.success(res.data.message)
-        //              }else{
-        //                  message.error(res.data.message)
-        //              }
-        //          })
-        // }
     }
     onchange=(e)=>{
         this.setState({

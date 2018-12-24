@@ -194,3 +194,6 @@
  .ant-layout.ant-layout-has-sider > .ant-layout-content{
     overflow-x: visible;
   }
+  .ad_body .Check>span:nth-child(2){
+    width: auto;
+  }

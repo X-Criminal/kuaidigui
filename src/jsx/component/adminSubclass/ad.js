@@ -29,7 +29,10 @@ class Addadmin extends React.Component {
     }
     componentDidMount(){
         this.queryAccount()
-        this.queryOptionalMenu()
+        this.queryOptionalMenu();
+        window.onhashchange=function(){
+            Jurisdiction=[[]];
+        }
     }
     onGo=()=>{
         window.history.back(-1)

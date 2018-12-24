@@ -36,7 +36,9 @@ class Addadmin extends React.Component {
     componentDidMount(){
         this.queryAdminDetails();
         this.queryOptionalMenu();
-    
+        window.onhashchange=function(){
+            Jurisdiction=[[]];
+        }
     }
     queryAdminDetails=()=>{
         axios.post(url+"/deliveryLockers/web/webMenuController/queryAdminDetails",{id:id})
@@ -207,7 +209,7 @@ class Addadmin extends React.Component {
                                                 </Button>:null
                                             }
                                             <br/>
-                                            <p>选中的快递柜子：{Jurisdiction[idx].map((item,index)=><span key={index}>{item.name}，</span> )}</p>
+                                            <p>选中的快递柜：{Jurisdiction[idx].map((item,index)=><span key={index}>{item.name}，</span> )}</p>
                                     </div>
                               )
                             })}

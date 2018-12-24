@@ -36,8 +36,6 @@ class Addadmin extends React.Component {
     }
     render(){
         let userDate = this.state.userData;
-        userDate.menus=[];
-        userDate.deliveryLocker=[];
         return(
             <div className={"ad"}>
                    <h3><span className={"_back"} onClick={this.onGo}>管理员管理</span>><span>管理员详情</span></h3>
@@ -60,11 +58,11 @@ class Addadmin extends React.Component {
                         </div>
                         <div className={"Check clear-fix"}>
                              <span>菜单权限：</span>
-                             <span>{userDate.menus.map((item,index)=><span kry={index}>{item},</span>)}</span>
+                             <span>{userDate.menus?userDate.menus.map((item,index)=><span key={index}>{item.menuName},</span>):null}</span>
                         </div>
                         <div className={"Check clear-fix add"}>
                              <span>管辖快递柜：</span>
-                             <span>{userDate.deliveryLocker.map((item,index)=><span key={index}>{item},</span>)}</span>
+                             <span>{userDate.deliveryLocker?userDate.deliveryLocker.map((item,index)=><span key={index}>{item.name},</span>):null}</span>
                         </div>
                         <div className={"AdBtn txt"}>
                               <span></span>

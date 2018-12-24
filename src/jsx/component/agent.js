@@ -102,7 +102,7 @@ export default class App extends Component{
                 <div className={"agent admin"}>
                         <h3>快递员管理</h3>
                         <Search courier={this.state.courier} addAdmin={this.addAdmin} onSearch={this.onSearch} getKeyWord={this.getKeyWord}/>
-                        <AgentLis strip={this.state.strip} admins={this.state.admins} rowSelection={this.rowSelection} deleData={this.deleData} emtPage={this.emtPage}/>
+                        <AgentLis onSearch={this.onSearch} strip={this.state.strip} admins={this.state.admins} rowSelection={this.rowSelection} deleData={this.deleData} emtPage={this.emtPage}/>
                 </div>
             )
         }

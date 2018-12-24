@@ -161,4 +161,11 @@
   .agent .edit .editBody .editBtn button {
     margin-top: 100px;
   }
+  .kdgs>span{
+    float: left;
+  }
+  .kdgs .ant-checkbox-group{
+    width: 400px;
+    float: left;
+  }
   
