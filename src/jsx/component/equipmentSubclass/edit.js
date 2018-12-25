@@ -289,7 +289,7 @@ export default class AddAmin extends Component{
     render(){
         let _default = this.state.deliveryData;
             return(
-                <div className={"addAdminBox equipAdd"}>
+                <div className={"addAdminBox equipAdd getHeight"}>
                         <div>
                               <h3> <Link to={"/equipment"}>设备管理</Link>>编辑信息</h3>
                               <div className={"addAdminData"}>

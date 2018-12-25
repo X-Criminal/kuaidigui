@@ -38,6 +38,7 @@ class App extends Component{
                 errContent:"",
                 isError:{isError:false,title:"",center:""},
                 sup:false,
+                height:"auto",
             }
         }
 
@@ -56,6 +57,20 @@ class App extends Component{
                         sup:false
                     })
                 }
+                setTimeout(()=>{
+                    let html=document.querySelector(".getHeight");
+                    console.log(html)
+                    if(html){
+                        let height = html.offsetHeight;
+                        this.setState({
+                            height:height
+                        })
+                    }else{
+                        this.setState({
+                            height:"auto"
+                        })
+                    }
+                },500)
             }
         }
         Interval=()=>{
@@ -87,6 +102,7 @@ class App extends Component{
                 isError:{isError:false,title:this.state.isError.title,center:this.state.isError.center},
             })
         }
+        
         queryNewestExceptions=()=>{
                 axios.post(url+"/deliveryLockers/web/exceptionsMessageController/queryNewestExceptions")
                 .then((res)=>{
@@ -100,6 +116,7 @@ class App extends Component{
                     }
                 })
         }
+        
         render(){
             return(
                 <Router>
@@ -107,6 +124,7 @@ class App extends Component{
                      isError={this.state.isError}
                      sup={this.state.sup}
                      close={this.close}
+                     height={this.state.height}
                      />
                 </Router>
             )
@@ -116,9 +134,9 @@ class App extends Component{
 const Home = withRouter((props)=>{
     const { location } = props;
     const pathSnippets = location.pathname.split('/').filter(i => i);
-    let text = JSON.stringify(WebMenu)
+    let text = JSON.stringify(WebMenu);
     return(
-        <div className={"Home"}>
+        <div className={"Home"} style={props.height!=="auto"?{height:props.height+150+"px"}:null}>
         <Layout>
             <Header>
                 <HEADER pathSnippets={pathSnippets}/>

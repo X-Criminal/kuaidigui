@@ -51,7 +51,7 @@ class Addadmin extends React.Component {
                  if(res.data.code===1000){
                         this.setState({
                             userData:res.data.data,
-                            deliveryLocker__:res.data.data.deliveryLocker
+                            deliveryLocker__:res.data.data.deliveryLocker||[]
                         })
                      this.defaultValue(res.data.data.menus);
                      
@@ -184,7 +184,7 @@ class Addadmin extends React.Component {
     render(){
         let data = this.state.userData;
         return(
-            <div className={"ad"}>
+            <div className={"ad getHeight"}>
                    <h3><span className={"_back"}><Link to={"/admin"}>管理员管理</Link></span>><span>修改管理员</span></h3>
                    <div className={"ad_body"}>
                         <div className={"txt"}>

@@ -33,7 +33,7 @@
     display: block;
 }
 .Home .ant-layout-sider{
-    height:calc(100vh - 100px);
+    /* height:calc(100vh - 100px); */
     background-color: rgb(66,152,238);
 }
 .Home .ant-layout-sider ul{

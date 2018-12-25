@@ -6,6 +6,7 @@
     border: 20px solid #e7eaee;
     min-width: 1517px;
     min-height: 869px;
+    height: 100%;
   }
   .admin h3 {
     font-size: 16px;

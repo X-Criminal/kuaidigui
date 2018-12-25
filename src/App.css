@@ -10,3 +10,6 @@
 ._back{
     cursor:pointer;
 }
+.Home .ant-layout{
+    height: 100%;
+}

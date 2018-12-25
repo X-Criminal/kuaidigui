@@ -48,7 +48,7 @@ export default class App extends Component{
         if(!_data.dhlAndUser) _data.dhlAndUser=[];
         let _cabinetList = this.state.cabinetList||[];
         return(
-            <div className={"details admin"}>
+            <div className={"details admin getHeight"}>
                 <h3><Link to={"/equipment"}>设备管理</Link> > <span>快递柜详情</span> </h3>
                 <table>
                     <thead>
@@ -182,7 +182,7 @@ class Edit extends Component{
     render(){
         let userData = this.state.dataId;
         return(
-            <div className={"edit"}>
+            <div className={"edit getHeight"}>
                 <div>
                     <h3>{this.state.dataId.name}<Icon type="close" onClick={this.BACK}/></h3>
                     <div>
