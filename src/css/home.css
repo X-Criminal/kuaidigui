@@ -94,6 +94,8 @@
     z-index:11;
     text-align: center;
     cursor: pointer;
+    z-index: 200;
+    background-color: white;
 }
 .HomeErr >i{
     position: absolute;

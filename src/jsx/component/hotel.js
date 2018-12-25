@@ -120,17 +120,17 @@ export default class App extends Component{
                   _data[i].index = i+1;
                   _data[i].key= "@!@"+i+"@!@"
                   _data[i]["Total"]=_data[i].serviceCharge+_data[i].expressFee;
-                  serviceCharge+=_data[i].serviceCharge;
-                  expressFee   +=_data[i].expressFee;
-                  Total += _data[i].Total
+                  serviceCharge+=_data[i].serviceCharge*1000;
+                  expressFee   +=_data[i].expressFee*1000;
+                  Total += _data[i].Total*1000
                 }
                 _data.push({orderNumber:"!!@@!!",key:"!-!",index:"-",expressFee:"--",Total:"---",orderStatus:"----",id:"-------"})
                   this.setState({
-                    expressFee:expressFee,
-                    serviceCharge:serviceCharge,
+                    expressFee:expressFee/1000,
+                    serviceCharge:serviceCharge/1000,
                     datas:_data,
                     totalItems:res.data.totalItems,
-                    Total:Total,
+                    Total:Total/1000,
                   })
               }else{
                 message.error(res.data.message)

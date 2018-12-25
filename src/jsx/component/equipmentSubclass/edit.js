@@ -72,7 +72,6 @@ export default class AddAmin extends Component{
                         layAddreass:res.data.data.layAddreass,
                         userDeliverys:userDeliverys,
                      })
-                    
                      cb&&cb( {latitude:res.data.data.latitude,longitude:res.data.data.longitude} );
                  }else{
                      message.error(res.data.message);
@@ -204,8 +203,6 @@ export default class AddAmin extends Component{
                     GetProvinceByAll:data
                 })
             }
-            //     }
-            //  })
      }
      /**-----省------ */
      getParentid=(e)=>{
@@ -435,7 +432,7 @@ class App2 extends React.Component{
                 {this.props.index===0?"绑定快递员":""}
             </span>
              <Select style={{ width: 240 }} placeholder={this.props._placeholder.name||"选择快递公司"} onChange={this.getDhlId}  allowClear={true}>
-                 {this.props.selectDhl.map((item,index)=><Option key={index} value={item.id}>{item.name}</Option>)}
+                 {this.props.selectDhl.map((item,index)=><Option key={index} index={item.id} value={item.id}>{item.name}</Option>)}
              </Select>
              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
              <Select style={{ width: 240 }} placeholder={this.props._placeholder.userName||"选择快递员"} onChange={this.CourierByDhlId} allowClear={true}>

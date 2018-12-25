@@ -102,6 +102,9 @@
     width: 423px;
     min-height: 585px;
     top: 10%;
+    height: 500px;
+    overflow-x: none;
+    overflow-y: scroll;
   }
   .hotel .infoBox > div h3 {
     font-size: 17px;
@@ -211,4 +214,4 @@
       top: 0%;
     }
   }
-  
+

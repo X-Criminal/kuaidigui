@@ -18,11 +18,9 @@ export default class App extends Component{
         
     }
     componentDidMount(){
-        console.log(this.props.Area)
         if(!this.props.Area) {window.history.go(-1);message.error("请先选择地区！")};
         this.init();
-        dataId=window.location.hash.split("Choice/")[1]||window.location.hash.split("Choice2/")[1];
-        console.log(dataId)
+        dataId=window.location.hash.split("Choice")[1]||window.location.hash.split("Choice2/")[1];
     }
     init=(data)=>{
       let _data={
@@ -41,7 +39,6 @@ export default class App extends Component{
                         Lis:res.data.data,
                     })
                  }else{
-                     message.error(res.data.message)
                  }
               })
     }

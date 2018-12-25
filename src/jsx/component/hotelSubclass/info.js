@@ -28,7 +28,8 @@ export default class App extends Component{
                  if(res.data.code===1000&&res.data.message==="操作成功！"){
                      if(res.data.data){
                         this.setState({
-                            lookLog:res.data.data
+                            lookLog:res.data.data,
+                            isloading:true
                          })
                      }else{
                         this.setState({
@@ -64,17 +65,18 @@ export default class App extends Component{
                             <div className={"title-info"}>
                                 <p>物流公司：{data.ShipperCode}</p>
                                 <p>物流编号：{data.LogisticCode}</p>
-                                <p>物流电话：{data.phone}</p>
+                                {/* <p>物流电话：{data.phone}</p> */}
                             </div>
-                            {data.Traces?
-                            <Steps direction="vertical" size="small" current={1}>
-                                <Step title="finish"    description="This is a description." icon={<i className="iconfont icon-buzhou"></i>}/>
+                            {data.Traces&&data.Traces.length>0?
+                            <Steps direction="vertical" size="small" current={data.Traces.length-1}>
+                                {data.Traces.map((item,index)=> <Step key={index} title={item.AcceptTime}  description={item.AcceptStation} icon={<i className="iconfont icon-buzou"></i>}/>)}
+                                {/* <Step title="finish"    description="This is a description." icon={<i className="iconfont icon-buzhou"></i>}/>
                                 <Step title="wait"      description="This is a description." icon={<i className="iconfont icon-buzou"></i>}/>
-                                <Step title="wait"      description="This is a description." icon={<i className="iconfont icon-buzou"></i>}/>
+                                <Step title="wait"      description="This is a description." icon={<i className="iconfont icon-buzou"></i>}/> */}
                             </Steps>:
                             <div>
                                 {
-                                    this.state.isloading?<span>暂无数据</span>:<span>信息获取中----<Icon type="loading" /></span>
+                                    this.state.isloading?<span>暂无物流轨迹</span>:<span>信息获取中----<Icon type="loading" /></span>
                                 }
                             </div>
                             }

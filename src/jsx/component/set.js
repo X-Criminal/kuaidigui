@@ -12,6 +12,8 @@ export default class App extends Component{
             serviceCharge:0,
             paySide:1,
             id:"",
+            selectNoticeList:[],
+
         }
         this.getTime = this.getTime.bind(this);
         this.getServiceCharge = this.getServiceCharge.bind(this);
@@ -22,10 +24,23 @@ export default class App extends Component{
      url = sessionStorage.getItem("url");
     }
 
-
+    xiaoming(obj,type){
+        let List = this.state.selectNoticeList;
+        for(let i = 0;i<List.length;i++){
+            if(List[i].id===obj.id){
+                List[i][obj.notice]=type.target.checked?1:0;
+                this.setState({
+                    selectNoticeList:List
+                })
+                return false;
+            }
+        }
+        
+    }
 
     componentDidMount(){
-            this.querySets( )
+            this.querySets( );
+            this.selectNoticeList( )
     }
     querySets=()=>{
         axios.post(url+"/deliveryLockers/web/setController/querySets")
@@ -36,10 +51,21 @@ export default class App extends Component{
                             id:_data.id,
                             paySide:_data.paySide,
                             serviceCharge:_data.serviceCharge,
-                            timeLimit:_data.timeLimit
+                            timeLimit:_data.timeLimit,
+                           
                         })
                  }else{
                      message.error(res.data.message)
+                 }
+             })
+    }
+    selectNoticeList=()=>{
+        axios.post(url+"/deliveryLockers/web/setController/selectNoticeList")
+             .then((res)=>{
+                 if(res.data.code===1000&&res.data.message.indexOf("操作成功")>-1){
+                     this.setState({
+                        selectNoticeList:res.data.data,
+                     })
                  }
              })
     }
@@ -61,7 +87,8 @@ export default class App extends Component{
             paySide:this.state.paySide,
             serviceCharge:this.state.serviceCharge,
             timeLimit:this.state.timeLimit,
-            type:1
+            type:1,
+            notices:this.state.selectNoticeList
         }
         axios.post(url+"/deliveryLockers/web/setController/updateOrAddSets",_data)
              .then((res)=>{
@@ -97,73 +124,32 @@ export default class App extends Component{
                             <div className={"_state clear-fix"}>
                                 <span>消息通知方式</span>
                                 <div>
+                                   
                                     <h4>
                                         发快递
                                     </h4>
-                                        <div className={"_stateIndex"}>
-                                            <span>已保存：</span>
-                                            <Checkbox name={"xiaoming"} onChange={this.xiaoming}>短信</Checkbox>
-                                            <Checkbox>系统消息</Checkbox>
-                                        </div>
-                                        <div className={"_stateIndex"}>
-                                            <span>代付款：</span>
-                                            <Checkbox>短信</Checkbox>
-                                             <Checkbox>系统消息</Checkbox>
-                                        </div>
-                                        <div className={"_stateIndex"}>
-                                            <span>待寄件：</span>
-                                            <Checkbox>短信</Checkbox>
-                                            <Checkbox>系统消息</Checkbox>
-                                        </div>
-                                        <div className={"_stateIndex"}>
-                                            <span>待定价：</span>
-                                            <Checkbox>短信</Checkbox>
-                                            <Checkbox>系统消息</Checkbox>
-                                        </div>
-                                        <div className={"_stateIndex"}>
-                                            <span>待付运费：</span>
-                                            <Checkbox>短信</Checkbox>
-                                            <Checkbox>系统消息</Checkbox>
-                                        </div>
-                                        <div className={"_stateIndex"}>
-                                            <span>待揽件：</span>
-                                            <Checkbox>短信</Checkbox>
-                                            <Checkbox>系统消息</Checkbox>
-                                        </div>
-                                        <div className={"_stateIndex"}>
-                                            <span>已揽件：</span>
-                                            <Checkbox>短信</Checkbox>
-                                            <Checkbox>系统消息</Checkbox>
-                                        </div>
-                                        <div className={"_stateIndex"}>
-                                            <span>已发件：</span>
-                                            <Checkbox>短信</Checkbox>
-                                            <Checkbox>系统消息</Checkbox>
-                                        </div>
-                                        <div className={"_stateIndex"}>
-                                            <span>已取消：</span>
-                                            <Checkbox>短信</Checkbox>
-                                            <Checkbox>系统消息</Checkbox>
-                                        </div>
+                                    {
+                                        this.state.selectNoticeList.map((item,index)=>
+                                        item.noticeGroup===1?
+                                        <div className={"_stateIndex"} key={index}>
+                                            <span>{item.noticeName}：</span>
+                                            <Checkbox defaultChecked={item.noticeSms===1?true:false} onChange={this.xiaoming.bind(this,{id:item.id,notice:"noticeSms"})}>短信</Checkbox>
+                                            <Checkbox defaultChecked={item.noticeSys===1?true:false} onChange={this.xiaoming.bind(this,{id:item.id,notice:"noticeSys"})}>系统消息</Checkbox>
+                                        </div>:null )
+                                    }
                                     <h4>
                                         存快递
                                     </h4>
-                                    <div className={"_stateIndex"}>
-                                        <span>已存件：</span>
-                                        <Checkbox>短信</Checkbox>
-                                         <Checkbox>系统消息</Checkbox>
-                                    </div>
-                                    <div className={"_stateIndex"}>
-                                            <span>已取件：</span>
-                                            <Checkbox>短信</Checkbox>
-                                            <Checkbox>系统消息</Checkbox>
-                                    </div>
-                                    <div className={"_stateIndex"}>
-                                        <span>已取消：</span>
-                                        <Checkbox>短信</Checkbox>
-                                        <Checkbox>系统消息</Checkbox>
-                                    </div>
-                                </div>
+                                    {
+                                        this.state.selectNoticeList.map((item,index)=>
+                                        item.noticeGroup===2?
+                                        <div className={"_stateIndex"} key={index}>
+                                            <span>{item.noticeName}：</span>
+                                            <Checkbox defaultChecked={item.noticeSms===1?true:false} onChange={this.xiaoming.bind(this,{id:item.id,notice:"noticeSms"})}>短信</Checkbox>
+                                            <Checkbox defaultChecked={item.noticeSys===1?true:false} onChange={this.xiaoming.bind(this,{id:item.id,notice:"noticeSys"})}>系统消息</Checkbox>
+                                        </div>:null )
+                                    }
+                                </div> 
                             </div>
                             <div> 
                                 <span></span>

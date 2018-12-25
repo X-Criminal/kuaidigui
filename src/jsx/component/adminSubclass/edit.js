@@ -4,8 +4,11 @@ import axios                                               from "axios";
 import Region                                              from "../share/region";
 import { Route, Switch, Link}                              from 'react-router-dom';
 import Choice                                              from "./choice"
-let url,Jurisdiction=[[]],id;
+let url,id;
 const CheckboxGroup = Checkbox.Group;
+let dele = [ ];
+let add =[ ];
+
 class Addadmin extends React.Component {
     constructor(props){
         super(props)
@@ -15,13 +18,15 @@ class Addadmin extends React.Component {
             password:"",
             phone:"",
 
+            GXnumber:[],
+              
             Area:"",
             deliverys:[],
             index:1,
             menuId:[],
             defaultValues:[],
             defaultValues_1:[],
-
+            deliveryLocker__:[],
             options:[],
             deliveryId:[],
             userData:{deliveryLocker:[]},
@@ -29,6 +34,7 @@ class Addadmin extends React.Component {
         }
         this.getUserDtate = this.getUserDtate.bind(this);
     }
+    Jurisdiction=[[]]
     componentWillMount(){
         url = sessionStorage.getItem("url");
         id = this.props.match.params.data;
@@ -36,18 +42,19 @@ class Addadmin extends React.Component {
     componentDidMount(){
         this.queryAdminDetails();
         this.queryOptionalMenu();
-        window.onhashchange=function(){
-            Jurisdiction=[[]];
-        }
+        dele = [ ];
+        add=[ ];
     }
     queryAdminDetails=()=>{
         axios.post(url+"/deliveryLockers/web/webMenuController/queryAdminDetails",{id:id})
              .then((res)=>{
                  if(res.data.code===1000){
                         this.setState({
-                            userData:res.data.data
+                            userData:res.data.data,
+                            deliveryLocker__:res.data.data.deliveryLocker
                         })
-                     this.defaultValue(res.data.data.menus)
+                     this.defaultValue(res.data.data.menus);
+                     
                  }else{
                     message.error(res.data.message)
                  }
@@ -57,10 +64,12 @@ class Addadmin extends React.Component {
         window.history.back(-1)
     }
     addExpress=( )=>{
-        this.setState({
-            index:this.state.index+1
-        })
-        Jurisdiction.push([])
+      let GXnumber =this.state.GXnumber;
+      GXnumber.push(0);
+      add.push([])
+      this.setState({
+        GXnumber:GXnumber,
+      })
     }
     getUserDtate(e){
         this.setState({
@@ -74,7 +83,10 @@ class Addadmin extends React.Component {
     }
 
     onDeliveryId=(data,index)=>{
-        Jurisdiction[index] = data
+        this.Jurisdiction[index] = data;
+        this.setState({
+
+        })
     }
     Check=(e)=>{
         this.setState({
@@ -88,12 +100,6 @@ class Addadmin extends React.Component {
             _deliveryId=[],
             menuId = [],
             delMenuId=[];
-        for(let i = 0 ;i<Jurisdiction.length;i++){
-                let data = Jurisdiction[i];
-            for(let k = 0;k<data.length;k++){
-                _deliveryId.push(data[k].id)
-            }
-        }
         /**添加 Start */
         for(let i = 0;i<d1.length;i++){
             if(d2.indexOf(d1[i])<=-1){
@@ -108,11 +114,23 @@ class Addadmin extends React.Component {
              }
         }
         /**删除 End */
+
+        /**
+         * 
+         */
+        _deliveryId=[];
+        for(let i = 0;i<add.length;i++){
+            let data = add[i];
+            for(let k =0;k<data.length;k++){
+                _deliveryId.push(data[k].id)
+            }
+        }
+
         let _data={
             deliveryId:_deliveryId,
             id:id,
             menuId:menuId,
-            delMenuId:delMenuId,
+            delMenuId:dele,
         }
        if(this.state.name.length>0) _data.tAdminBase.name = this.state.name;
        if(this.state.password.length>0) _data.tAdminBase.name = this.state.password;
@@ -192,29 +210,13 @@ class Addadmin extends React.Component {
                         <div className={"Check clear-fix add"}>
                              <span>管辖快递柜：</span>
                              <div>
-                             {Jurisdiction.map((item,idx)=>{
-                              return(
-                                    <div key={idx} index={this.state.index} className={"Check clear-fix add"}>
-                                            <Region onGetArea={this.getArea}/>
-                                            <Button type={"primary"}>
-                                                <Link to={"/admin/edit"+id+"/Choice/"+idx}>
-                                                    选择快递柜
-                                                </Link>
-                                            </Button>
-                                            {
-                                                idx === 0?
-                                                <Button type={"primary"} ghost onClick={this.addExpress}>
-                                                    <Icon type="plus-circle" />
-                                                    添加管辖快递柜
-                                                </Button>:null
-                                            }
-                                            <br/>
-                                            <p>选中的快递柜：{Jurisdiction[idx].map((item,index)=><span key={index}>{item.name}，</span> )}</p>
-                                    </div>
-                              )
-                            })}
-                            <p>已绑定快递柜：{this.state.userData.deliveryLocker?this.state.userData.deliveryLocker.map((item,index)=><span key={index}>{item.name}，</span>):null}</p>
-                             </div>
+                             {this.state.deliveryLocker__.map((item,idx)=> <XZ key={idx+"-"} obj={item}/>)}
+                             <Button type={"primary"} ghost onClick={this.addExpress}>
+                                     <Icon type="plus-circle"/>
+                                     添加管辖快递柜
+                             </Button>
+                             <GX GXnumber={this.state.GXnumber} />
+                         </div>
                         </div>
                         <div className={"AdBtn txt"}>
                               <span></span>
@@ -223,12 +225,86 @@ class Addadmin extends React.Component {
                               </Button>
                         </div>
                    </div>
-                   <Switch>
-                       <Route path={"/admin/edit"+id+"/Choice"} render={ ()=>{return <Choice Area={this.state.Area} onDeliveryId={this.onDeliveryId}/>}}/>
-                   </Switch>
+                  
             </div>
         )
     }
 }
 
 export default Addadmin;
+
+
+class XZ extends React.Component{
+    constructor(props){
+        super(props);
+        this.state={
+            isShow:true,
+        }
+    }
+    
+    dele=()=>{
+        dele.push(this.props.obj.area);
+        this.setState({
+            isShow:false
+        })
+    }
+    render(){
+        return(
+            <div className={"Check clear-fix add"} style={this.state.isShow?{display:"block"}:{display:"none"}}>
+                    <p style={{marginBottom:"0",lineHeight:"60px",float:"left"}}>{this.props.obj.provinceName+this.props.obj.cityName+this.props.obj.areaName+"已"}绑定的快递柜：<span>{this.props.obj.name}</span></p>
+                                            <Button  style={{backgroundColor:"red",color:"#fff",float:"left"}} onClick={this.dele}>删除</Button>
+                    </div>
+        )
+    }
+
+}
+
+class GX extends React.Component{
+    constructor(props){
+        super(props);
+        this.state={
+            Area:"",
+            arr:[],
+            index:""
+        }
+    }
+    componentDidMount(){
+        this.setState({
+            index:this.props.index
+        })
+    }
+    getArea=(id)=>{
+        this.setState({
+            Area:id
+        })
+    }
+    onDeliveryId=(e,type)=>{
+            add[type] = e;
+            this.setState({
+                arr:add
+            })
+    }
+    render(){
+        return(
+            <div>
+                {
+                    this.props.GXnumber.map((item,index)=>
+                        <div className={"Check clear-fix add"} key={index}>
+                            <Region onGetArea={this.getArea}/>
+                            <Button type={"primary"}>
+                                <Link to={"/admin/edit"+id+"/Choice"+index}>
+                                    选择快递柜
+                                </Link>
+                            </Button>
+                            <br/>
+                            <p>绑定的快递柜:{add[index].map((item,index)=> <span key={index}>{item.name},</span> )}</p>
+                        </div>
+                    )
+                }
+                <Switch>
+                    <Route path={"/admin/edit"+id+"/Choice:data"} render={ ()=>{return <Choice Area={this.state.Area} onDeliveryId={this.onDeliveryId}/>}}/>
+                </Switch>
+            </div>
+        )
+    }
+}

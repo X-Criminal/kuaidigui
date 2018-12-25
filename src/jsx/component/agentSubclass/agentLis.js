@@ -12,7 +12,11 @@ export default class App extends Component{
             upData:[],
             adminId:"",
             rowSelection:[],
+            selectedRowKeys:[],
         }
+    }
+    componentDidMount(){
+        this.props.getPropsSet(this)
     }
     /**保存修改 */
     onUpdateAdmin(data){
@@ -48,6 +52,15 @@ export default class App extends Component{
     }
     rowSelection=(a,b)=>{
         this.props.rowSelection(a)
+        this.setState({
+            selectedRowKeys:a
+        })
+    }
+    /**清空所有选项 */
+    selectedRowKeys(){
+        this.setState({
+            selectedRowKeys:[ ]
+        })
     }
     render(){
         let data
@@ -67,9 +80,9 @@ export default class App extends Component{
                         rowKey="id2"
                         dataSource={data} 
                         bordered
+                        selectedRowKeys={this.state.selectedRowKeys}
                         pagination={false}
                         rowSelection={{onChange:this.rowSelection}}
-                       
                         >
                         <Column
                         title="序号"

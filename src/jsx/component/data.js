@@ -94,12 +94,12 @@ export default class App extends Component{
                 for(let i = 0;i<_data.length;i++){
                   _data[i].index = i+1;
                   _data[i].keykey = "@!@"+i+"@!@"
-                  serviceCharge+=_data[i].serviceCharge;
+                  serviceCharge+=_data[i].serviceCharge*1000;
                 }
                 _data.push({index:"--"})
 
                   this.setState({
-                    serviceCharge:serviceCharge,
+                    serviceCharge:serviceCharge/1000,
                     datas:_data,
                     totalItems:res.data.totalItems,
                   })

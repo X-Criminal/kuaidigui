@@ -14,6 +14,7 @@ export default class App extends Component{
                 user:{userCouriers:{}},
                 plainOptions:[],
                 defa:[],
+                defa1:[],
                 T_province:"",
                 T_city:"",
                 T_area:"",
@@ -96,7 +97,8 @@ export default class App extends Component{
                          }
                         this.setState({
                             user:res.data.data,
-                            defa:arr
+                            defa:arr,
+                            defa1:arr
                         })
                      }
                  })
@@ -107,12 +109,31 @@ export default class App extends Component{
             })
          }
          upData=()=>{
+             let dhlId=[ ];
+             let delDhlId = [];
+             let a = this.state.defa1;
+             let b = this.state.defa;
+               /**删除 Start */
+                for(let i = 0;i<a.length;i++){
+                    if(b.indexOf(a[i])<=-1){
+                        delDhlId.push(a[i])
+                    }
+                }
+                /**删除 End */
+                /**添加 Start */
+                for(let i = 0;i<b.length;i++){
+                    if(a.indexOf(b[i])<=-1){
+                        dhlId.push(b[i])
+                    }
+                }
+                /**添加 End */
              let data={
                 area:this.state.T_area,
                 city:this.state.T_city,
                 province:this.state.T_province,
                 id:id,
-                dhlId:this.state.defa
+                dhlId:dhlId,
+                delDhlId:delDhlId
              }
             axios.post(url+"/deliveryLockers/web/webTUserController/chengeUser",data)
                  .then((res)=>{

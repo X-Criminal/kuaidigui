@@ -86,6 +86,7 @@ class AddAmin extends React.Component{
         this.initMap( );
         this.getSelectDhl( );
         this.getProvinceByAll( );
+     
     }
 
 /**地图*/

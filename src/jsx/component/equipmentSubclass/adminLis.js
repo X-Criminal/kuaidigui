@@ -13,6 +13,11 @@ export default class App extends Component{
             adminId:"",
         }
     }
+    componentDidMount(){
+        let data = document.querySelector("equipAdd");
+       
+    }
+
     /**保存修改 */
     onEdit(data){
         this.setState({
@@ -53,7 +58,6 @@ export default class App extends Component{
                 ids.push(selectedRows[i].id)
             }
             this.props.selectedRows(ids)
-       //   console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
         },
         getCheckboxProps: record => ({
           disabled: record.name === 'Disabled User', // Column configuration not to be checked

@@ -4,7 +4,7 @@ import axios                                               from "axios";
 import Region                                              from "../share/region";
 import { Route, Switch, Link}                              from 'react-router-dom';
 import Choice                                              from "./choice"
-let url,Jurisdiction=[[]];
+let url;
 const CheckboxGroup = Checkbox.Group;
 class Addadmin extends React.Component {
     constructor(props){
@@ -19,20 +19,17 @@ class Addadmin extends React.Component {
             deliverys:[],
             index:1,
             menuId:[],
-
             deliveryId:[],
         }
         this.getUserDtate = this.getUserDtate.bind(this);
     }
+    Jurisdiction=[[]]
     componentWillMount(){
         url = sessionStorage.getItem("url")
     }
     componentDidMount(){
         this.queryAccount()
         this.queryOptionalMenu();
-        window.onhashchange=function(){
-            Jurisdiction=[[]];
-        }
     }
     onGo=()=>{
         window.history.back(-1)
@@ -52,7 +49,7 @@ class Addadmin extends React.Component {
         this.setState({
             index:this.state.index+1
         })
-        Jurisdiction.push([])
+        this.Jurisdiction.push([])
     }
     getUserDtate(e){
         this.setState({
@@ -76,8 +73,7 @@ class Addadmin extends React.Component {
     }
 
     onDeliveryId=(data,index)=>{
-        Jurisdiction[index] = data;
-        console.log(Jurisdiction)
+        this.Jurisdiction[index] = data;
     }
     Check=(e)=>{
         this.setState({
@@ -87,8 +83,8 @@ class Addadmin extends React.Component {
 
     onAdd=()=>{
         let _deliveryId=[]
-        for(let i = 0 ;i<Jurisdiction.length;i++){
-                let data = Jurisdiction[i];
+        for(let i = 0 ;i<this.Jurisdiction.length;i++){
+            let data = this.Jurisdiction[i];
             for(let k = 0;k<data.length;k++){
                 _deliveryId.push(data[k].id)
             }
@@ -113,7 +109,6 @@ class Addadmin extends React.Component {
                 return false;
             }
         }
-
         this.props.onAddData( _data )
     }
 
@@ -160,7 +155,7 @@ class Addadmin extends React.Component {
                         <div className={"Check clear-fix add"}>
                              <span>管辖快递柜：</span>
                              <div>
-                             {Jurisdiction.map((item,idx)=>{
+                             {this.Jurisdiction.map((item,idx)=>{
                               return(
                                     <div key={idx} index={this.state.index} className={"Check clear-fix add"}>
                                             <Region onGetArea={this.getArea}/>
@@ -177,7 +172,7 @@ class Addadmin extends React.Component {
                                                 </Button>:null
                                             }
                                             <br/>
-                                            <p>选中的快递柜子：{Jurisdiction[idx].map((item,index)=><span key={index}>{item.name}，</span> )}</p>
+                                            <p>选中的快递柜子：{this.Jurisdiction[idx].map((item,index)=><span key={index}>{item.name}，</span> )}</p>
                                     </div>
                               )
                             })}

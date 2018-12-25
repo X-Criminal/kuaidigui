@@ -102,7 +102,7 @@ export default class App extends Component{
                                 <Link to={"/equipment/details"+id+"/aedit"+JSON.stringify({name:item.name,serviceCharge:item.serviceCharge,useWay:item.useWay,width:item.width,height:item.high,length:item.length,id:item.id})}>
                                     <div className={item.useStatus===2?"shiyong":item.useWay===1?"gongxiang":item.useWay===2?"duxiang":"-"}>
                                         <h4>{item.name}</h4>
-                                        <p>寄存费:{item.serviceCharge}元</p>
+                                        <p>服务费:{item.serviceCharge}元</p>
                                         <p>{item.width+"wX"+item.high+"hX"+item.length+"cm"}</p>
                                     </div>
                                 </Link>
