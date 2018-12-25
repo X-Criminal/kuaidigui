@@ -137,7 +137,7 @@ class Edit extends Component{
     }
     componentWillMount(){
         this.setState({
-            dataId:JSON.parse(decodeURIComponent(window.decodeURIComponent(window.location.hash.split("/aedit")[1]))),
+            dataId:JSON.parse(window.decodeURIComponent(window.location.hash.split("/aedit")[1])),
         })
     }
     componentDidMount(){

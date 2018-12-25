@@ -149,7 +149,7 @@ export default class App extends React.Component{
                                         <span>状态：</span>
                                         <b>已发件</b> 
                                         &nbsp;&nbsp;&nbsp;&nbsp;
-                                        <Link to={"/hotel/details"+id+"/info"+JSON.stringify({dhlCoding:data.dhlCoding,logisticCode:data.expressNumber})}>
+                                        <Link to={"/hotel/details"+id+"/info"+JSON.stringify({serviceCall:data.serviceCall,dhlName:data.dhlName,dhlCoding:data.dhlCoding,logisticCode:data.expressNumber,logo:data.logo})}>
                                             <Button className={"state-info"}>查看物流信息</Button>
                                         </Link>
                                     </td>

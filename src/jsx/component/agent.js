@@ -68,9 +68,9 @@ export default class App extends Component{
         axios.post(url+"/deliveryLockers/web/webTUserController/bindingCourierArk",{deliveryId:data,userIds:this.state.courier})
              .then((res)=>{
                 if(res.data.code===1000){
-                    this.state.propsSet.selectedRowKeys( )
-                    window.history.go(-1)
-                    message.success(res.data.message)
+                    this.state.propsSet.selectedRowKeys( );
+                    window.history.go(-1);
+                    message.success(res.data.message);
                 }else{
                     message.error(res.data.message)
                 }
@@ -99,7 +99,16 @@ export default class App extends Component{
     }
      /**删除 */
     deleData=( e ,cb)=>{
-
+        axios.post(url+"/deliveryLockers/web/webMenuController/delAdmin",{id:e})
+             .then((res)=>{
+                 if(res.data.code===1000&&res.data.message.indexOf("操作成功")>-1){
+                     this.init( );
+                     cb&&cb( );
+                     message.success(res.data.message);
+                 }else{
+                     message.error(res.data.message);
+                 }
+             })
     }
     /**翻页 */
     emtPage=(e)=>{

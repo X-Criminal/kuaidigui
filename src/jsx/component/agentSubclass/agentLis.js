@@ -39,10 +39,10 @@ export default class App extends Component{
     /**判断删除 */
     DeleBox=(e)=>{
         if(e==="cancel"){
-                window.location.href="/#/agent"
+                window.history.go(-1)
         }else if(e==="sure" ){
             this.props.deleData(this.state.adminId,()=>{
-                window.location.href="/#/agent"
+                window.history.go(-1)
             })
         }
     }
