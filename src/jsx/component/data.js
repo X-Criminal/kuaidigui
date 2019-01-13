@@ -244,7 +244,7 @@ export default class App extends Component{
                             key="createtime"
                             render={(value, row, index) => {
                                     const obj = {
-                                      children:moment(parseInt(value)).format("YYYY-MM-DD"),
+                                      children:moment(parseInt(value)).format("YYYY-MM-DD HH:mm:ss"),
                                       props: {},
                                     };
                                     if (index === this.state.datas.length-1) {

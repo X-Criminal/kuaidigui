@@ -11,3 +11,7 @@
 .bill-details .img >span:nth-child(2){
         width: auto;
 }
+.apply .img span>img{
+    width: 170px;
+    height: 100px;
+}

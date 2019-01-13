@@ -52,8 +52,8 @@ class app extends Component{
                          if(res.data.code===1000){
                                 cookie.save("islogin",true);
                                 cookie.save("userData",res.data.data);
+                                axios.defaults.headers.common['token'] =res.data.data.token;
                                 this.getWebMenu( res.data.data.id )
-                                
                          }else{
                              this.setState({
                                 loginerr:"账号或密码错误"
@@ -90,9 +90,14 @@ class app extends Component{
                      data.newPassword=values.newPassword;
                          data.code=values.code;
                     data.account=values.account;
-                        this.Postreset(data,()=>{
+                        this.Postreset(data,(data)=>{
                             /**发送后回调 */
-                            message.error(data.data.message)
+                            if(data.data.code===1000&&data.data.message.indexOf("成功")>-1){
+                                message.success("密码修改成功");
+                                this.pagIng( )
+                            }else{
+                                message.error(data.data.message);
+                            }
                            // console.log(data)
                         })
                  }else{
@@ -101,7 +106,7 @@ class app extends Component{
             })
       }
       Postreset=(data,cb)=>{
-            axios.post(url+"/SmartPillow/web/admin/resetAdminPassword",data)
+            axios.post(url+"/deliveryLockers/web/webBasicFunctionController/forgetPassword",data)
                  .then((res)=>{
                             cb&&cb(res)
                        })
@@ -135,10 +140,10 @@ class app extends Component{
     /**获取验证码 */
       getCode=( )=>{
           if( this.state.user.length<=0) return false;
-            axios.get(url+"/deliveryLockers/wx/basicFunctionController/getCode?phone="+this.state.user+"&type=4")
+            axios.post(url+"/deliveryLockers/wx/basicFunctionController/getCode?",{phone:this.state.user,type:"4"})
                  .then((res)=>{
-                        if(res.data!==1000){
-                            alert(res.data.message)
+                        if(res.data===1000){
+                            message.success(res.data.message)
                         }
                  })
       }
@@ -216,14 +221,14 @@ class app extends Component{
                                 {getFieldDecorator('newPassword', {
                                         rules: [{ required: true, message: '输入新密码!' },{validator:this.validateToNextPassword}],
                                 })(
-                                        <Input placeholder="输入新密码" />
+                                        <Input placeholder="输入新密码" type={"password"}/>
                                 )}
                             </FormItem>
                             <FormItem>
                                 {getFieldDecorator('confirm', {
                                         rules: [{ required: true, message: '重复新密码' },{validator: this.compareToFirstPassword,}],
                                 })(
-                                        <Input placeholder="重复新密码"/>
+                                        <Input placeholder="重复新密码" type={"password"}/>
                                 )}
                             </FormItem>
                             <p className={"resetAdminErr"}>{this.state.resetAdminErr}</p>

@@ -79,7 +79,7 @@ export default class App extends Component{
                 <div className={"user admin"}>
                        <h3>用户管理</h3>
                        <Search onSearch={this.onSearch}  onchange={this.onchange}/>
-                       <UserLis strip={this.state.strip} emtPage={this.emtPage} admins={this.state.admins}/>
+                       <UserLis strip={this.state.strip} init={this.init} emtPage={this.emtPage} admins={this.state.admins}/>
                 </div>
             )
         }

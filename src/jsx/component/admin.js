@@ -37,7 +37,7 @@ export default class App extends Component{
          for(let k  in data){
              _data[k] = data[k]
          }
-         axios.post(url+"/deliveryLockers/web/webMenuController/getTAdminCustomByParams",_data)
+         axios.post(url+"/deliveryLockers/web/webMenuController/getTAdminCustomByParams",_data/*,{"headers":{token:cookie.load("userData").token}}*/)
               .then((res)=>{
                   if(res.data.code===1000&&res.data.message!=="没有数据！"){
                       this.setState({

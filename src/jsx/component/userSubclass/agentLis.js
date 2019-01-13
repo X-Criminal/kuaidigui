@@ -58,7 +58,7 @@ export default class App extends Component{
                         dataIndex="approveStatus"
                         key="approveStatus"
                         render={(res)=>{
-                            return <span>{res===0?"未认证":res===1?"已认证":res===2?"已冻结":"-"}</span>
+                            return <span>{res===2||res===3?"已冻结":res===0?"未认证":res===1?"已认证":"-"}</span>
                         }}
                         />
                         <Column
@@ -108,7 +108,7 @@ export default class App extends Component{
                     </div>
                     <Switch>
                         <Route path={"/user/edit:data"}     component={Edit}/>
-                        <Route path={"/user/change"}   render={()=> <Change userID={this.state.userID}/>}/>
+                        <Route path={"/user/change"}   render={()=> <Change init={this.props.init} userID={this.state.userID}/>}/>
                     </Switch>
             </div>
         )

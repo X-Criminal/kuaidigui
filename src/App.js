@@ -2,6 +2,7 @@ import React, { Component }  from 'react';
 import Login                 from "./jsx/login.js";
 import Home                  from "./jsx/Home.js"
 import cookie                from "react-cookies";
+import axios from "axios";
 import { LocaleProvider } from 'antd';
 import zh_CN from 'antd/lib/locale-provider/zh_CN';
 import 'moment/locale/zh-cn';
@@ -27,7 +28,7 @@ class App extends Component {
     }
   }
   componentWillMount(){
-    sessionStorage.setItem("url","https://guigui.zhongdianwl.com/");
+    sessionStorage.setItem("url","https://guigui.zhongdianwl.com");
     //cookie.save("islogin",true)
    // cookie.save("userData",{name:"xiaoming"})
   }
@@ -36,6 +37,7 @@ class App extends Component {
           this.setState({
             islogin:true,
           })
+          axios.defaults.headers.common['token'] =cookie.load("userData").token;
       }else{
         this.setState({
           islogin:false,

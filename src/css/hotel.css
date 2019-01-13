@@ -214,4 +214,21 @@
       top: 0%;
     }
   }
-
+  @media screen and (max-width: 1370px) {
+    .hotel .hotelSearch{
+      width: 100%;
+    }
+    .hotel .export{
+      margin-top: -50px;
+    }
+    .hotel .hotelSearch > button{
+      margin-top: 0;
+      margin-bottom: 20px;
+    }
+    .hotel .hotelSearch > div > span > input{
+      width: 15%;
+    }
+   .hotel thead tr th:last-child{
+      width: 10%;
+    }
+   }

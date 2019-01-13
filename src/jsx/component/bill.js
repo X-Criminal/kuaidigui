@@ -126,7 +126,7 @@ export default class App extends Component{
                             key="createtime"
                             dataIndex="createtime"
                             render={(res)=>{
-                                return <span>{ moment(res).format("YYYY-MM-DD")}</span>
+                                return <span>{ moment(res).format("YYYY-MM-DD HH:mm:ss")}</span>
                             }}
                             />
                         </Table>

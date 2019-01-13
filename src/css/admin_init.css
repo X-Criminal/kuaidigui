@@ -4,9 +4,10 @@
     height: auto;
     box-sizing: border-box;
     border: 20px solid #e7eaee;
-    min-width: 1517px;
+   /*min-width: 1517px; */
     min-height: 869px;
     height: 100%;
+    font-size: 12px;
   }
   .admin h3 {
     font-size: 16px;
@@ -33,9 +34,9 @@
     margin-right: 15px;
   }
   .admin .adminSearch .keyWord {
-    width: 150px;
-    margin-right: 30px;
-    margin-left: 5px;
+    width:12%;
+    margin-right: 1%;
+    margin-left: 0.1%;
     height: 30px;
     box-sizing: border-box;
     line-height: 30px;
@@ -198,3 +199,6 @@
   .ad_body .Check>span:nth-child(2){
     width: auto;
   }
+ thead tr th:last-child{
+   width: 20%;
+ }

@@ -3,6 +3,7 @@ import { HashRouter as Router, Route, Switch, Link,withRouter } from 'react-rout
 import {Layout,Menu,Icon}        from "antd";
 import axios    from "axios";
 import imgErr   from "../img/jiazai001.png";
+//{"headers":{token:cookie.load("userData").token}}
 
 import "../css/home.css";
 import "../font-icn/iconfont.css"
@@ -22,6 +23,7 @@ import Feedback  from "./component/feedback";
 import Apply     from "./component/apply";
 import Problem   from "./component/problem";
 import { setInterval } from "core-js";
+
 
 
 
@@ -59,9 +61,9 @@ class App extends Component{
                 }
                 setTimeout(()=>{
                     let html=document.querySelector(".getHeight");
-                    console.log(html)
                     if(html){
                         let height = html.offsetHeight;
+                        console.log(height)
                         this.setState({
                             height:height
                         })
@@ -106,10 +108,10 @@ class App extends Component{
         queryNewestExceptions=()=>{
                 axios.post(url+"/deliveryLockers/web/exceptionsMessageController/queryNewestExceptions")
                 .then((res)=>{
-                    if(res.data.code===1000&&res.data.message==="操作成功！"){
-                        if(this.state.isError.title!==res.data.data.area||this.state.isError.center!==res.data.data.content){
+                    if(res.data.code===1000&&res.data.message==="操作成功！"&&res.data.data){
+                        if(this.state.isError.title!==res.data.data.deliveryName||this.state.isError.center!==res.data.data.content){
                             this.setState({
-                                isError:{isError:true,title:res.data.data.area,center:res.data.data.content},
+                                isError:{isError:true,title:res.data.data.deliveryName,center:res.data.data.content},
                                 sup:true
                             })
                         }
@@ -137,12 +139,13 @@ const Home = withRouter((props)=>{
     let text = JSON.stringify(WebMenu);
     return(
         <div className={"Home"} style={props.height!=="auto"?{height:props.height+150+"px"}:null}>
+        
         <Layout>
             <Header>
                 <HEADER pathSnippets={pathSnippets}/>
             </Header>
             <Layout>
-                <Sider width="240">
+                <Sider width="15%">
                     <Menu
                         defaultSelectedKeys={['/']}
                         defaultOpenKeys={['sub1']}
@@ -278,7 +281,7 @@ const Home = withRouter((props)=>{
                         }
                     </Menu>
                 </Sider>
-                <Content>
+                <Content style={{width:"85%"}}>
                     <Switch>
                         {
                             text.indexOf("管理员")>-1?       <Route  path="/admin"     component={ Admin}/>:null

@@ -235,14 +235,19 @@ class B extends Component{
 
     render(){
         let data = this.state.Lis;
+        let _data = [ ];
+        let index = 0;
         for(let i =0;i<data.length;i++){
-            data[i].index = i+1;
+            if(data[i]){
+                data[i].index = index++
+                _data.push(data[i])
+            }
         }
         return(
             <div className={"B"}>
                 <Table
                 className={"lisB"}
-                dataSource={data}
+                dataSource={_data}
                 bordered
                 pagination={false}
                 rowKey={"key"}

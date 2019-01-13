@@ -116,7 +116,6 @@ class Add extends Component{
         }
     }
     componentDidMount(){
-        console.log(this.props.onEdit)
         if(this.props.onEdit.length<=0) window.history.go(-1);
     }
 
@@ -163,7 +162,7 @@ class Add extends Component{
                   <div className={"orderAddBody"}>
                     <div>
                         <span>
-                            快递柜名称：
+                            快递公司名称：
                         </span>
                         <Input name={"serviceCall"} disabled={true} value={this.props.onEdit.name}/>
                     </div>
@@ -171,7 +170,7 @@ class Add extends Component{
                         <span>
                             服务电话：
                         </span>
-                        <Input name={"serviceCall"} onChange={this.serviceCall}/>
+                        <Input name={"serviceCall"} onChange={this.serviceCall} placeholder={this.props.onEdit.serviceCall}/>
                     </div>
                     <div>
                         <span>

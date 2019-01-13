@@ -6,7 +6,9 @@ export default class App extends Component{
     constructor(props){
         super(props)
         this.state={
-            getUserCustom2ById:{}
+            getUserCustom2ById:{},
+            maxImg:"",
+            isMax:false,
         }
     }
     
@@ -36,7 +38,6 @@ export default class App extends Component{
     }
 
     upDateUser(type){
-        console.log(type)
         let _type = window.confirm("此操作将冻结该用户，是否继续？")
             if(_type){
                 axios.post(url+"/deliveryLockers/web/webTUserController/updateUser",{id:id,type:type})
@@ -51,7 +52,19 @@ export default class App extends Component{
                     message.error("网络连接错误，请稍后再试！")
                 })
             }
-         
+    }
+
+    enlarge=(e)=>{
+        this.setState({
+            maxImg:e.target.src,
+            isMax:true,
+        })
+    }
+    onlarge=(e)=>{
+        this.setState({
+            maxImg:"",
+            isMax:false,
+        })
     }
     render(){
         let data = this.state.getUserCustom2ById;
@@ -87,7 +100,7 @@ export default class App extends Component{
                     <div>
                         <span>状态：</span>
                         {/* <span>{data.approveStatus===0?"未认证":data.approveStatus===1?"已认证"?data.approveStatus===2:"已冻结":"-"}</span> */}
-                        {data.approveStatus===0?<span style={{color:"red"}}>未认证</span>:data.approveStatus===1?<span>已认证</span>:data.approveStatus===2?<span color="red">已冻结</span>:<span>-</span>}
+                        {data.approveStatus===0?<span style={{color:"red"}}>未认证</span>:data.approveStatus===1?<span>已认证</span>:data.approveStatus===2?<span style={{color:"red"}}>已冻结</span>:<span>-</span>}
                     </div>
                 </div>
                 {
@@ -104,13 +117,16 @@ export default class App extends Component{
                         <div>
                             <span>身份证：</span>
                             <span>
-                                <img src={data.frontPic} alt={"userData"}/>
-                                <img src={data.reversePic} alt={"userData"}/>
+                                <img src={url+"/"+data.frontPic} alt={"userData"}   onClick={this.enlarge}/>
+                                <img src={url+"/"+data.reversePic} alt={"userData"} onClick={this.enlarge}/>
                             </span>
                         </div>
                     </div>
                     :null
                 }
+               {this.state.isMax?<div className={"enlarge"} onClick={this.onlarge}>
+                    <img src={this.state.maxImg} alt={"userData"} />
+                </div>:null}
                 <Button type="primary" onClick={this.upDateUser.bind(this,data.approveStatus===2?2:1)}>
                     {data.approveStatus===2?<span>解冻</span>:<span>冻结</span>}
                 </Button>

@@ -14,7 +14,7 @@ export default class App extends Component{
         }
     }
     componentDidMount(){
-        let data = document.querySelector("equipAdd");
+       // let data = document.querySelector("equipAdd");
        
     }
 
@@ -126,7 +126,7 @@ export default class App extends Component{
                         dataIndex="deviceStatus"
                         key="deviceStatus"
                         render={(res)=>{
-                            return <span>{res===1?"正常":res===2?"异常":"-"}</span>
+                            return <span>{res===2?"正常":res===1?"异常":"-"}</span>
                         }}
                         />
                         <Column

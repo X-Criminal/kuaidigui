@@ -26,7 +26,7 @@ export default class App extends Component{
         this.selectDhl()
     }
     selectDhl=()=>{
-        axios.post(url+"/deliveryLockers/wx/expressDeliveryController/selectDhl")
+        axios.post(url+"/deliveryLockers/wx/expressDeliveryController/selectDhl",{keyword:""})
              .then((res)=>{
                  if(res.data.code===1000&&res.data.message==="操作成功！"){
                      let data =res.data.data;
@@ -96,6 +96,7 @@ export default class App extends Component{
         axios.post(url+"/deliveryLockers/web/webTUserController/setIdentity",_data)
              .then((res)=>{
                  if(res.data.code===1000&&res.data.message==="操作成功！"){
+                         this.props.init( )
                          window.history.go(-1)
                          message.success(res.data.message)
                  }else{

@@ -145,6 +145,9 @@ export default class App extends Component{
             isbinding:!this.state.isbinding
         })
     }
+    upData_=()=>{
+        this.init(  )
+    }
         render(){
             return(
                 <div className={"equipment admin"}>
@@ -161,7 +164,7 @@ export default class App extends Component{
                         <Button className={"Adminbtn"} type="primary" loading={this.state.loading} onClick={this.search}>
                             查询
                         </Button>
-                        <AddAdmin/>
+                        <AddAdmin upData={this.upData_}/>
                         <Button type="primary" className={"binding"} disabled={this.state.deliveryIds.length<=0?true:false} onClick={this.binding}>
                             <Icon type="paper-clip" />
                             绑定快递员

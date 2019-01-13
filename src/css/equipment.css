@@ -89,7 +89,7 @@
     color: black;
     margin: 0 auto;
     margin-top: 20px;
-    min-width: 1558px;
+    /* min-width: 1558px; */
   }
   .equipment .details .cabinet > p span {
     margin-right: 10px;
@@ -313,5 +313,10 @@
     color: white;
     margin-top: 20px;
     margin-left: 80px;
+  }
+  @media screen and (max-width: 1370px) {
+    .equipment .adminSearch .name{
+      width: 15%;
+    }
   }
   

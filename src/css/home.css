@@ -11,7 +11,7 @@
 }
 .Home .ant-layout-header .title{
     float: left;
-    width: 240px;
+    width: 15%;
     background: rgb(61, 160, 249);
     text-align: center;
     color: white;
@@ -83,7 +83,7 @@
     position: relative;
 }
 .HomeErr{
-    position: absolute;
+    position: fixed;
     bottom: 35px;
     right: 35px;
     width: 240px;
@@ -119,4 +119,9 @@
     background-color: red;
     top: 12px;
     left: 25px;
+}
+.feedback .imgBox img{
+    border-radius: 0;
+    width: 175px;
+    height: 100px;
 }

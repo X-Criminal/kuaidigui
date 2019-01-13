@@ -188,6 +188,8 @@ class Details extends Component{
         super(props)
         this.state={
                 userData:{},
+                maxImg:"",
+                isMax:false,
         }
     }
     componentWillMount(){
@@ -221,7 +223,18 @@ class Details extends Component{
                  }
              })
     }
-
+    enlarge=(e)=>{
+        this.setState({
+            maxImg:e.target.src,
+            isMax:true,
+        })
+    }
+    onlarge=(e)=>{
+        this.setState({
+            maxImg:"",
+            isMax:false,
+        })
+    }
 
     render(){
         let data = this.state.userData;
@@ -255,7 +268,10 @@ class Details extends Component{
                         </div>
                         <div className={"Check clear-fix add img"}>
                              <span>身份证：</span>
-                             <span style={{width:"auto"}}> <img src={url+data.frontPic} alt="身份证"/>&nbsp;&nbsp;&nbsp;&nbsp; <img src={url+data.reversePic} alt="身份证"/></span>
+                             <span style={{width:"auto"}}>
+                                <img src={url+data.frontPic} alt="身份证" onClick={this.enlarge}/>&nbsp;&nbsp;&nbsp;&nbsp; 
+                                <img src={url+data.reversePic} alt="身份证" onClick={this.enlarge}/>
+                            </span>
                         </div>
                         <div className={"AdBtn txt"}>
                               <span></span>
@@ -268,6 +284,9 @@ class Details extends Component{
                               </Button>
                         </div>
                     </div>
+                    {this.state.isMax?<div className={"enlarge"} onClick={this.onlarge}>
+                    <img src={this.state.maxImg} alt={"userData"} />
+                    </div>:null}
             </div>
         )
     }

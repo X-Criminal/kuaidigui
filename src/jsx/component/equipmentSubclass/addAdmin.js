@@ -23,6 +23,7 @@ export default class App extends React.Component {
              .then((res)=>{
                  if(res.data.code ===1000){
                      cb&&cb( );
+                     this.props.upData( )
                      message.success(res.data.message);
                  }else{
                      message.error(res.data.message);
@@ -151,16 +152,16 @@ class AddAmin extends React.Component{
         arr={}
     /**快递公司 */
         getSelectDhl=()=>{
-            axios.post(url+"/deliveryLockers/wx/expressDeliveryController/selectDhl")
-                .then((res)=>{
-                        if(res.data.code===1000){
+            // axios.post(url+"/deliveryLockers/wx/expressDeliveryController/selectDhl")
+            //     .then((res)=>{
+            //             if(res.data.code===1000){
                             this.setState({
-                                selectDhl:res.data.data
+                                selectDhl:JSON.parse(sessionStorage.getItem("selectDhl"))
                             })
-                        }else{
-                            message.error(res.data.message)
-                        }
-                })
+                //         }else{
+                //             message.error(res.data.message)
+                //         }
+                // })
         }
     /**快递公司-END- */
     onAddCourier=()=>{

@@ -83,7 +83,7 @@ export default class App extends Component{
                      data[i].index = i+1;
                 }
             return(
-                <div className={"admin bill"}>
+                <div className={"admin bill feedback"}>
                        <h3>反馈信息</h3>
                        <div className={"search"}>
                             <span>反馈人</span>
@@ -151,7 +151,7 @@ export default class App extends Component{
                             key="processTime"
                             dataIndex="processTime"
                             render={(res)=>{
-                               return <span> {res?moment(parseInt(res)).format("YYYY-MM-DD"):"-"}</span>
+                               return <span> {res?moment(parseInt(res)).format("YYYY-MM-DD HH:mm:ss"):"-"}</span>
                             }}
                             />
                             <Column
@@ -186,6 +186,8 @@ class Details extends Component{
         super(props)
         this.state={
                 userData:{},
+                maxImg:"",
+                isMax:false,
         }
     }
     componentWillMount(){
@@ -223,6 +225,18 @@ class Details extends Component{
              })
     }
 
+    enlarge=(e)=>{
+        this.setState({
+            maxImg:e.target.src,
+            isMax:true,
+        })
+    }
+    onlarge=(e)=>{
+        this.setState({
+            maxImg:"",
+            isMax:false,
+        })
+    }
 
     render(){
         let data = this.state.userData;
@@ -246,6 +260,10 @@ class Details extends Component{
                             <span>信息内容：</span>
                             <span>{data.content}</span>
                         </div>
+                        <div className={"txt imgBox"}>
+                            <span>反馈图片：</span>
+                            <span>{data.pics?data.pics.map((item,index)=> <img src={url+"/"+item} alt={"userData"} onClick={this.enlarge} key={index}/> ):null}</span>
+                        </div>
                         <div className={"AdBtn txt"}>
                               <span></span>
                               {
@@ -260,6 +278,9 @@ class Details extends Component{
                               
                         </div>
                     </div>
+                    {this.state.isMax?<div className={"enlarge"} onClick={this.onlarge}>
+                    <img src={this.state.maxImg} alt={"userData"} />
+                </div>:null}
             </div>
         )
     }

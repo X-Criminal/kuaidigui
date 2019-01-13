@@ -99,7 +99,7 @@ export default class App extends Component{
     }
      /**删除 */
     deleData=( e ,cb)=>{
-        axios.post(url+"/deliveryLockers/web/webMenuController/delAdmin",{id:e})
+        axios.post(url+"/deliveryLockers/web/webTUserController/delUser",{id:e})
              .then((res)=>{
                  if(res.data.code===1000&&res.data.message.indexOf("操作成功")>-1){
                      this.init( );

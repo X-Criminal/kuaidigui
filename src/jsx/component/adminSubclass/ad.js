@@ -20,6 +20,7 @@ class Addadmin extends React.Component {
             index:1,
             menuId:[],
             deliveryId:[],
+            Jurisdiction:[[]],
         }
         this.getUserDtate = this.getUserDtate.bind(this);
     }
@@ -49,7 +50,10 @@ class Addadmin extends React.Component {
         this.setState({
             index:this.state.index+1
         })
-        this.Jurisdiction.push([])
+        this.Jurisdiction.push([]);
+        this.setState({
+            Jurisdiction: this.Jurisdiction
+        })
     }
     getUserDtate(e){
         this.setState({
@@ -74,6 +78,9 @@ class Addadmin extends React.Component {
 
     onDeliveryId=(data,index)=>{
         this.Jurisdiction[index] = data;
+        this.setState({
+            Jurisdiction:this.Jurisdiction
+        })
     }
     Check=(e)=>{
         this.setState({
@@ -155,7 +162,7 @@ class Addadmin extends React.Component {
                         <div className={"Check clear-fix add"}>
                              <span>管辖快递柜：</span>
                              <div>
-                             {this.Jurisdiction.map((item,idx)=>{
+                             {this.state.Jurisdiction.map((item,idx)=>{
                               return(
                                     <div key={idx} index={this.state.index} className={"Check clear-fix add"}>
                                             <Region onGetArea={this.getArea}/>
@@ -172,7 +179,7 @@ class Addadmin extends React.Component {
                                                 </Button>:null
                                             }
                                             <br/>
-                                            <p>选中的快递柜子：{this.Jurisdiction[idx].map((item,index)=><span key={index}>{item.name}，</span> )}</p>
+                                            <p>选中的快递柜子：{this.state.Jurisdiction[idx].map((item,index)=><span key={index}>{item.name}，</span> )}</p>
                                     </div>
                               )
                             })}

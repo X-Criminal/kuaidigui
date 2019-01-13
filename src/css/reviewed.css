@@ -169,3 +169,17 @@
     background-color: #e06950;
   }
   
+  @media screen and (max-width: 1370px) {
+    .reviewed  ._map{
+      width: 714px;
+      display: block;
+      float: none;
+      margin: 0 auto;
+    }
+    .reviewed  ._data{
+      width: 714px;
+      display: block;
+      float: none;
+      margin: 0 auto;
+    }
+  }

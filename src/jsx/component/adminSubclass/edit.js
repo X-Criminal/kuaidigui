@@ -130,11 +130,16 @@ class Addadmin extends React.Component {
             deliveryId:_deliveryId,
             id:id,
             menuId:menuId,
-            delMenuId:dele,
+            delMenuId:delMenuId,
+            ids:dele,
         }
-       if(this.state.name.length>0) _data.tAdminBase.name = this.state.name;
-       if(this.state.password.length>0) _data.tAdminBase.name = this.state.password;
-       if(this.state.phone.length>0) _data.tAdminBase.name = this.state.phone;
+        if(this.state.name.length>0||this.state.password.length>0||this.state.phone.length>0){
+            _data.tAdminBase={}
+            if(this.state.name.length>0) _data.tAdminBase.name = this.state.name;
+            if(this.state.password.length>0) _data.tAdminBase.password = this.state.password;
+            if(this.state.phone.length>0) _data.tAdminBase.phone = this.state.phone;
+        }
+      
         axios.post(url+"/deliveryLockers/web/webMenuController/updateAdmin",_data)
              .then((res)=>{
                  message.success(res.data.message)
@@ -243,7 +248,7 @@ class XZ extends React.Component{
     }
     
     dele=()=>{
-        dele.push(this.props.obj.area);
+        dele.push(this.props.obj.ids);
         this.setState({
             isShow:false
         })

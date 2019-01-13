@@ -1,6 +1,7 @@
 import React ,{Component}                               from "react";
 import {Input,Button,Table,DatePicker,Tooltip,Select,message}         from "antd";
 import {Link,Switch,Route}                              from "react-router-dom"
+import cookie from "react-cookies";
 import HotelDetails                                     from "./hotelSubclass/HotelDetailList";
 import Open                                             from "./hotelSubclass/open"
 import axios  from "axios"
@@ -139,19 +140,30 @@ export default class App extends Component{
     }
 
     exportOrder=()=>{
-      window.open(url+"/deliveryLockers/web/sendOrderManageController/exportOrder?orderStatus=3&currPage="
-                                                                                                +this.state.currPage
-                                                                                                +"&dhlId="+
-                                                                                                this.state.dhlId
-                                                                                                +"&dlName="
-                                                                                                +this.state.dlName
-                                                                                                +"&endTime="
-                                                                                                +this.state.endTime
-                                                                                                +"&orderNumber="
-                                                                                                +this.state.orderNumber
-                                                                                                +"&size=5&startTime="
-                                                                                                +this.state.startTime
-                                                                                                +"&name="+this.state.userName)
+      let data = url+"/deliveryLockers/web/sendOrderManageController/exportOrder?orderStatus=3&currPage="
+      +this.state.currPage
+      +"&dhlId="+
+      this.state.dhlId
+      +"&dlName="
+      +this.state.dlName
+      +"&endTime="
+      +this.state.endTime
+      +"&orderNumber="
+      +this.state.orderNumber
+      +"&size=5&startTime="
+      +this.state.startTime
+      +"&name="+this.state.userName;
+      this.downloadFile(data)
+    }
+
+    downloadFile(url){
+      let link = document.createElement('a')
+      link.style.display = 'none'
+      link.href = url
+      //link.setAttribute('download', 'excel1111.xlsx')
+      document.body.appendChild(link)
+      link.click()
+      document.body.removeChild(link)
     }
     _init=()=>{
       this.init( )
@@ -270,7 +282,7 @@ export default class App extends Component{
                             key="createtime"
                             render={(value, row, index) => {
                                     const obj = {
-                                      children:moment(parseInt(value)).format("YYYY-MM-DD"),
+                                      children:moment(parseInt(value)).format("YYYY-MM-DD HH:mm:ss"),
                                       props: {},
                                     };
                                     if (index === this.state.datas.length-1) {

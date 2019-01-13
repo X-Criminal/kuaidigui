@@ -20,7 +20,7 @@ export default class App extends Component{
     componentDidMount(){
         if(!this.props.Area) {window.history.go(-1);message.error("请先选择地区！")};
         this.init();
-        dataId=window.location.hash.split("Choice")[1]||window.location.hash.split("Choice2/")[1];
+        dataId=window.location.hash.split("Choice2/")[1]||window.location.hash.split("Choice")[1];
     }
     init=(data)=>{
       let _data={

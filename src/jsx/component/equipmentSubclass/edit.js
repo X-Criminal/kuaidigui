@@ -264,7 +264,6 @@ export default class AddAmin extends Component{
                 a.push(diffDeliverys[i])
             }
         }
-        
         let data = {
             id:dataId,
             serviceCharge:this.state.serviceCharge,
@@ -354,7 +353,7 @@ export default class AddAmin extends Component{
                                        <span>
                                            付款方
                                        </span>
-                                       <Select style={{ width: 500 }} name={"payer"} placeholder={_default.payer===1?"存件方":_default.payer===2?"付款方":"-"} onChange={this.payer}>
+                                       <Select style={{ width: 500 }} name={"payer"} placeholder={_default.payer===1?"存件方":_default.payer===2?"取件方":"-"} onChange={this.payer}>
                                             <Option value={1}>存件方</Option>
                                             <Option value={2}>取件方</Option>
                                         </Select>
