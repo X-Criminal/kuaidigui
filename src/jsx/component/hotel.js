@@ -95,6 +95,7 @@ export default class App extends Component{
 
     init=(data)=>{
       let _data ={
+        adminId:cookie.load("userData").id,
           size:5,
           area:this.state.area,
           courierName:this.state.courierName,

@@ -145,7 +145,7 @@ export default class App extends Component{
                         dataIndex="deviceStatus"
                         key="deviceStatus"
                         render={((res)=>{
-                            return res===1?<span>正常</span>:<span style={{color:"red"}}>异常</span>
+                            return res===2?<span>正常</span>:<span style={{color:"red"}}>异常</span>
                         })}
                         />
                 </Table>

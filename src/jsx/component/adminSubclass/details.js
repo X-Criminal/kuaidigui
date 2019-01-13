@@ -67,14 +67,14 @@ class Addadmin extends React.Component {
                         <div className={"AdBtn txt"}>
                               <span></span>
                               <Button type={"primary"}>
-                                 <Link to={"/admin/details"+id+"/edit"+id}>
+                                 <Link to={"/admin/edit"+id}>
                                     修改
                                  </Link>
                               </Button>
                         </div>
                    </div>
                    <Switch>
-                       <Route path={"/admin/details:data/edit:data"} component={Edit}/>
+                       <Route path={"/admin/edit:data"} component={Edit}/>
                    </Switch>
             </div>
         )

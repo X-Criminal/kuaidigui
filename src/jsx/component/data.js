@@ -1,6 +1,7 @@
 import React ,{Component}                               from "react";
 import {Input,Button,Table,DatePicker,Tooltip,Select,message }         from "antd";
-import {Link,Switch,Route}                              from "react-router-dom"
+import {Link,Switch,Route}                              from "react-router-dom";
+import cookie from "react-cookies";
 import HotelDetails                                     from "./dataSubclass/HotelDetailList";
 import Open                                             from "./dataSubclass/open"
 import axios  from "axios"
@@ -37,6 +38,7 @@ export default class App extends Component{
     }
     componentDidMount(){
       this.init()
+     
     }
 
     /**状态 */
@@ -72,6 +74,7 @@ export default class App extends Component{
 
     init=(data)=>{
       let _data ={
+          adminId:cookie.load("userData").id,
           size:5,
           areaName:this.state.areaName,
           consigneeName:this.state.consigneeName,

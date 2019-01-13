@@ -101,7 +101,7 @@ export default class App extends Component{
                             <li key = {index}>
                                 <Link to={"/equipment/details"+id+"/aedit"+JSON.stringify({name:item.name,serviceCharge:item.serviceCharge,useWay:item.useWay,width:item.width,height:item.high,length:item.length,id:item.id})}>
                                     <div className={item.useStatus===2?"shiyong":item.useWay===1?"gongxiang":item.useWay===2?"duxiang":"-"}>
-                                        <h4>{item.name}</h4>
+                                        <h4>{item.name}号格子</h4>
                                         <p>服务费:{item.serviceCharge}元</p>
                                         <p>{item.width+"wX"+item.high+"hX"+item.length+"cm"}</p>
                                     </div>
@@ -184,10 +184,10 @@ class Edit extends Component{
         return(
             <div className={"edit getHeight"}>
                 <div>
-                    <h3>{this.state.dataId.name}<Icon type="close" onClick={this.BACK}/></h3>
+                    <h3>{this.state.dataId.name}号格子<Icon type="close" onClick={this.BACK}/></h3>
                     <div>
                         <span>柜子名称：</span>
-                        <Input name={"name"} onChange={this.onchange} placeholder={userData.name}/>
+                        <Input name={"name"} onChange={this.onchange} placeholder={userData.name+"号"}/>
                     </div>
                     <div>
                         <span>服务费：</span>

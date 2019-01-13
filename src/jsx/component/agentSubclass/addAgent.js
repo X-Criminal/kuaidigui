@@ -48,6 +48,9 @@ class AddAmin extends React.Component{
             text:[[]]
         }
     }
+    componentDidMount(){
+        this.ByDelivery( )
+    }
     addEq=()=>{
         let index = this.state.index;
         let text = this.state.text;
@@ -58,14 +61,24 @@ class AddAmin extends React.Component{
             text:text
         })
     }
-    onSearch(e,type){
-        axios.post(url+"/deliveryLockers/web/webDeliveryLockerController/getByDeliveryLockerVO2List",{keyword:type})
+    // onSearch(e,type){
+    //     axios.post(url+"/deliveryLockers/web/webDeliveryLockerController/getByDeliveryLockerVO2List",{keyword:type})
+    //          .then((res)=>{
+    //              if(res.data.code===1000){
+    //                 let text = this.state.text;
+    //                 text[e] = res.data.data;
+    //                 this.setState({
+    //                     text:text
+    //                 })
+    //              }
+    //          })
+    // }
+    ByDelivery(){
+        axios.post(url+"/deliveryLockers/web/webDeliveryLockerController/getByDeliveryLockerVO2List",{keyword:""})
              .then((res)=>{
                  if(res.data.code===1000){
-                    let text = this.state.text;
-                    text[e] = res.data.data;
                     this.setState({
-                        text:text
+                        text:res.data.data
                     })
                  }
              })
@@ -92,7 +105,7 @@ class AddAmin extends React.Component{
                                             快递柜:
                                         </span>
                                         <Select
-                                                onSearch={this.onSearch.bind(this,index)}
+                                                // onSearch={this.onSearch.bind(this,index)}
                                                 onSelect={this.onSelect.bind(this,index)}
                                                 showSearch
                                                 style={{ width: 230 }}
@@ -103,7 +116,7 @@ class AddAmin extends React.Component{
                                                 <Option value="lucy">Lucy</Option>
                                                 <Option value="tom">Tom</Option> */}
                                                 {
-                                                    this.state.text[index].map((item,index)=><Option key={index} value={item.id}>{item.name}</Option>)
+                                                    this.state.text.map((item,index)=><Option key={index} value={item.id}>{item.name}</Option>)
                                                 }
                                         </Select>
                                         {
